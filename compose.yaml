@@ -1,0 +1,81 @@
+name: trusttrace-test
+
+services:
+  database:
+    image: pgvector/pgvector:0.8.1-pg17
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-trusttrace}
+      POSTGRES_USER: ${POSTGRES_USER:-trusttrace}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-trusttrace}
+    ports:
+      - "${DATABASE_PORT:-5432}:5432"
+    volumes:
+      - trusttrace-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  migrate:
+    image: trusttrace-server:test
+    build:
+      context: ./server
+    environment: &server-env
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${POSTGRES_USER:-trusttrace}:${POSTGRES_PASSWORD:-trusttrace}@database:5432/${POSTGRES_DB:-trusttrace}
+      DIRECT_URL: postgresql://${POSTGRES_USER:-trusttrace}:${POSTGRES_PASSWORD:-trusttrace}@database:5432/${POSTGRES_DB:-trusttrace}
+      JWT_SECRET: ${JWT_SECRET:-testing-only-secret-change-before-production}
+      JWT_EXPIRES_IN: 1d
+      CORS_ORIGINS: http://localhost:${CLIENT_PORT:-3001}
+      EMBEDDING_PROVIDER: mock
+      EMBEDDING_API_KEY: ""
+      EMBEDDING_MODEL: text-embedding-004
+      VISION_MODEL: gemini-2.0-flash
+      EMBEDDING_DIM: 768
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-test-cloud}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-test-key}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-test-secret}
+      PAYMENT_PROVIDER: mock
+      PORT: 3000
+    depends_on:
+      database:
+        condition: service_healthy
+    command: ["sh", "-c", "npm run prisma:migrate && npm run prisma:seed"]
+    restart: "no"
+
+  server:
+    image: trusttrace-server:test
+    build:
+      context: ./server
+    environment: *server-env
+    ports:
+      - "${SERVER_PORT:-3000}:3000"
+    depends_on:
+      database:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  client:
+    image: trusttrace-client:test
+    build:
+      context: ./client
+      args:
+        NEXT_PUBLIC_MOCK_PAYMENT: ${NEXT_PUBLIC_MOCK_PAYMENT:-1}
+        NEXT_PUBLIC_IMAGE_HOST: ${NEXT_PUBLIC_IMAGE_HOST:-res.cloudinary.com}
+    environment:
+      API_URL: http://server:3000/api
+    ports:
+      - "${CLIENT_PORT:-3001}:3000"
+    depends_on:
+      server:
+        condition: service_healthy
+
+volumes:
+  trusttrace-db:
