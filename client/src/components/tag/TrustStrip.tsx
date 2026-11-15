@@ -31,7 +31,8 @@ export function TrustStrip({
 }) {
   const reduce = useReducedMotion();
   const run = animated && !reduce;
-  const [shown, setShown] = useState(run ? 0 : score);
+  const [count, setCount] = useState(0);
+  const shown = run ? count : score;
   const done = useRef(onDone);
   useEffect(() => {
     done.current = onDone;
@@ -39,25 +40,19 @@ export function TrustStrip({
 
   useEffect(() => {
     if (!run) {
-      setShown(score);
       const t = setTimeout(() => done.current?.(), 0);
       return () => clearTimeout(t);
     }
     const c = animate(0, score, {
       duration: 0.9,
       ease: "easeOut",
-      onUpdate: (v) => setShown(Math.round(v)),
+      onUpdate: (v) => setCount(Math.round(v)),
     });
     return () => c.stop();
   }, [run, score]);
 
-  let offset = 0;
-  const segs = order.map((k, i) => {
-    const v = Math.max(0, breakdown[k]);
-    const left = offset;
-    offset += v;
-    return { k, v, left, i };
-  });
+  const vals = order.map((k) => Math.max(0, breakdown[k]));
+  const segs = order.map((k, i) => ({ k, v: vals[i], left: vals.slice(0, i).reduce((a, b) => a + b, 0), i }));
 
   return (
     <div className={cn("space-y-3", className)}>

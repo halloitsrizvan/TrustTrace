@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { Bell, LayoutGrid, Plus, Sparkles, UserRound, Trophy, PackageSearch, PackagePlus } from "lucide-react";
 import { copy } from "@/lib/copy";
@@ -39,6 +39,7 @@ function ReportSheet({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
 
 export function PageShell({ children, wide }: { children: ReactNode; wide?: boolean }) {
   const path = usePathname();
+  const router = useRouter();
   const [sheet, setSheet] = useState(false);
   const me = useMe();
   const notifs = useNotifications();
@@ -113,7 +114,7 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
           <li className="flex justify-center">
             <button
               type="button"
-              onClick={() => (signedIn ? setSheet(true) : (window.location.href = "/login?next=/board"))}
+              onClick={() => (signedIn ? setSheet(true) : router.push("/login?next=/board"))}
               data-testid="report-tab"
               aria-label={copy.nav.report}
               className="-mt-5 grid size-14 place-items-center rounded-full bg-ultra text-on-ultra shadow-[3px_3px_0_rgba(20,26,60,0.2)] transition-transform active:scale-95"

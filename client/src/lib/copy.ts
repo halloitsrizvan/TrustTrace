@@ -408,6 +408,8 @@ export const copy = {
     tipsTitle: "Tips",
     auditTitle: "Audit log",
     filterAll: "All",
+    confirmed: "Confirmed",
+    pending: "Pending",
     prev: "Previous",
     nextPage: "Next",
     noRows: "No rows match",

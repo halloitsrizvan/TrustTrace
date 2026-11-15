@@ -91,14 +91,14 @@ export default function ClaimPage({ params }: { params: Promise<{ claimId: strin
   const claimQ = useClaim(claimId);
   const claim = claimQ.data;
 
-  const [prompts, setPrompts] = useState<Claim["prompts"]>();
+  const [fetchedPrompts, setFetchedPrompts] = useState<Claim["prompts"]>();
+  const [now] = useState(() => Date.now());
   const [photos, setPhotos] = useState<Record<string, string | null>>({});
   const [result, setResult] = useState<ClaimSubmitResult | null>(null);
   const [fresh, setFresh] = useState(false); // result came from this session: animate
   const [phase, setPhase] = useState<"strip" | "result">("strip");
   const [token, setToken] = useState<{ t: string; e: string } | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [announce, setAnnounce] = useState("");
   const [loadFail, setLoadFail] = useState(false);
 
   const form = useForm<Answers>({ defaultValues: {}, mode: "onTouched" });
@@ -107,21 +107,25 @@ export default function ClaimPage({ params }: { params: Promise<{ claimId: strin
   // Prompts come with the claim; if the API omits them, start again to fetch them (idempotent).
   useEffect(() => {
     if (!claim || claim.status !== "PENDING") return;
-    if (claim.prompts?.length) return setPrompts(claim.prompts);
+    if (claim.prompts?.length) return;
     startClaim(claim.foundItem.id)
-      .then((r) => setPrompts(r.prompts))
+      .then((r) => setFetchedPrompts(r.prompts))
       .catch(() => setLoadFail(true));
   }, [claim]);
 
+  const prompts = claim?.prompts?.length ? claim.prompts : fetchedPrompts;
   const onStripDone = useCallback(() => setPhase("result"), []);
 
   // Announce the final result once, for screen readers and reduced-motion users.
   const finalDecision = result?.decision;
-  useEffect(() => {
-    if (!result || phase !== "result") return;
-    const n = result.trustScore;
-    setAnnounce(finalDecision === "APPROVED" ? c.approvedAria(n) : finalDecision === "FLAGGED" ? c.flaggedAria(n) : c.rejectedAria(n));
-  }, [phase, result, finalDecision]);
+  const announce =
+    !result || phase !== "result"
+      ? ""
+      : finalDecision === "APPROVED"
+        ? c.approvedAria(result.trustScore)
+        : finalDecision === "FLAGGED"
+          ? c.flaggedAria(result.trustScore)
+          : c.rejectedAria(result.trustScore);
 
   async function submit(values: Answers) {
     if (submitting || !prompts) return;
@@ -231,7 +235,7 @@ export default function ClaimPage({ params }: { params: Promise<{ claimId: strin
   } else {
     const r = shown;
     const retry = r.retryAfter ? new Date(r.retryAfter) : null;
-    const retryFuture = retry && retry.getTime() > Date.now();
+    const retryFuture = retry && retry.getTime() > now;
     top = (
       <div className="space-y-5">
         {header}
