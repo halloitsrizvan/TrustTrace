@@ -22,10 +22,10 @@ function target(n: AppNotification) {
   switch (n.type) {
     case "STRONG_MATCH":
     case "CLAIM_STARTED": return n.data?.itemId ? `/items/${n.data.itemId}` : "/matches";
-    case "CLAIM_DECISION": return n.data?.claimId ? `/claim/${n.data.claimId}` : "/claims";
-    case "HANDOVER_COMPLETED": return "/claims";
-    case "RETURN_COMPLETED": return "/items/mine";
-    case "TIP_PROMPT": return n.data?.claimId ? `/thanks/${n.data.claimId}` : "/claims";
+    case "CLAIM_DECISION": return n.data?.claimId ? `/claim/${n.data.claimId}` : "/activity?tab=claims";
+    case "HANDOVER_COMPLETED": return "/activity?tab=claims";
+    case "RETURN_COMPLETED": return "/activity";
+    case "TIP_PROMPT": return n.data?.claimId ? `/thanks/${n.data.claimId}` : "/activity?tab=claims";
     default: return "/me";
   }
 }

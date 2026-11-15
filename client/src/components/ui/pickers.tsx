@@ -1,11 +1,11 @@
 "use client";
 import { Chip } from "./chip";
-import { Select } from "./field";
 import { categoryIcons } from "@/components/tag/ItemPhoto";
 import { copy } from "@/lib/copy";
 import { CATEGORIES, ZONES } from "@/lib/utils";
-import { Package } from "lucide-react";
+import { MapPin, Package } from "lucide-react";
 
+/** Area picker as a wrap of pill chips: no native dropdown, thumb-sized, shows every option at once. */
 export function ZoneSelect({
   value,
   onChange,
@@ -15,21 +15,35 @@ export function ZoneSelect({
 }: {
   value: string;
   onChange: (v: string) => void;
+  /** When set, tapping the selected area again clears it. */
   anyLabel?: string;
   id?: string;
   "aria-describedby"?: string;
   "aria-invalid"?: boolean;
   "aria-label"?: string;
 }) {
+  const clearable = anyLabel !== undefined;
   return (
-    <Select id={id} value={value} onChange={(e) => onChange(e.target.value)} data-testid="zone-select" {...aria}>
-      {anyLabel !== undefined ? <option value="">{anyLabel}</option> : <option value="" disabled>{copy.report.zone}</option>}
+    <div
+      id={id}
+      role="group"
+      aria-label={aria["aria-label"] ?? copy.report.zone}
+      aria-describedby={aria["aria-describedby"]}
+      data-testid="zone-select"
+      className="flex flex-wrap gap-2"
+    >
       {ZONES.map((z) => (
-        <option key={z} value={z}>
+        <Chip
+          key={z}
+          selected={value === z}
+          onClick={() => onChange(clearable && value === z ? "" : z)}
+          icon={<MapPin size={15} strokeWidth={1.75} aria-hidden />}
+          testid={`zone-${z}`}
+        >
           {copy.zone[z]}
-        </option>
+        </Chip>
       ))}
-    </Select>
+    </div>
   );
 }
 

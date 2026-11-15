@@ -26,10 +26,10 @@ export function BottomSheet({
         <Dialog.Overlay className="fade-in fixed inset-0 z-50 bg-[#141a3c]/55" />
         <Dialog.Content
           data-testid={testid}
-          className="sheet-in safe-bottom fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[92dvh] w-full max-w-lg overflow-y-auto rounded-t-[28px] border border-rule bg-surface p-5 pt-3 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 sm:rounded-[28px]"
+          className="sheet-in fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[92dvh] w-full max-w-lg overflow-y-auto rounded-t-[28px] border border-rule bg-surface px-6 pb-[max(2rem,calc(env(safe-area-inset-bottom)+1.5rem))] pt-4 sm:p-8 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 sm:rounded-[28px]"
         >
           <div aria-hidden className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-rule sm:hidden" />
-          <div className="mb-4 flex items-start justify-between gap-3">
+          <div className="mb-6 flex items-start justify-between gap-3">
             <div>
               <Dialog.Title className="font-display text-xl">{title}</Dialog.Title>
               {description ? (

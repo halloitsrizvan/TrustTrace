@@ -278,7 +278,7 @@ export default function ClaimPage({ params }: { params: Promise<{ claimId: strin
             )}
             <div className="flex flex-wrap gap-2 pt-1">
               {claim.status === "COLLECTED" ? <Button href={`/thanks/${claimId}`}>{c.thanksPrompt}</Button> : null}
-              <Button href="/claims" variant="secondary">{c.backToClaims}</Button>
+              <Button href="/activity?tab=claims" variant="secondary">{c.backToClaims}</Button>
             </div>
           </div>
         ) : null}

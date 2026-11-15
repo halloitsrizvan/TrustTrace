@@ -119,9 +119,9 @@ export default function BoardPage() {
       </div>
 
       {feed.isLoading ? (
-        <div className="grid gap-3 md:grid-cols-3 md:gap-4 xl:grid-cols-4" role="status" aria-label={copy.states.loading}>
+        <div className="grid grid-cols-2 gap-x-3 gap-y-5 md:grid-cols-3 md:gap-x-5 xl:grid-cols-4" role="status" aria-label={copy.states.loading}>
           {Array.from({ length: 8 }).map((_, i) => (
-            <SkeletonTag key={i} tall={i % 3 === 0} />
+            <SkeletonTag key={i} />
           ))}
         </div>
       ) : feed.isError ? (
@@ -134,14 +134,14 @@ export default function BoardPage() {
         )
       ) : (
         <>
-          <div className="grid gap-3 md:grid-cols-3 md:items-start md:gap-4 xl:grid-cols-4" data-testid="feed">
+          <div className="grid grid-cols-2 gap-x-3 gap-y-5 md:grid-cols-3 md:gap-x-5 xl:grid-cols-4" data-testid="feed">
             {items.map((it) => (
-              <TagCard key={it.id} item={it} tall />
+              <TagCard key={it.id} item={it} />
             ))}
           </div>
           <div ref={sentinel} className="h-8" aria-hidden />
           {isFetchingNextPage ? (
-            <div className="grid gap-3 md:grid-cols-3 md:gap-4 xl:grid-cols-4">
+            <div className="grid grid-cols-2 gap-x-3 gap-y-5 md:grid-cols-3 md:gap-x-5 xl:grid-cols-4">
               <SkeletonTag />
               <SkeletonTag />
             </div>
@@ -150,7 +150,7 @@ export default function BoardPage() {
       )}
 
       <BottomSheet open={sheet} onOpenChange={setSheet} title={b.filters}>
-        <div className="space-y-5">
+        <div className="space-y-7">
           <div className="space-y-2">
             <p className="text-sm font-bold">{b.categoryLabel}</p>
             <CategoryChips label={b.categoryLabel} value={category} onChange={setCategory} allowNone />
@@ -170,7 +170,7 @@ export default function BoardPage() {
               </Select>
             </div>
           ) : null}
-          <div className="flex gap-3 pt-1">
+          <div className="flex gap-3 pt-2">
             <Button variant="secondary" className="flex-1" onClick={() => { setCategory(""); setZone(""); setEventTag(""); }} disabled={!extra}>
               {copy.action.clear}
             </Button>

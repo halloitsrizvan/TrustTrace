@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 // Signed-out visitors are sent to /login. Admin role is checked in the admin layout from GET /auth/me.
-const PROTECTED = ["/report", "/claim", "/claims", "/items/mine", "/matches", "/notifications", "/thanks", "/me", "/admin"];
+const PROTECTED = ["/report", "/claim", "/claims", "/items/mine", "/activity", "/matches", "/notifications", "/thanks", "/me", "/admin"];
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;

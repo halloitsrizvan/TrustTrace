@@ -129,7 +129,7 @@ export default function ItemPage({ params }: { params: Promise<{ id: string }> }
               close.mutate(id, {
                 onSuccess: () => {
                   toast.success(copy.item.closed);
-                  router.replace("/items/mine");
+                  router.replace("/activity");
                 },
                 onError: () => toast.error(copy.states.errorDefaultBody),
               })

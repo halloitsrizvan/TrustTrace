@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { Bell, LayoutGrid, Plus, Sparkles, UserRound, Trophy, PackageSearch, PackagePlus } from "lucide-react";
+import { Bell, ClipboardList, LayoutGrid, Plus, Sparkles, UserRound, Trophy, PackageSearch, PackagePlus } from "lucide-react";
 import { copy } from "@/lib/copy";
 import { cn } from "@/lib/utils";
 import { useMe, useNotifications } from "@/lib/api/hooks";
@@ -13,12 +13,12 @@ import { Logo } from "./Logo";
 function ReportSheet({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
   return (
     <BottomSheet open={open} onOpenChange={onOpenChange} title={copy.report.chooseTitle} testid="report-sheet">
-      <div className="grid gap-3">
+      <div className="grid gap-4 pb-2">
         <Link
           href="/report/lost"
           onClick={() => onOpenChange(false)}
           data-testid="report-lost-link"
-          className="flex min-h-16 items-center gap-3 rounded-2xl border border-rule bg-lost-tint p-4 text-lost-ink"
+          className="flex min-h-20 items-center gap-4 rounded-2xl border border-rule bg-lost-tint p-5 text-lost-ink"
         >
           <PackageSearch aria-hidden size={26} strokeWidth={1.75} />
           <span className="font-display text-lg">{copy.report.chooseLost}</span>
@@ -27,7 +27,7 @@ function ReportSheet({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
           href="/report/found"
           onClick={() => onOpenChange(false)}
           data-testid="report-found-link"
-          className="flex min-h-16 items-center gap-3 rounded-2xl border border-rule bg-found-tint p-4 text-found-ink"
+          className="flex min-h-20 items-center gap-4 rounded-2xl border border-rule bg-found-tint p-5 text-found-ink"
         >
           <PackagePlus aria-hidden size={26} strokeWidth={1.75} />
           <span className="font-display text-lg">{copy.report.chooseFound}</span>
@@ -55,6 +55,7 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
   const links = [
     { href: "/board", label: copy.nav.board, Icon: LayoutGrid },
     { href: "/matches", label: copy.nav.matches, Icon: Sparkles },
+    { href: "/activity", label: copy.nav.activity, Icon: ClipboardList },
     { href: "/heroes", label: copy.nav.heroes, Icon: Trophy },
   ];
   const active = (h: string) => path === h || path.startsWith(`${h}/`);
@@ -95,6 +96,14 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
                 <Button variant="primary" size="md" className="max-md:hidden" onClick={() => setSheet(true)} data-testid="report-open">
                   <Plus size={18} strokeWidth={1.75} aria-hidden /> {copy.nav.report}
                 </Button>
+                <Link
+                  href="/activity"
+                  aria-label={copy.nav.activity}
+                  aria-current={active("/activity") ? "page" : undefined}
+                  className="grid size-11 place-items-center rounded-full text-ink-soft transition-colors duration-150 hover:text-ink md:hidden"
+                >
+                  <ClipboardList size={21} strokeWidth={1.75} aria-hidden />
+                </Link>
                 <Link
                   href="/notifications"
                   aria-label={unread ? `${copy.nav.notifications}, ${unread} unread` : copy.nav.notifications}
