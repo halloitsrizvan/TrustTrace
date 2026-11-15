@@ -6,6 +6,8 @@ import { Roles } from '../auth/decorators/roles.decorator.js';
 import { Role } from '../generated/prisma/enums.js';
 import { AdminService } from './admin.service.js';
 import { AdminClaimsQueryDto, AdminDecisionDto } from './dto/admin-claims.dto.js';
+import { AdminAuditQueryDto } from './dto/admin-audit.dto.js';
+import { AdminStatsDto } from './dto/admin-stats.dto.js';
 
 @ApiTags('Admin') @ApiBearerAuth() @Roles(Role.ADMIN) @Controller('admin')
 export class AdminController {
@@ -14,4 +16,8 @@ export class AdminController {
   claims(@Query() query: AdminClaimsQueryDto) { return this.admin.listClaims(query); }
   @Post('claims/:id/decision') @ApiOkResponse({ description: 'Approve or reject a flagged claim' })
   decide(@Param('id', ParseUUIDPipe) id: string, @Body() input: AdminDecisionDto, @CurrentUser() admin: AuthenticatedUser) { return this.admin.decide(id, input, admin); }
+  @Get('stats') @ApiOkResponse({ type: AdminStatsDto })
+  stats() { return this.admin.stats(); }
+  @Get('audit') @ApiOkResponse({ description: 'Cursor-paginated audit log' })
+  audit(@Query() query: AdminAuditQueryDto) { return this.admin.audit(query); }
 }

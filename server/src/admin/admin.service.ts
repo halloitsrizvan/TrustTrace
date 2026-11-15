@@ -5,6 +5,9 @@ import { ClaimStatus } from '../generated/prisma/enums.js';
 import { NotificationsService } from '../notifications/notifications.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import type { AdminClaimsQueryDto, AdminDecisionDto } from './dto/admin-claims.dto.js';
+import type { AdminAuditQueryDto } from './dto/admin-audit.dto.js';
+import { ClaimStatus as Status } from '../generated/prisma/enums.js';
+import { Prisma } from '../generated/prisma/client.js';
 
 @Injectable()
 export class AdminService {
@@ -42,5 +45,50 @@ export class AdminService {
     }
     await this.notifications.create(claim.claimantId, 'CLAIM_DECISION', { claimId: id, decision: input.decision === 'APPROVE' ? 'APPROVED' : 'REJECTED' });
     return { decision: input.decision, ...(handoverToken ? { handoverToken } : {}) };
+  }
+
+  async stats() {
+    const [totalItems, reunitedCount, fraudBlockedCount, openFlagged, durations, zones, hours] = await Promise.all([
+      this.prisma.item.count(),
+      this.prisma.claim.count({ where: { status: Status.COLLECTED } }),
+      this.prisma.claim.count({ where: { status: Status.REJECTED } }),
+      this.prisma.claim.count({ where: { status: Status.FLAGGED } }),
+      this.prisma.$queryRaw<Array<{ average: number | null }>>(Prisma.sql`
+        SELECT AVG(EXTRACT(EPOCH FROM (claim."updatedAt" - item."createdAt")) / 3600)::float AS average
+        FROM "Claim" claim JOIN "Item" item ON item."id" = claim."foundItemId"
+        WHERE claim."status" = 'COLLECTED'::"ClaimStatus"
+      `),
+      this.prisma.$queryRaw<Array<{ key: string; count: bigint }>>(Prisma.sql`
+        SELECT "zone" AS key, COUNT(*) AS count FROM "Item"
+        WHERE "createdAt" >= NOW() - INTERVAL '30 days'
+        GROUP BY "zone" ORDER BY count DESC
+      `),
+      this.prisma.$queryRaw<Array<{ key: number; count: bigint }>>(Prisma.sql`
+        SELECT EXTRACT(HOUR FROM "occurredAt")::int AS key, COUNT(*) AS count FROM "Item"
+        WHERE "createdAt" >= NOW() - INTERVAL '30 days'
+        GROUP BY key ORDER BY key
+      `),
+    ]);
+    return {
+      totalItems,
+      reunitedCount,
+      avgHoursToReunite: Number((durations[0]?.average ?? 0).toFixed(2)),
+      fraudBlockedCount,
+      openFlagged,
+      zones: zones.map(({ key, count }) => ({ key, count: Number(count) })),
+      hours: hours.map(({ key, count }) => ({ key: String(key), count: Number(count) })),
+    };
+  }
+
+  async audit(query: AdminAuditQueryDto) {
+    const rows = await this.prisma.auditLog.findMany({
+      where: { entity: query.entity },
+      orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
+      take: query.limit + 1,
+      ...(query.cursor ? { cursor: { id: query.cursor }, skip: 1 } : {}),
+    });
+    const hasMore = rows.length > query.limit;
+    const logs = hasMore ? rows.slice(0, query.limit) : rows;
+    return { logs, nextCursor: hasMore ? logs.at(-1)!.id : null };
   }
 }
