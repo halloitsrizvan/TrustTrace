@@ -23,7 +23,11 @@ function assertNoPrivateKeys(value: unknown): void {
 }
 
 describe('ItemsService response mapping', () => {
-  const service = new ItemsService({} as PrismaService);
+  const service = new ItemsService(
+    {} as PrismaService,
+    {} as never,
+    {} as never,
+  );
 
   it('allow-lists public fields even when the source contains private data', () => {
     const now = new Date();

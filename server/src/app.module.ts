@@ -12,6 +12,8 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard.js';
 import { RolesGuard } from './auth/guards/roles.guard.js';
 import { UploadsModule } from './uploads/uploads.module.js';
 import { ItemsModule } from './items/items.module.js';
+import { EmbeddingsModule } from './embeddings/embeddings.module.js';
+import { NotificationsModule } from './notifications/notifications.module.js';
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { ItemsModule } from './items/items.module.js';
     AuthModule,
     UploadsModule,
     ItemsModule,
+    EmbeddingsModule,
+    NotificationsModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },

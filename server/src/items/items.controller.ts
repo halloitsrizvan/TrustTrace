@@ -23,16 +23,21 @@ import { CreateItemDto } from './dto/create-item.dto.js';
 import { ItemQueryDto } from './dto/item-query.dto.js';
 import {
   CreateItemResponseDto,
+  ItemMatchResponseDto,
   ItemPageResponseDto,
   OwnerItemResponseDto,
   PublicItemResponseDto,
 } from './dto/item-response.dto.js';
 import { ItemsService } from './items.service.js';
+import { MatchingService } from '../matching/matching.service.js';
 
 @ApiTags('Items')
 @Controller('items')
 export class ItemsController {
-  constructor(private readonly items: ItemsService) {}
+  constructor(
+    private readonly items: ItemsService,
+    private readonly matching: MatchingService,
+  ) {}
 
   @Post()
   @ApiBearerAuth()
@@ -67,6 +72,16 @@ export class ItemsController {
     @CurrentUser() user?: AuthenticatedUser,
   ): Promise<PublicItemResponseDto | OwnerItemResponseDto> {
     return this.items.findOne(id, user);
+  }
+
+  @Get(':id/matches')
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: [ItemMatchResponseDto] })
+  matches(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: AuthenticatedUser,
+  ) {
+    return this.matching.listForReporter(id, user);
   }
 
   @Patch(':id/close')

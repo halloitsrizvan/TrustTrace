@@ -8,6 +8,8 @@ import type { CurrentUser } from '../auth/auth.types.js';
 import { ItemStatus, ItemType } from '../generated/prisma/enums.js';
 import type { Prisma } from '../generated/prisma/client.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { EmbeddingsService } from '../embeddings/embeddings.service.js';
+import { MatchingService } from '../matching/matching.service.js';
 import type { CreateItemDto } from './dto/create-item.dto.js';
 import type { ItemQueryDto } from './dto/item-query.dto.js';
 import type {
@@ -23,7 +25,11 @@ type ItemWithRelations = Prisma.ItemGetPayload<{
 
 @Injectable()
 export class ItemsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly embeddings: EmbeddingsService,
+    private readonly matching: MatchingService,
+  ) {}
 
   async create(
     user: CurrentUser,
@@ -76,7 +82,16 @@ export class ItemsService {
       return created;
     });
 
-    return Object.assign(this.toOwner(item), { matches: [] });
+    await this.embeddings.processItem(item.id);
+    const matches = await this.matching.runForItem(item.id);
+    const refreshed = await this.prisma.item.findUniqueOrThrow({
+      where: { id: item.id },
+      include: {
+        reporter: { select: { id: true, name: true } },
+        private: true,
+      },
+    });
+    return Object.assign(this.toOwner(refreshed), { matches });
   }
 
   async feed(query: ItemQueryDto): Promise<ItemPageResponseDto> {

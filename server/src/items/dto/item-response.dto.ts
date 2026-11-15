@@ -46,9 +46,21 @@ export class ItemPageResponseDto {
 
 export class CreateItemResponseDto extends OwnerItemResponseDto {
   @ApiProperty({
-    type: Object,
-    isArray: true,
-    description: 'Populated by the matching slice',
+    type: () => [ItemMatchResponseDto],
   })
-  matches: unknown[];
+  matches: ItemMatchResponseDto[];
+}
+
+export class MatchBreakdownDto {
+  @ApiProperty() sem: number;
+  @ApiProperty() place: number;
+  @ApiProperty() time: number;
+}
+
+export class ItemMatchResponseDto {
+  @ApiProperty({ format: 'uuid' }) id: string;
+  @ApiProperty() score: number;
+  @ApiProperty({ type: MatchBreakdownDto }) breakdown: MatchBreakdownDto;
+  @ApiProperty({ format: 'date-time' }) createdAt: Date;
+  @ApiProperty({ type: PublicItemResponseDto }) item: PublicItemResponseDto;
 }
