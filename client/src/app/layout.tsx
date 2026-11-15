@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-dvh">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-[12px] focus:bg-ultra focus:px-4 focus:py-2 focus:text-on-ultra"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-2xl focus:bg-ultra focus:px-4 focus:py-2 focus:text-on-ultra"
         >
           {copy.nav.skip}
         </a>

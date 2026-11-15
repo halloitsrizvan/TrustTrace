@@ -34,7 +34,7 @@ export function ItemPhoto({
   const Icon = categoryIcons[category] ?? Package;
   return (
     <div
-      className={cn("relative w-full overflow-hidden rounded-[6px] bg-ultra-tint", className)}
+      className={cn("relative w-full overflow-hidden rounded-2xl bg-ultra-tint", className)}
       style={{ aspectRatio: ratio }}
     >
       {src ? (

@@ -68,10 +68,10 @@ export default function DesignPage() {
 
         <Block title="Trust strip">
           <div className="grid max-w-3xl gap-8 md:grid-cols-2">
-            <div className="rounded-[14px] bg-surface p-5 printed">
+            <div className="rounded-3xl bg-surface p-5 printed">
               <TrustStrip score={82} highValue breakdown={{ proof: 44, timeline: 16, history: 14, behaviour: 8 }} />
             </div>
-            <div className="rounded-[14px] bg-surface p-5 printed">
+            <div className="rounded-3xl bg-surface p-5 printed">
               <TrustStrip score={18} breakdown={{ proof: 0, timeline: 4, history: 8, behaviour: 6 }} />
             </div>
           </div>
@@ -115,8 +115,8 @@ export default function DesignPage() {
 
         <Block title="States">
           <div className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-[14px] bg-surface"><EmptyState title="No matches yet" body="We'll tell you when one appears." /></div>
-            <div className="rounded-[14px] bg-surface"><ErrorState onRetry={() => {}} /></div>
+            <div className="rounded-3xl bg-surface"><EmptyState title="No matches yet" body="We'll tell you when one appears." /></div>
+            <div className="rounded-3xl bg-surface"><ErrorState onRetry={() => {}} /></div>
           </div>
         </Block>
       </div>

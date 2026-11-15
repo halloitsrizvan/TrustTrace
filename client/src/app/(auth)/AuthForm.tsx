@@ -11,8 +11,6 @@ import { keys } from "@/lib/api/hooks";
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/field";
 
-const DEMO = process.env.NEXT_PUBLIC_DEMO_MODE === "1";
-
 const loginSchema = z.object({
   email: z.string().email(copy.auth.emailInvalid),
   password: z.string().min(1, copy.auth.required),
@@ -81,7 +79,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
           )}
         </Field>
         {error ? (
-          <p role="alert" className="rounded-[12px] bg-rejected-tint p-3 text-sm font-bold text-rejected-ink">
+          <p role="alert" className="rounded-2xl bg-rejected-tint p-3 text-sm font-bold text-rejected-ink">
             {error}
           </p>
         ) : null}
@@ -96,29 +94,6 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
         </p>
       </form>
 
-      {DEMO && mode === "login" ? (
-        <section aria-labelledby="demo-h" className="rounded-[14px] border border-dashed border-rule p-4">
-          <h2 id="demo-h" className="font-display text-lg">
-            {t.demoTitle}
-          </h2>
-          <p className="text-sm text-ink-soft">{t.demoHint}</p>
-          <div className="mt-3 grid gap-2 sm:grid-cols-3">
-            {t.demo.map((d) => (
-              <button
-                key={d.key}
-                type="button"
-                disabled={busy}
-                data-testid={`demo-${d.key}`}
-                onClick={() => go({ email: d.email, password: t.demoPassword })}
-                className="min-h-14 rounded-[12px] border border-rule bg-surface px-3 py-2 text-left hover:bg-ultra-tint active:scale-[0.98] disabled:opacity-50"
-              >
-                <span className="block font-bold">{d.label}</span>
-                <span className="block text-sm text-ink-soft">{d.note}</span>
-              </button>
-            ))}
-          </div>
-        </section>
-      ) : null}
     </div>
   );
 }

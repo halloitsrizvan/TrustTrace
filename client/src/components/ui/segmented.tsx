@@ -20,7 +20,7 @@ export function Segmented<T extends string>({
       role="radiogroup"
       aria-label={label}
       data-testid={testid}
-      className="inline-flex rounded-[12px] border border-rule bg-surface p-1"
+      className="inline-flex rounded-2xl border border-rule bg-surface p-1"
     >
       {options.map((o, i) => {
         const on = o.value === value;
@@ -41,7 +41,7 @@ export function Segmented<T extends string>({
               }
             }}
             className={cn(
-              "min-h-10 min-w-16 rounded-[9px] px-4 text-sm transition-colors duration-150",
+              "min-h-10 min-w-16 rounded-full px-4 text-sm transition-colors duration-150",
               on ? "bg-ultra font-bold text-on-ultra" : "text-ink hover:bg-ultra-tint",
             )}
           >

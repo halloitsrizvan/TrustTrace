@@ -108,7 +108,7 @@ export default function ThanksPage({ params }: { params: Promise<{ claimId: stri
             <span className="block text-sm text-ink-soft">{t.anonymousHint}</span>
           </span>
         </label>
-        {err && err !== t.amountInvalid ? <p role="alert" className="rounded-[12px] bg-rejected-tint p-3 text-sm font-bold text-rejected-ink">{err}</p> : null}
+        {err && err !== t.amountInvalid ? <p role="alert" className="rounded-2xl bg-rejected-tint p-3 text-sm font-bold text-rejected-ink">{err}</p> : null}
         <div className="flex gap-3">
           <Button size="lg" className="flex-1" onClick={send} disabled={busy} data-testid="tip-send">{copy.action.sendThanks}</Button>
           <Button size="lg" variant="secondary" className="flex-1" onClick={close} disabled={busy}>{copy.action.notNow}</Button>

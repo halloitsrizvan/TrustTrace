@@ -53,7 +53,7 @@ export default function NotificationsPage() {
                     if (!x.readAt) read.mutate(x.id);
                     router.push(target(x));
                   }}
-                  className="flex min-h-16 w-full items-start gap-3 rounded-[14px] border border-rule bg-surface p-4 text-left hover:bg-ultra-tint"
+                  className="flex min-h-16 w-full items-start gap-3 rounded-3xl border border-rule bg-surface p-4 text-left hover:bg-ultra-tint"
                 >
                   <span aria-hidden className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full bg-ultra-tint">
                     <Icon size={18} strokeWidth={1.75} />

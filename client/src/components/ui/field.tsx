@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const control =
-  "w-full min-h-11 rounded-[12px] border border-rule bg-surface px-3.5 py-2.5 text-base text-ink placeholder:text-ink-soft/80 aria-[invalid=true]:border-rejected";
+  "w-full min-h-11 rounded-2xl border border-rule bg-surface px-4 py-2.5 text-base text-ink placeholder:text-ink-soft/80 aria-[invalid=true]:border-rejected";
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(function Input(
   { className, ...p },

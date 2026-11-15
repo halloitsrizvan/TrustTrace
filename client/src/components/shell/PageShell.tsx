@@ -18,7 +18,7 @@ function ReportSheet({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
           href="/report/lost"
           onClick={() => onOpenChange(false)}
           data-testid="report-lost-link"
-          className="flex min-h-16 items-center gap-3 rounded-[12px] border border-rule bg-lost-tint p-4 text-lost-ink"
+          className="flex min-h-16 items-center gap-3 rounded-2xl border border-rule bg-lost-tint p-4 text-lost-ink"
         >
           <PackageSearch aria-hidden size={26} strokeWidth={1.75} />
           <span className="font-display text-lg">{copy.report.chooseLost}</span>
@@ -27,7 +27,7 @@ function ReportSheet({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
           href="/report/found"
           onClick={() => onOpenChange(false)}
           data-testid="report-found-link"
-          className="flex min-h-16 items-center gap-3 rounded-[12px] border border-rule bg-found-tint p-4 text-found-ink"
+          className="flex min-h-16 items-center gap-3 rounded-2xl border border-rule bg-found-tint p-4 text-found-ink"
         >
           <PackagePlus aria-hidden size={26} strokeWidth={1.75} />
           <span className="font-display text-lg">{copy.report.chooseFound}</span>
@@ -54,8 +54,9 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
   const active = (h: string) => path === h || path.startsWith(`${h}/`);
 
   return (
-    <div className="min-h-dvh pb-24 md:pb-10">
-      <header className="sticky top-0 z-30 border-b border-rule bg-paper/95 backdrop-blur-sm">
+    <div className="relative isolate min-h-dvh pb-28 md:pb-10">
+      <div aria-hidden className="bg-hero absolute inset-x-0 top-0 -z-10 h-[420px]" />
+      <header className="sticky top-0 z-30 bg-transparent">
         <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 md:px-6">
           <Logo href="/board" />
           <nav aria-label={copy.nav.main} className="ml-4 hidden items-center gap-1 md:flex">
@@ -65,7 +66,7 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
                 href={href}
                 aria-current={active(href) ? "page" : undefined}
                 className={cn(
-                  "inline-flex min-h-11 items-center rounded-[12px] px-3 text-base",
+                  "inline-flex min-h-11 items-center rounded-2xl px-3 text-base",
                   active(href) ? "bg-ultra-tint font-bold" : "hover:bg-ultra-tint",
                 )}
               >
@@ -104,25 +105,22 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
         {children}
       </main>
 
-      {/* mobile tab bar */}
-      <nav
-        aria-label={copy.nav.main}
-        className="safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-surface md:hidden"
-      >
-        <ul className="mx-auto grid max-w-md grid-cols-4 items-end px-2">
+      {/* mobile tab bar: floating pill */}
+      <nav aria-label={copy.nav.main} className="safe-bottom pointer-events-none fixed inset-x-0 bottom-3 z-40 md:hidden">
+        <ul className="glass-nav pointer-events-auto mx-auto grid w-[min(92%,22rem)] grid-cols-4 items-center rounded-full px-2 py-1.5">
           <TabLink href="/board" label={copy.nav.board} Icon={LayoutGrid} on={active("/board")} />
+          <TabLink href="/matches" label={copy.nav.matches} Icon={Sparkles} on={active("/matches")} />
           <li className="flex justify-center">
             <button
               type="button"
               onClick={() => (signedIn ? setSheet(true) : router.push("/login?next=/board"))}
               data-testid="report-tab"
               aria-label={copy.nav.report}
-              className="-mt-5 grid size-14 place-items-center rounded-full bg-ultra text-on-ultra shadow-[3px_3px_0_rgba(20,26,60,0.2)] transition-transform active:scale-95"
+              className="grid size-12 place-items-center rounded-full bg-ultra text-on-ultra shadow-[0_8px_16px_-6px_rgba(34,115,235,0.8)] transition-transform active:scale-95"
             >
-              <Plus size={26} strokeWidth={1.75} aria-hidden />
+              <Plus size={24} strokeWidth={1.75} aria-hidden />
             </button>
           </li>
-          <TabLink href="/matches" label={copy.nav.matches} Icon={Sparkles} on={active("/matches")} />
           <TabLink href="/me" label={copy.nav.me} Icon={UserRound} on={active("/me")} />
         </ul>
       </nav>
@@ -133,14 +131,18 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
 
 function TabLink({ href, label, Icon, on }: { href: string; label: string; Icon: typeof Bell; on: boolean }) {
   return (
-    <li>
+    <li className="flex justify-center">
       <Link
         href={href}
+        aria-label={label}
         aria-current={on ? "page" : undefined}
-        className={cn("flex min-h-14 flex-col items-center justify-center gap-0.5 text-xs", on ? "font-bold text-ultra" : "text-ink-soft")}
+        className={cn(
+          "flex min-h-11 items-center justify-center gap-1.5 rounded-full px-3 text-sm",
+          on ? "bg-surface font-bold text-ultra shadow-sm" : "text-ink",
+        )}
       >
-        <Icon size={22} strokeWidth={1.75} aria-hidden />
-        {label}
+        <Icon size={20} strokeWidth={1.75} aria-hidden />
+        {on ? <span>{label}</span> : null}
       </Link>
     </li>
   );

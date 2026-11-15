@@ -49,7 +49,7 @@ export function PhotoPicker({
       {value ? (
         <div className="space-y-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={value} alt={copy.report.photoReady} className="aspect-[4/3] w-full rounded-[6px] object-cover" />
+          <img src={value} alt={copy.report.photoReady} className="aspect-[4/3] w-full rounded-2xl object-cover" />
           <div className="flex gap-2">
             <Button variant="secondary" onClick={() => input.current?.click()} disabled={busy}>
               {copy.action.replacePhoto}
@@ -62,7 +62,7 @@ export function PhotoPicker({
       ) : (
         <label
           htmlFor={id}
-          className="flex min-h-48 cursor-pointer flex-col items-center justify-center gap-2 rounded-[12px] border-2 border-dashed border-rule bg-surface p-6 text-center hover:bg-ultra-tint focus-within:outline-2"
+          className="flex min-h-48 cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-rule bg-surface p-6 text-center hover:bg-ultra-tint focus-within:outline-2"
         >
           {busy ? <Loader2 className="animate-spin" size={30} strokeWidth={1.75} aria-hidden /> : <Camera size={30} strokeWidth={1.75} aria-hidden />}
           <span className="font-bold">{busy ? copy.report.photoUploading : copy.action.takePhoto}</span>

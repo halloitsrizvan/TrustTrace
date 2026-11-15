@@ -3,7 +3,6 @@ import type { SignedUpload } from "./api/types";
 
 const MAX_EDGE = 1600;
 const MAX_BYTES = 5 * 1024 * 1024;
-const USE_MOCKS = process.env.NEXT_PUBLIC_USE_MOCKS === "1";
 const PUBLIC_BASE = process.env.NEXT_PUBLIC_STORAGE_PUBLIC_URL ?? "";
 
 export class PhotoTooBig extends Error {}
@@ -28,21 +27,8 @@ export async function prepareImage(file: File, maxEdge = MAX_EDGE): Promise<Blob
   throw new PhotoTooBig();
 }
 
-function blobToDataUrl(b: Blob) {
-  return new Promise<string>((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result as string);
-    r.onerror = () => rej(r.error);
-    r.readAsDataURL(b);
-  });
-}
-
 /** Returns the public image URL to send in the item payload. */
 export async function uploadPhoto(file: File): Promise<string> {
-  if (USE_MOCKS) {
-    // Mock mode keeps a small thumbnail inline instead of calling storage.
-    return blobToDataUrl(await prepareImage(file, 480));
-  }
   const blob = await prepareImage(file);
   const signed = await post<SignedUpload>("/uploads/sign", { contentType: "image/jpeg", purpose: "public" });
   const put = await fetch(signed.signedUrl, { method: "PUT", headers: { "Content-Type": "image/jpeg" }, body: blob });

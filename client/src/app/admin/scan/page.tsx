@@ -77,7 +77,7 @@ export default function ScanPage() {
           role="status"
           data-testid="scan-result"
           data-ok={result.ok}
-          className={`space-y-4 rounded-[20px] p-8 text-center ${result.ok ? "bg-found-tint text-found-ink" : "bg-rejected-tint text-rejected-ink"}`}
+          className={`space-y-4 rounded-3xl p-8 text-center ${result.ok ? "bg-found-tint text-found-ink" : "bg-rejected-tint text-rejected-ink"}`}
         >
           {result.ok ? <CircleCheck className="mx-auto" size={64} strokeWidth={1.75} aria-hidden /> : <CircleX className="mx-auto" size={64} strokeWidth={1.75} aria-hidden />}
           {result.ok ? (
@@ -94,7 +94,7 @@ export default function ScanPage() {
       ) : manual ? (
         <form
           onSubmit={(e) => { e.preventDefault(); if (code.trim() && !busy) check(code, true); }}
-          className="space-y-4 rounded-[14px] border border-rule bg-surface p-5"
+          className="space-y-4 rounded-3xl border border-rule bg-surface p-5"
         >
           <Field label={a.scanManual}>{(p) => <Input {...p} value={code} onChange={(e) => setCode(e.target.value)} autoComplete="off" data-testid="scan-code" />}</Field>
           <div className="flex gap-3">
@@ -104,10 +104,10 @@ export default function ScanPage() {
         </form>
       ) : (
         <div className="space-y-4">
-          <div className="relative overflow-hidden rounded-[20px] bg-ink">
+          <div className="relative overflow-hidden rounded-3xl bg-ink">
             <div id={REGION} className="min-h-[320px] w-full" />
             <div aria-hidden className="pointer-events-none absolute inset-0 grid place-items-center">
-              <div className="size-60 rounded-[20px] border-4 border-white/90" />
+              <div className="size-60 rounded-3xl border-4 border-white/90" />
             </div>
           </div>
           <p className="text-center text-ink-soft">{camError ? a.cameraDenied : a.scanHint}</p>

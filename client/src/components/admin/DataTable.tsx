@@ -33,7 +33,7 @@ export function DataTable<T>({
   if (!rows?.length) return <EmptyState title={copy.admin.noRows} />;
   return (
     <div className="space-y-3">
-      <div className="overflow-x-auto rounded-[14px] border border-rule bg-surface">
+      <div className="overflow-x-auto rounded-3xl border border-rule bg-surface">
         <table className="w-full min-w-[560px] text-left" data-testid={testid}>
           <thead>
             <tr className="border-b border-rule text-sm text-ink-soft">

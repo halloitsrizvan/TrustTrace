@@ -62,7 +62,7 @@ function QrBlock({ claimId, token, expiresAt, onNew }: { claimId: string; token:
   }
   return (
     <div className="fade-in flex flex-col items-center gap-3 text-center">
-      <div ref={wrap} data-testid="claim-qr" className={`rounded-[12px] bg-white p-4 ${expired ? "opacity-30" : ""}`}>
+      <div ref={wrap} data-testid="claim-qr" className={`rounded-2xl bg-white p-4 ${expired ? "opacity-30" : ""}`}>
         <QRCodeCanvas value={token} size={220} level="M" marginSize={0} bgColor="#ffffff" fgColor="#000000" role="img" aria-label={c.qrAlt} />
       </div>
       <p className="flex items-center gap-1.5 text-sm font-bold num" aria-live="off">
@@ -151,7 +151,7 @@ export default function ClaimPage({ params }: { params: Promise<{ claimId: strin
   if (claimQ.isLoading)
     return (
       <div className="mx-auto max-w-xl space-y-3" role="status" aria-label={copy.states.loading}>
-        <Skel className="h-72 w-full rounded-[14px]" />
+        <Skel className="h-72 w-full rounded-3xl" />
       </div>
     );
   if (claimQ.isError || !claim || loadFail)
@@ -198,7 +198,7 @@ export default function ClaimPage({ params }: { params: Promise<{ claimId: strin
       top = (
         <form id="claim-form" onSubmit={handleSubmit(submit)} noValidate className="space-y-5">
           {header}
-          <p className="rounded-[12px] bg-ultra-tint p-3">{c.why}</p>
+          <p className="rounded-2xl bg-ultra-tint p-3">{c.why}</p>
           {!prompts ? (
             <Skel className="h-40 w-full" />
           ) : (

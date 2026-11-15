@@ -8,7 +8,7 @@ const a = copy.admin;
 
 function Stat({ label, value, unit }: { label: string; value: string | number; unit?: string }) {
   return (
-    <div className="rounded-[14px] border border-rule bg-surface p-4">
+    <div className="rounded-3xl border border-rule bg-surface p-4">
       <dd className="font-display text-4xl num">
         {value}
         {unit ? <span className="ml-1 text-xl text-ink-soft">{unit}</span> : null}
@@ -53,7 +53,7 @@ export default function AdminDashboard() {
             <h2 id="hs" className="font-display text-2xl">{a.hotspots}</h2>
             <p className="text-ink-soft">{a.hotspotsSub}</p>
           </div>
-          <div className="overflow-x-auto rounded-[14px] border border-rule bg-surface p-4">
+          <div className="overflow-x-auto rounded-3xl border border-rule bg-surface p-4">
             <div className="grid min-w-[560px] gap-1" style={{ gridTemplateColumns: `120px repeat(${hours.length}, minmax(0, 1fr))` }} role="table" aria-label={a.hotspots}>
               <div />
               {hours.map((h) => <div key={h} className="text-center text-xs text-ink-soft num" role="columnheader">{h}</div>)}
@@ -85,7 +85,7 @@ export default function AdminDashboard() {
 
         <section aria-labelledby="tf" className="space-y-3">
           <h2 id="tf" className="font-display text-2xl">{a.topFinders}</h2>
-          <ol className="space-y-3 rounded-[14px] border border-rule bg-surface p-4">
+          <ol className="space-y-3 rounded-3xl border border-rule bg-surface p-4">
             {s.topFinders.map((f, i) => (
               <li key={f.id}>
                 <div className="flex justify-between text-sm"><span><span className="num">{i + 1}</span>. {f.name}</span><span className="font-bold num">{f.returns}</span></div>

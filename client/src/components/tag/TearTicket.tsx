@@ -31,7 +31,7 @@ export function TearTicket({
   return (
     <div className={cn("relative", className)} data-testid={testid}>
       <div className="printed-drop">
-        <div className="relative overflow-hidden rounded-t-[14px] bg-surface p-5">
+        <div className="relative overflow-hidden rounded-t-[28px] bg-surface p-5">
           {top}
           <Notches edge="bottom" />
         </div>
@@ -47,7 +47,7 @@ export function TearTicket({
           className={cn(torn ? "relative z-0" : "")}
         >
           <div className={torn ? "drop-shadow-[0_12px_14px_rgba(20,26,60,0.22)]" : "printed-drop"}>
-            <div className="relative overflow-hidden rounded-b-[14px] bg-surface p-5">
+            <div className="relative overflow-hidden rounded-b-[28px] bg-surface p-5">
               <Notches edge="top" />
               {stub}
             </div>

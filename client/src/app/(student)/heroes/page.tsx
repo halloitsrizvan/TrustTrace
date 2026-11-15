@@ -40,7 +40,7 @@ export default function HeroesPage() {
         <ol className="space-y-2" data-testid="leaderboard">
           {q.data!.map((r) => (
             <li key={r.id}>
-              <Link href={`/u/${r.id}`} className="flex items-center gap-3 rounded-[14px] border border-rule bg-surface p-3 hover:bg-ultra-tint">
+              <Link href={`/u/${r.id}`} className="flex items-center gap-3 rounded-3xl border border-rule bg-surface p-3 hover:bg-ultra-tint">
                 <span className="w-8 text-center font-display text-2xl num">{r.rank}</span>
                 <Avatar name={r.name} />
                 <span className="min-w-0 flex-1">

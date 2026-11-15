@@ -15,14 +15,15 @@ const sample = (id: string, type: "LOST" | "FOUND", title: string): PublicItem =
 export default function Landing() {
   const c = copy.landing;
   return (
-    <>
+    <div className="relative isolate">
+      <div aria-hidden className="bg-hero absolute inset-x-0 top-0 -z-10 h-[640px]" />
       <header className="mx-auto flex max-w-6xl items-center justify-between px-4 md:px-6">
         <Logo />
         <nav aria-label={copy.nav.main} className="flex items-center gap-1">
-          <Link href="/board" className="inline-flex min-h-11 items-center rounded-[12px] px-3 hover:bg-ultra-tint">
+          <Link href="/board" className="inline-flex min-h-11 items-center rounded-2xl px-3 hover:bg-ultra-tint">
             {copy.nav.board}
           </Link>
-          <Link href="/login" className="inline-flex min-h-11 items-center rounded-[12px] px-3 font-bold hover:bg-ultra-tint">
+          <Link href="/login" className="inline-flex min-h-11 items-center rounded-2xl px-3 font-bold hover:bg-ultra-tint">
             {copy.action.signIn}
           </Link>
         </nav>
@@ -65,7 +66,7 @@ export default function Landing() {
           <h2 className="font-display text-3xl">{c.stepsTitle}</h2>
           <ol className="mt-6 grid gap-4 md:grid-cols-4">
             {c.steps.map((s, i) => (
-              <li key={s.t} className="rounded-[14px] border border-rule bg-surface p-5">
+              <li key={s.t} className="rounded-3xl border border-rule bg-surface p-5">
                 <span className="font-display text-4xl text-ultra num">{i + 1}</span>
                 <h3 className="mt-2 font-display text-xl">{s.t}</h3>
                 <p className="mt-1 text-ink-soft">{s.d}</p>
@@ -74,6 +75,6 @@ export default function Landing() {
           </ol>
         </section>
       </main>
-    </>
+    </div>
   );
 }

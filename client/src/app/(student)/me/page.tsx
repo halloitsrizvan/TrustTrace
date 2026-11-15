@@ -24,7 +24,7 @@ function TipList({ title, tips, mode }: { title: string; tips?: Tip[]; mode: "gi
       ) : tips.length === 0 ? (
         <p className="text-ink-soft">{p.tipsEmpty}</p>
       ) : (
-        <ul className="divide-y divide-rule rounded-[14px] border border-rule bg-surface">
+        <ul className="divide-y divide-rule rounded-3xl border border-rule bg-surface">
           {tips.map((t) => (
             <li key={t.id} className="flex items-center justify-between gap-3 p-3">
               <span>
@@ -74,11 +74,11 @@ export default function MePage() {
         </div>
       </div>
       <dl className="grid grid-cols-2 gap-3">
-        <div className="rounded-[14px] border border-rule bg-surface p-4">
+        <div className="rounded-3xl border border-rule bg-surface p-4">
           <dd className="font-display text-4xl num">{pr?.karma ?? "-"}</dd>
           <dt className="text-ink-soft">{p.karma}</dt>
         </div>
-        <div className="rounded-[14px] border border-rule bg-surface p-4">
+        <div className="rounded-3xl border border-rule bg-surface p-4">
           <dd className="font-display text-4xl num">{pr?.returns ?? "-"}</dd>
           <dt className="text-ink-soft">{p.returns}</dt>
         </div>
@@ -87,7 +87,7 @@ export default function MePage() {
 
       <section className="space-y-3" aria-labelledby="wallet-h">
         <h2 id="wallet-h" className="font-display text-2xl">{p.wallet}</h2>
-        <div className="rounded-[14px] bg-surface p-5 printed">
+        <div className="rounded-3xl bg-surface p-5 printed">
           <p className="text-ink-soft">{p.balance}</p>
           <p className="font-display text-4xl num" data-testid="wallet-balance">{wallet.data ? rupees(wallet.data.balance) : "-"}</p>
         </div>
@@ -95,7 +95,7 @@ export default function MePage() {
         {wallet.data && wallet.data.ledger.length === 0 ? (
           <p className="text-ink-soft">{p.ledgerEmpty}</p>
         ) : (
-          <ul className="divide-y divide-rule rounded-[14px] border border-rule bg-surface">
+          <ul className="divide-y divide-rule rounded-3xl border border-rule bg-surface">
             {(wallet.data?.ledger ?? []).map((l) => (
               <li key={l.id} className="flex justify-between gap-3 p-3">
                 <span>{l.label}<span className="block text-sm text-ink-soft">{timeAgo(l.createdAt)}</span></span>

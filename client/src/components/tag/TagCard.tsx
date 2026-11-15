@@ -1,30 +1,18 @@
 import Link from "next/link";
+import { MapPin } from "lucide-react";
 import { cn, hashInt, ticketNo, timeAgo, zoneName } from "@/lib/utils";
 import { copy } from "@/lib/copy";
 import type { PublicItem } from "@/lib/api/types";
-import { ItemPhoto, categoryIcons } from "./ItemPhoto";
+import { ItemPhoto } from "./ItemPhoto";
 import { ItemStatusChip, TypeChip } from "@/components/ui/chip";
 import { Skel } from "@/components/ui/states";
-import { Package } from "lucide-react";
 
 const ratios = ["4 / 3", "1 / 1", "4 / 5"];
 
-/** Lost tags hang from the top-left, Found tags from the top-right. */
-function TagString({ side }: { side: "left" | "right" }) {
-  return (
-    <svg
-      aria-hidden
-      width="44"
-      height="34"
-      viewBox="0 0 44 34"
-      fill="none"
-      className={cn("absolute top-0 text-ink-soft", side === "left" ? "left-1" : "right-1 -scale-x-100")}
-    >
-      <path d="M14 33 C 4 20, 6 3, 22 3 C 38 3, 38 20, 14 33" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
+/**
+ * Item card. A horizontal row on phones (thumbnail, title, place, chevron) and a photo card from md up.
+ * Lost and Found differ by the text chip and a coloured dot, never colour alone.
+ */
 export function TagCard({
   item,
   score,
@@ -38,66 +26,58 @@ export function TagCard({
   tall?: boolean;
   href?: string;
   testid?: string;
-  /** Renders a non-interactive tag, for illustration. */
+  /** Renders a non-interactive card, for illustration. */
   decorative?: boolean;
 }) {
   const lost = item.type === "LOST";
-  const Icon = categoryIcons[item.category] ?? Package;
   const ratio = tall ? ratios[hashInt(item.id) % ratios.length] : "4 / 3";
-  const place = `${zoneName(item.zone)}, ${timeAgo(item.occurredAt)}`;
+  const place = zoneName(item.zone);
+  const when = timeAgo(item.occurredAt);
   const body = (
-    <>
-      <TagString side={lost ? "left" : "right"} />
-      <div className="printed-drop">
-        <article
-          className={cn(
-            "relative overflow-hidden rounded-[6px] bg-surface",
-            lost ? "tag-lost" : "tag-found",
-          )}
-        >
-          {/* type band */}
-          <span aria-hidden className={cn("absolute inset-y-0 w-2", lost ? "left-0 bg-lost" : "right-0 bg-found")} />
-          {/* punched hole */}
-          <span
-            aria-hidden
-            className={cn(
-              "absolute top-2.5 size-3.5 rounded-full border border-rule bg-paper",
-              lost ? "left-5" : "right-5",
-            )}
-          />
-          <div className={cn("space-y-2 p-3 pt-8", lost ? "pl-5" : "pr-5")}>
-            <ItemPhoto src={item.imageUrl} category={item.category} alt={`${item.title}, ${copy.type[item.type].toLowerCase()} item`} ratio={ratio} />
-            <h3 className="font-display text-lg">{item.title}</h3>
-            <p className="flex items-center gap-1.5 text-sm text-ink-soft">
-              <Icon size={15} strokeWidth={1.75} aria-hidden />
-              {place}
-            </p>
-            {typeof score === "number" ? (
-              <p className="text-sm font-bold text-ink num">{score}% match</p>
-            ) : null}
-          </div>
-          <div className={cn("perforation mx-3", lost ? "ml-5" : "mr-5")} />
-          <div className={cn("flex flex-wrap items-center justify-between gap-2 p-3", lost ? "pl-5" : "pr-5")}>
-            <span className="whitespace-nowrap font-display text-sm num">{ticketNo(item.id)}</span>
-            <span className="flex items-center gap-1">
-              <TypeChip type={item.type} />
-              {item.status !== "OPEN" ? <ItemStatusChip status={item.status} /> : null}
-            </span>
-          </div>
-        </article>
+    <article className={cn("printed rounded-3xl bg-surface p-3", decorative ? "block" : "flex items-center gap-3 md:block")}>
+      <div className={cn("relative", decorative ? "w-full" : "w-20 shrink-0 md:w-full")}>
+        <ItemPhoto
+          src={item.imageUrl}
+          category={item.category}
+          alt={`${item.title}, ${copy.type[item.type].toLowerCase()} item`}
+          ratio={ratio}
+          className={decorative ? undefined : "aspect-square! md:aspect-auto!"}
+        />
+        {typeof score === "number" ? (
+          <span className="num absolute bottom-1.5 right-1.5 rounded-lg bg-found px-2 py-0.5 text-xs font-bold text-[#06231a]">
+            {score}%
+          </span>
+        ) : null}
       </div>
-    </>
+      <div className={cn("min-w-0 flex-1 space-y-1", decorative ? "mt-3" : "md:mt-3")}>
+        <div className="flex items-center gap-1.5">
+          <span aria-hidden className={cn("size-2 rounded-full", lost ? "bg-lost" : "bg-found")} />
+          <TypeChip type={item.type} />
+          {item.status !== "OPEN" ? <ItemStatusChip status={item.status} /> : null}
+        </div>
+        <h3 className="font-display text-lg leading-tight">{item.title}</h3>
+        <p className="flex flex-wrap items-center gap-x-2 text-sm text-ink-soft">
+          <span className="inline-flex items-center gap-1">
+            <MapPin size={14} strokeWidth={1.75} aria-hidden />
+            {place}
+          </span>
+          <span>{when}</span>
+        </p>
+        <p className="num hidden text-xs text-ink-soft md:block">{ticketNo(item.id)}</p>
+      </div>
+      <svg aria-hidden width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cn("shrink-0 text-ink-soft md:hidden", decorative && "hidden")}>
+        <path d="m9 6 6 6-6 6" />
+      </svg>
+    </article>
   );
   return decorative ? (
-    <div className="relative block pt-7" aria-hidden>
-      {body}
-    </div>
+    <div aria-hidden>{body}</div>
   ) : (
     <Link
       href={href ?? `/items/${item.id}`}
       data-testid={testid}
-      aria-label={`${copy.type[item.type]}: ${item.title}. ${place}`}
-      className="group relative block pt-7"
+      aria-label={`${copy.type[item.type]}: ${item.title}. ${place}, ${when}`}
+      className="block rounded-3xl"
     >
       {body}
     </Link>
@@ -106,13 +86,12 @@ export function TagCard({
 
 export function SkeletonTag({ tall }: { tall?: boolean }) {
   return (
-    <div aria-hidden className="relative break-inside-avoid pt-7">
-      <div className="rounded-[6px] border border-rule bg-surface p-3 pt-6">
-        <Skel className={cn("w-full", tall ? "h-40" : "h-28")} />
-        <Skel className="mt-3 h-5 w-3/4" />
-        <Skel className="mt-2 h-4 w-1/2" />
-        <div className="perforation my-3" />
-        <Skel className="h-5 w-full" />
+    <div aria-hidden className="flex items-center gap-3 rounded-3xl bg-surface p-3 md:block">
+      <Skel className="size-20 shrink-0 rounded-2xl md:h-32 md:w-full" />
+      <div className="mt-0 flex-1 space-y-2 md:mt-3">
+        <Skel className="h-4 w-1/3" />
+        <Skel className="h-5 w-3/4" />
+        <Skel className={tall ? "h-4 w-1/2" : "h-4 w-2/5"} />
       </div>
     </div>
   );

@@ -175,7 +175,7 @@ export function ReportForm({ type }: { type: ItemType }) {
 
       {step === 2 ? (
         <section className="space-y-4" data-testid="step-private">
-          <div className="rounded-[12px] bg-ultra-tint p-4">
+          <div className="rounded-2xl bg-ultra-tint p-4">
             <h2 className="font-display text-xl">{found ? r.privateTitleFound : r.privateTitleLost}</h2>
             <p className="mt-1">{found ? r.privateHelpFound : r.privateHelpLost}</p>
           </div>

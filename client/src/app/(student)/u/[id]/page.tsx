@@ -27,11 +27,11 @@ export default function PublicProfilePage({ params }: { params: Promise<{ id: st
         <h1 className="font-display text-3xl">{u.name}</h1>
       </div>
       <dl className="grid grid-cols-2 gap-3">
-        <div className="rounded-[14px] border border-rule bg-surface p-4">
+        <div className="rounded-3xl border border-rule bg-surface p-4">
           <dd className="font-display text-4xl num">{u.karma}</dd>
           <dt className="text-ink-soft">{p.karma}</dt>
         </div>
-        <div className="rounded-[14px] border border-rule bg-surface p-4">
+        <div className="rounded-3xl border border-rule bg-surface p-4">
           <dd className="font-display text-4xl num">{u.returns}</dd>
           <dt className="text-ink-soft">{p.returns}</dt>
         </div>

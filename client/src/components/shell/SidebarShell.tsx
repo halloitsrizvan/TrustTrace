@@ -32,7 +32,7 @@ export function SidebarShell({ children }: { children: ReactNode }) {
                     href={href}
                     aria-current={on(href, exact) ? "page" : undefined}
                     className={cn(
-                      "flex min-h-11 items-center gap-2.5 rounded-[12px] px-3",
+                      "flex min-h-11 items-center gap-2.5 rounded-2xl px-3",
                       on(href, exact) ? "bg-ultra-tint font-bold" : "hover:bg-ultra-tint",
                     )}
                   >
@@ -45,7 +45,7 @@ export function SidebarShell({ children }: { children: ReactNode }) {
           </nav>
           <div className="hidden md:block md:mt-auto md:space-y-3">
             <ThemeToggle />
-            <Link href="/board" className="flex min-h-11 items-center gap-2 rounded-[12px] px-3 text-ink-soft hover:bg-ultra-tint">
+            <Link href="/board" className="flex min-h-11 items-center gap-2 rounded-2xl px-3 text-ink-soft hover:bg-ultra-tint">
               <ArrowLeft size={18} strokeWidth={1.75} aria-hidden /> {copy.nav.admin.backToApp}
             </Link>
           </div>

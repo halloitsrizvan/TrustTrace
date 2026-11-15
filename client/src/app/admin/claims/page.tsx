@@ -64,12 +64,12 @@ function Panel({ id, onDecided }: { id: string; onDecided: () => void }) {
       <p className="text-ink-soft">{c.claimantName}, {timeAgo(c.createdAt)}</p>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <section className="rounded-[14px] border-2 border-dashed border-review bg-review-tint p-4 text-review-ink">
+        <section className="rounded-3xl border-2 border-dashed border-review bg-review-tint p-4 text-review-ink">
           <h3 className="flex items-center gap-1.5 font-display text-lg"><Lock size={16} strokeWidth={1.75} aria-hidden />{a.privateTitle}</h3>
           <p className="text-xs">{a.privateAdminOnly}</p>
           <p className="mt-2 text-ink dark:text-review-ink">{c.privateDetails ?? ""}</p>
         </section>
-        <section className="rounded-[14px] border border-rule bg-surface p-4">
+        <section className="rounded-3xl border border-rule bg-surface p-4">
           <h3 className="font-display text-lg">{a.answersTitle}</h3>
           <dl className="mt-2 space-y-3">
             {c.answers.map((x) => (
@@ -82,7 +82,7 @@ function Panel({ id, onDecided }: { id: string; onDecided: () => void }) {
         </section>
       </div>
 
-      <section className="rounded-[14px] border border-rule bg-surface p-4">
+      <section className="rounded-3xl border border-rule bg-surface p-4">
         <h3 className="mb-3 font-display text-lg">{a.componentsTitle}</h3>
         <TrustStrip score={total} breakdown={bd} highValue={["PHONE", "GADGET", "ID_CARD", "WALLET"].includes(c.foundItem.category)} />
         <ul className="mt-4 space-y-1.5 border-t border-rule pt-3 text-sm">
@@ -161,7 +161,7 @@ export default function AdminClaimsPage() {
                     onClick={() => setSel(r.id)}
                     aria-current={sel === r.id}
                     data-testid="claim-row"
-                    className={cn("w-full rounded-[14px] border p-3 text-left", sel === r.id ? "border-ultra bg-ultra-tint" : "border-rule bg-surface hover:bg-ultra-tint")}
+                    className={cn("w-full rounded-3xl border p-3 text-left", sel === r.id ? "border-ultra bg-ultra-tint" : "border-rule bg-surface hover:bg-ultra-tint")}
                   >
                     <span className="flex items-center justify-between gap-2">
                       <span className="truncate font-bold">{r.itemTitle}</span>

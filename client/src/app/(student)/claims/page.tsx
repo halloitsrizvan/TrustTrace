@@ -30,7 +30,7 @@ export default function ClaimsPage() {
             const s = stampFor[c.status];
             return (
               <li key={c.id}>
-                <Link href={`/claim/${c.id}`} className="flex items-center gap-3 rounded-[14px] border border-rule bg-surface p-4 hover:bg-ultra-tint">
+                <Link href={`/claim/${c.id}`} className="flex items-center gap-3 rounded-3xl border border-rule bg-surface p-4 hover:bg-ultra-tint">
                   <div className="min-w-0 flex-1 space-y-1">
                     <p className="truncate font-display text-lg">{c.foundItem.title}</p>
                     <p className="text-sm text-ink-soft"><span className="num">{ticketNo(c.foundItem.id)}</span>, {timeAgo(c.createdAt)}</p>

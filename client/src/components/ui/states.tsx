@@ -60,7 +60,7 @@ export function ListSkeleton({ rows = 4 }: { rows?: number }) {
   return (
     <div role="status" aria-label={copy.states.loading} className="space-y-3">
       {Array.from({ length: rows }).map((_, i) => (
-        <Skel key={i} className="h-20 w-full rounded-[12px]" />
+        <Skel key={i} className="h-20 w-full rounded-2xl" />
       ))}
     </div>
   );

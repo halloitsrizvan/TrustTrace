@@ -63,7 +63,7 @@ export default function ItemPage({ params }: { params: Promise<{ id: string }> }
 
   return (
     <article className="mx-auto max-w-2xl space-y-6">
-      <div className={`overflow-hidden rounded-[6px] border-l-8 ${lost ? "border-lost" : "border-found"} printed bg-surface p-4 md:p-5`}>
+      <div className={`overflow-hidden rounded-2xl border-l-8 ${lost ? "border-lost" : "border-found"} printed bg-surface p-4 md:p-5`}>
         <ItemPhoto src={it.imageUrl} category={it.category} alt={`${it.title}, ${copy.type[it.type].toLowerCase()} item`} priority />
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <TypeChip type={it.type} />
@@ -79,7 +79,7 @@ export default function ItemPage({ params }: { params: Promise<{ id: string }> }
         </ul>
         <p className="measure mt-4 whitespace-pre-line">{it.publicDescription}</p>
         {privateDetails ? (
-          <p className="mt-4 rounded-[12px] bg-ultra-tint p-3 text-sm">{privateDetails}</p>
+          <p className="mt-4 rounded-2xl bg-ultra-tint p-3 text-sm">{privateDetails}</p>
         ) : null}
       </div>
 
