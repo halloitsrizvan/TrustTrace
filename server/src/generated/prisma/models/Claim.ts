@@ -328,6 +328,7 @@ export type ClaimWhereInput = {
   lostItem?: Prisma.XOR<Prisma.ItemNullableScalarRelationFilter, Prisma.ItemWhereInput> | null
   claimant?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   decider?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  tip?: Prisma.XOR<Prisma.TipNullableScalarRelationFilter, Prisma.TipWhereInput> | null
 }
 
 export type ClaimOrderByWithRelationInput = {
@@ -354,6 +355,7 @@ export type ClaimOrderByWithRelationInput = {
   lostItem?: Prisma.ItemOrderByWithRelationInput
   claimant?: Prisma.UserOrderByWithRelationInput
   decider?: Prisma.UserOrderByWithRelationInput
+  tip?: Prisma.TipOrderByWithRelationInput
 }
 
 export type ClaimWhereUniqueInput = Prisma.AtLeast<{
@@ -383,6 +385,7 @@ export type ClaimWhereUniqueInput = Prisma.AtLeast<{
   lostItem?: Prisma.XOR<Prisma.ItemNullableScalarRelationFilter, Prisma.ItemWhereInput> | null
   claimant?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   decider?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  tip?: Prisma.XOR<Prisma.TipNullableScalarRelationFilter, Prisma.TipWhereInput> | null
 }, "id">
 
 export type ClaimOrderByWithAggregationInput = {
@@ -457,6 +460,7 @@ export type ClaimCreateInput = {
   lostItem?: Prisma.ItemCreateNestedOneWithoutLostClaimsInput
   claimant: Prisma.UserCreateNestedOneWithoutClaimsInput
   decider?: Prisma.UserCreateNestedOneWithoutDecisionsInput
+  tip?: Prisma.TipCreateNestedOneWithoutClaimInput
 }
 
 export type ClaimUncheckedCreateInput = {
@@ -479,6 +483,7 @@ export type ClaimUncheckedCreateInput = {
   decisionNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  tip?: Prisma.TipUncheckedCreateNestedOneWithoutClaimInput
 }
 
 export type ClaimUpdateInput = {
@@ -501,6 +506,7 @@ export type ClaimUpdateInput = {
   lostItem?: Prisma.ItemUpdateOneWithoutLostClaimsNestedInput
   claimant?: Prisma.UserUpdateOneRequiredWithoutClaimsNestedInput
   decider?: Prisma.UserUpdateOneWithoutDecisionsNestedInput
+  tip?: Prisma.TipUpdateOneWithoutClaimNestedInput
 }
 
 export type ClaimUncheckedUpdateInput = {
@@ -523,6 +529,7 @@ export type ClaimUncheckedUpdateInput = {
   decisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tip?: Prisma.TipUncheckedUpdateOneWithoutClaimNestedInput
 }
 
 export type ClaimCreateManyInput = {
@@ -667,6 +674,11 @@ export type ClaimSumOrderByAggregateInput = {
   proofScore?: Prisma.SortOrder
   trustScore?: Prisma.SortOrder
   attemptNo?: Prisma.SortOrder
+}
+
+export type ClaimScalarRelationFilter = {
+  is?: Prisma.ClaimWhereInput
+  isNot?: Prisma.ClaimWhereInput
 }
 
 export type ClaimCreateNestedManyWithoutClaimantInput = {
@@ -845,6 +857,20 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
+export type ClaimCreateNestedOneWithoutTipInput = {
+  create?: Prisma.XOR<Prisma.ClaimCreateWithoutTipInput, Prisma.ClaimUncheckedCreateWithoutTipInput>
+  connectOrCreate?: Prisma.ClaimCreateOrConnectWithoutTipInput
+  connect?: Prisma.ClaimWhereUniqueInput
+}
+
+export type ClaimUpdateOneRequiredWithoutTipNestedInput = {
+  create?: Prisma.XOR<Prisma.ClaimCreateWithoutTipInput, Prisma.ClaimUncheckedCreateWithoutTipInput>
+  connectOrCreate?: Prisma.ClaimCreateOrConnectWithoutTipInput
+  upsert?: Prisma.ClaimUpsertWithoutTipInput
+  connect?: Prisma.ClaimWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClaimUpdateToOneWithWhereWithoutTipInput, Prisma.ClaimUpdateWithoutTipInput>, Prisma.ClaimUncheckedUpdateWithoutTipInput>
+}
+
 export type ClaimCreateWithoutClaimantInput = {
   id?: string
   status?: $Enums.ClaimStatus
@@ -864,6 +890,7 @@ export type ClaimCreateWithoutClaimantInput = {
   foundItem: Prisma.ItemCreateNestedOneWithoutFoundClaimsInput
   lostItem?: Prisma.ItemCreateNestedOneWithoutLostClaimsInput
   decider?: Prisma.UserCreateNestedOneWithoutDecisionsInput
+  tip?: Prisma.TipCreateNestedOneWithoutClaimInput
 }
 
 export type ClaimUncheckedCreateWithoutClaimantInput = {
@@ -885,6 +912,7 @@ export type ClaimUncheckedCreateWithoutClaimantInput = {
   decisionNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  tip?: Prisma.TipUncheckedCreateNestedOneWithoutClaimInput
 }
 
 export type ClaimCreateOrConnectWithoutClaimantInput = {
@@ -916,6 +944,7 @@ export type ClaimCreateWithoutDeciderInput = {
   foundItem: Prisma.ItemCreateNestedOneWithoutFoundClaimsInput
   lostItem?: Prisma.ItemCreateNestedOneWithoutLostClaimsInput
   claimant: Prisma.UserCreateNestedOneWithoutClaimsInput
+  tip?: Prisma.TipCreateNestedOneWithoutClaimInput
 }
 
 export type ClaimUncheckedCreateWithoutDeciderInput = {
@@ -937,6 +966,7 @@ export type ClaimUncheckedCreateWithoutDeciderInput = {
   decisionNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  tip?: Prisma.TipUncheckedCreateNestedOneWithoutClaimInput
 }
 
 export type ClaimCreateOrConnectWithoutDeciderInput = {
@@ -1025,6 +1055,7 @@ export type ClaimCreateWithoutFoundItemInput = {
   lostItem?: Prisma.ItemCreateNestedOneWithoutLostClaimsInput
   claimant: Prisma.UserCreateNestedOneWithoutClaimsInput
   decider?: Prisma.UserCreateNestedOneWithoutDecisionsInput
+  tip?: Prisma.TipCreateNestedOneWithoutClaimInput
 }
 
 export type ClaimUncheckedCreateWithoutFoundItemInput = {
@@ -1046,6 +1077,7 @@ export type ClaimUncheckedCreateWithoutFoundItemInput = {
   decisionNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  tip?: Prisma.TipUncheckedCreateNestedOneWithoutClaimInput
 }
 
 export type ClaimCreateOrConnectWithoutFoundItemInput = {
@@ -1077,6 +1109,7 @@ export type ClaimCreateWithoutLostItemInput = {
   foundItem: Prisma.ItemCreateNestedOneWithoutFoundClaimsInput
   claimant: Prisma.UserCreateNestedOneWithoutClaimsInput
   decider?: Prisma.UserCreateNestedOneWithoutDecisionsInput
+  tip?: Prisma.TipCreateNestedOneWithoutClaimInput
 }
 
 export type ClaimUncheckedCreateWithoutLostItemInput = {
@@ -1098,6 +1131,7 @@ export type ClaimUncheckedCreateWithoutLostItemInput = {
   decisionNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  tip?: Prisma.TipUncheckedCreateNestedOneWithoutClaimInput
 }
 
 export type ClaimCreateOrConnectWithoutLostItemInput = {
@@ -1140,6 +1174,110 @@ export type ClaimUpdateWithWhereUniqueWithoutLostItemInput = {
 export type ClaimUpdateManyWithWhereWithoutLostItemInput = {
   where: Prisma.ClaimScalarWhereInput
   data: Prisma.XOR<Prisma.ClaimUpdateManyMutationInput, Prisma.ClaimUncheckedUpdateManyWithoutLostItemInput>
+}
+
+export type ClaimCreateWithoutTipInput = {
+  id?: string
+  status?: $Enums.ClaimStatus
+  prompts: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  answers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  proofScore?: number
+  trustScore?: number
+  breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  attemptNo?: number
+  startedAt?: Date | string
+  submittedAt?: Date | string | null
+  tokenHash?: string | null
+  tokenExpiresAt?: Date | string | null
+  decisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  foundItem: Prisma.ItemCreateNestedOneWithoutFoundClaimsInput
+  lostItem?: Prisma.ItemCreateNestedOneWithoutLostClaimsInput
+  claimant: Prisma.UserCreateNestedOneWithoutClaimsInput
+  decider?: Prisma.UserCreateNestedOneWithoutDecisionsInput
+}
+
+export type ClaimUncheckedCreateWithoutTipInput = {
+  id?: string
+  foundItemId: string
+  lostItemId?: string | null
+  claimantId: string
+  status?: $Enums.ClaimStatus
+  prompts: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  answers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  proofScore?: number
+  trustScore?: number
+  breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  attemptNo?: number
+  startedAt?: Date | string
+  submittedAt?: Date | string | null
+  tokenHash?: string | null
+  tokenExpiresAt?: Date | string | null
+  decidedBy?: string | null
+  decisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ClaimCreateOrConnectWithoutTipInput = {
+  where: Prisma.ClaimWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClaimCreateWithoutTipInput, Prisma.ClaimUncheckedCreateWithoutTipInput>
+}
+
+export type ClaimUpsertWithoutTipInput = {
+  update: Prisma.XOR<Prisma.ClaimUpdateWithoutTipInput, Prisma.ClaimUncheckedUpdateWithoutTipInput>
+  create: Prisma.XOR<Prisma.ClaimCreateWithoutTipInput, Prisma.ClaimUncheckedCreateWithoutTipInput>
+  where?: Prisma.ClaimWhereInput
+}
+
+export type ClaimUpdateToOneWithWhereWithoutTipInput = {
+  where?: Prisma.ClaimWhereInput
+  data: Prisma.XOR<Prisma.ClaimUpdateWithoutTipInput, Prisma.ClaimUncheckedUpdateWithoutTipInput>
+}
+
+export type ClaimUpdateWithoutTipInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumClaimStatusFieldUpdateOperationsInput | $Enums.ClaimStatus
+  prompts?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  answers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  proofScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  attemptNo?: Prisma.IntFieldUpdateOperationsInput | number
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  decisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foundItem?: Prisma.ItemUpdateOneRequiredWithoutFoundClaimsNestedInput
+  lostItem?: Prisma.ItemUpdateOneWithoutLostClaimsNestedInput
+  claimant?: Prisma.UserUpdateOneRequiredWithoutClaimsNestedInput
+  decider?: Prisma.UserUpdateOneWithoutDecisionsNestedInput
+}
+
+export type ClaimUncheckedUpdateWithoutTipInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  foundItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  lostItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  claimantId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumClaimStatusFieldUpdateOperationsInput | $Enums.ClaimStatus
+  prompts?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  answers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  proofScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  attemptNo?: Prisma.IntFieldUpdateOperationsInput | number
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  decidedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  decisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ClaimCreateManyClaimantInput = {
@@ -1203,6 +1341,7 @@ export type ClaimUpdateWithoutClaimantInput = {
   foundItem?: Prisma.ItemUpdateOneRequiredWithoutFoundClaimsNestedInput
   lostItem?: Prisma.ItemUpdateOneWithoutLostClaimsNestedInput
   decider?: Prisma.UserUpdateOneWithoutDecisionsNestedInput
+  tip?: Prisma.TipUpdateOneWithoutClaimNestedInput
 }
 
 export type ClaimUncheckedUpdateWithoutClaimantInput = {
@@ -1224,6 +1363,7 @@ export type ClaimUncheckedUpdateWithoutClaimantInput = {
   decisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tip?: Prisma.TipUncheckedUpdateOneWithoutClaimNestedInput
 }
 
 export type ClaimUncheckedUpdateManyWithoutClaimantInput = {
@@ -1266,6 +1406,7 @@ export type ClaimUpdateWithoutDeciderInput = {
   foundItem?: Prisma.ItemUpdateOneRequiredWithoutFoundClaimsNestedInput
   lostItem?: Prisma.ItemUpdateOneWithoutLostClaimsNestedInput
   claimant?: Prisma.UserUpdateOneRequiredWithoutClaimsNestedInput
+  tip?: Prisma.TipUpdateOneWithoutClaimNestedInput
 }
 
 export type ClaimUncheckedUpdateWithoutDeciderInput = {
@@ -1287,6 +1428,7 @@ export type ClaimUncheckedUpdateWithoutDeciderInput = {
   decisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tip?: Prisma.TipUncheckedUpdateOneWithoutClaimNestedInput
 }
 
 export type ClaimUncheckedUpdateManyWithoutDeciderInput = {
@@ -1371,6 +1513,7 @@ export type ClaimUpdateWithoutFoundItemInput = {
   lostItem?: Prisma.ItemUpdateOneWithoutLostClaimsNestedInput
   claimant?: Prisma.UserUpdateOneRequiredWithoutClaimsNestedInput
   decider?: Prisma.UserUpdateOneWithoutDecisionsNestedInput
+  tip?: Prisma.TipUpdateOneWithoutClaimNestedInput
 }
 
 export type ClaimUncheckedUpdateWithoutFoundItemInput = {
@@ -1392,6 +1535,7 @@ export type ClaimUncheckedUpdateWithoutFoundItemInput = {
   decisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tip?: Prisma.TipUncheckedUpdateOneWithoutClaimNestedInput
 }
 
 export type ClaimUncheckedUpdateManyWithoutFoundItemInput = {
@@ -1434,6 +1578,7 @@ export type ClaimUpdateWithoutLostItemInput = {
   foundItem?: Prisma.ItemUpdateOneRequiredWithoutFoundClaimsNestedInput
   claimant?: Prisma.UserUpdateOneRequiredWithoutClaimsNestedInput
   decider?: Prisma.UserUpdateOneWithoutDecisionsNestedInput
+  tip?: Prisma.TipUpdateOneWithoutClaimNestedInput
 }
 
 export type ClaimUncheckedUpdateWithoutLostItemInput = {
@@ -1455,6 +1600,7 @@ export type ClaimUncheckedUpdateWithoutLostItemInput = {
   decisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tip?: Prisma.TipUncheckedUpdateOneWithoutClaimNestedInput
 }
 
 export type ClaimUncheckedUpdateManyWithoutLostItemInput = {
@@ -1504,6 +1650,7 @@ export type ClaimSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   lostItem?: boolean | Prisma.Claim$lostItemArgs<ExtArgs>
   claimant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   decider?: boolean | Prisma.Claim$deciderArgs<ExtArgs>
+  tip?: boolean | Prisma.Claim$tipArgs<ExtArgs>
 }, ExtArgs["result"]["claim"]>
 
 export type ClaimSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1586,6 +1733,7 @@ export type ClaimInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   lostItem?: boolean | Prisma.Claim$lostItemArgs<ExtArgs>
   claimant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   decider?: boolean | Prisma.Claim$deciderArgs<ExtArgs>
+  tip?: boolean | Prisma.Claim$tipArgs<ExtArgs>
 }
 export type ClaimIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   foundItem?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
@@ -1607,6 +1755,7 @@ export type $ClaimPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     lostItem: Prisma.$ItemPayload<ExtArgs> | null
     claimant: Prisma.$UserPayload<ExtArgs>
     decider: Prisma.$UserPayload<ExtArgs> | null
+    tip: Prisma.$TipPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2026,6 +2175,7 @@ export interface Prisma__ClaimClient<T, Null = never, ExtArgs extends runtime.Ty
   lostItem<T extends Prisma.Claim$lostItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Claim$lostItemArgs<ExtArgs>>): Prisma.Prisma__ItemClient<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   claimant<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   decider<T extends Prisma.Claim$deciderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Claim$deciderArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  tip<T extends Prisma.Claim$tipArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Claim$tipArgs<ExtArgs>>): Prisma.Prisma__TipClient<runtime.Types.Result.GetResult<Prisma.$TipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2510,6 +2660,25 @@ export type Claim$deciderArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * Claim.tip
+ */
+export type Claim$tipArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tip
+   */
+  select?: Prisma.TipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tip
+   */
+  omit?: Prisma.TipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TipInclude<ExtArgs> | null
+  where?: Prisma.TipWhereInput
 }
 
 /**

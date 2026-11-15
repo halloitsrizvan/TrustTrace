@@ -15,3 +15,7 @@ process.env.EMBEDDING_MODEL = 'mock-embedding';
 process.env.VISION_MODEL = 'mock-vision';
 process.env.EMBEDDING_DIM = '768';
 process.env.PORT = '3000';
+process.env.PAYMENT_PROVIDER = 'mock';
+process.env.PAYMENT_KEY_ID = '';
+process.env.PAYMENT_KEY_SECRET = '';
+process.env.PAYMENT_WEBHOOK_SECRET = '';

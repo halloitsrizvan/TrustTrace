@@ -23,4 +23,8 @@ export const validationSchema = Joi.object({
   VISION_MODEL: Joi.string().min(1).required(),
   EMBEDDING_DIM: Joi.number().integer().positive().default(768),
   PORT: Joi.number().port().default(3000),
+  PAYMENT_PROVIDER: Joi.string().valid('mock', 'razorpay').default('mock'),
+  PAYMENT_KEY_ID: Joi.string().allow('').optional(),
+  PAYMENT_KEY_SECRET: Joi.string().allow('').optional(),
+  PAYMENT_WEBHOOK_SECRET: Joi.string().allow('').optional(),
 });

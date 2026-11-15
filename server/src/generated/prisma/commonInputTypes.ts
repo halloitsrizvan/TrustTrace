@@ -447,6 +447,87 @@ export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
 }
 
+export type EnumTipStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipStatus | Prisma.EnumTipStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TipStatus[] | Prisma.ListEnumTipStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TipStatus[] | Prisma.ListEnumTipStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTipStatusFilter<$PrismaModel> | $Enums.TipStatus
+}
+
+export type BoolFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
+}
+
+export type EnumTipStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipStatus | Prisma.EnumTipStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TipStatus[] | Prisma.ListEnumTipStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TipStatus[] | Prisma.ListEnumTipStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTipStatusWithAggregatesFilter<$PrismaModel> | $Enums.TipStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTipStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTipStatusFilter<$PrismaModel>
+}
+
+export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedBoolFilter<$PrismaModel>
+  _max?: Prisma.NestedBoolFilter<$PrismaModel>
+}
+
+export type EnumWalletEntryTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.WalletEntryType | Prisma.EnumWalletEntryTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.WalletEntryType[] | Prisma.ListEnumWalletEntryTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WalletEntryType[] | Prisma.ListEnumWalletEntryTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWalletEntryTypeFilter<$PrismaModel> | $Enums.WalletEntryType
+}
+
+export type EnumWalletEntryReasonFilter<$PrismaModel = never> = {
+  equals?: $Enums.WalletEntryReason | Prisma.EnumWalletEntryReasonFieldRefInput<$PrismaModel>
+  in?: $Enums.WalletEntryReason[] | Prisma.ListEnumWalletEntryReasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WalletEntryReason[] | Prisma.ListEnumWalletEntryReasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWalletEntryReasonFilter<$PrismaModel> | $Enums.WalletEntryReason
+}
+
+export type EnumWalletEntryTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WalletEntryType | Prisma.EnumWalletEntryTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.WalletEntryType[] | Prisma.ListEnumWalletEntryTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WalletEntryType[] | Prisma.ListEnumWalletEntryTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWalletEntryTypeWithAggregatesFilter<$PrismaModel> | $Enums.WalletEntryType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWalletEntryTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWalletEntryTypeFilter<$PrismaModel>
+}
+
+export type EnumWalletEntryReasonWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WalletEntryReason | Prisma.EnumWalletEntryReasonFieldRefInput<$PrismaModel>
+  in?: $Enums.WalletEntryReason[] | Prisma.ListEnumWalletEntryReasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WalletEntryReason[] | Prisma.ListEnumWalletEntryReasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWalletEntryReasonWithAggregatesFilter<$PrismaModel> | $Enums.WalletEntryReason
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWalletEntryReasonFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWalletEntryReasonFilter<$PrismaModel>
+}
+
+export type EnumBadgeFilter<$PrismaModel = never> = {
+  equals?: $Enums.Badge | Prisma.EnumBadgeFieldRefInput<$PrismaModel>
+  in?: $Enums.Badge[] | Prisma.ListEnumBadgeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Badge[] | Prisma.ListEnumBadgeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBadgeFilter<$PrismaModel> | $Enums.Badge
+}
+
+export type EnumBadgeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.Badge | Prisma.EnumBadgeFieldRefInput<$PrismaModel>
+  in?: $Enums.Badge[] | Prisma.ListEnumBadgeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Badge[] | Prisma.ListEnumBadgeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBadgeWithAggregatesFilter<$PrismaModel> | $Enums.Badge
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBadgeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBadgeFilter<$PrismaModel>
+}
+
 export type NestedUuidFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -822,6 +903,87 @@ export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumTipStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipStatus | Prisma.EnumTipStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TipStatus[] | Prisma.ListEnumTipStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TipStatus[] | Prisma.ListEnumTipStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTipStatusFilter<$PrismaModel> | $Enums.TipStatus
+}
+
+export type NestedBoolFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
+}
+
+export type NestedEnumTipStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipStatus | Prisma.EnumTipStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TipStatus[] | Prisma.ListEnumTipStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TipStatus[] | Prisma.ListEnumTipStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTipStatusWithAggregatesFilter<$PrismaModel> | $Enums.TipStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTipStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTipStatusFilter<$PrismaModel>
+}
+
+export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedBoolFilter<$PrismaModel>
+  _max?: Prisma.NestedBoolFilter<$PrismaModel>
+}
+
+export type NestedEnumWalletEntryTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.WalletEntryType | Prisma.EnumWalletEntryTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.WalletEntryType[] | Prisma.ListEnumWalletEntryTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WalletEntryType[] | Prisma.ListEnumWalletEntryTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWalletEntryTypeFilter<$PrismaModel> | $Enums.WalletEntryType
+}
+
+export type NestedEnumWalletEntryReasonFilter<$PrismaModel = never> = {
+  equals?: $Enums.WalletEntryReason | Prisma.EnumWalletEntryReasonFieldRefInput<$PrismaModel>
+  in?: $Enums.WalletEntryReason[] | Prisma.ListEnumWalletEntryReasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WalletEntryReason[] | Prisma.ListEnumWalletEntryReasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWalletEntryReasonFilter<$PrismaModel> | $Enums.WalletEntryReason
+}
+
+export type NestedEnumWalletEntryTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WalletEntryType | Prisma.EnumWalletEntryTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.WalletEntryType[] | Prisma.ListEnumWalletEntryTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WalletEntryType[] | Prisma.ListEnumWalletEntryTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWalletEntryTypeWithAggregatesFilter<$PrismaModel> | $Enums.WalletEntryType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWalletEntryTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWalletEntryTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumWalletEntryReasonWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WalletEntryReason | Prisma.EnumWalletEntryReasonFieldRefInput<$PrismaModel>
+  in?: $Enums.WalletEntryReason[] | Prisma.ListEnumWalletEntryReasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WalletEntryReason[] | Prisma.ListEnumWalletEntryReasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWalletEntryReasonWithAggregatesFilter<$PrismaModel> | $Enums.WalletEntryReason
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWalletEntryReasonFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWalletEntryReasonFilter<$PrismaModel>
+}
+
+export type NestedEnumBadgeFilter<$PrismaModel = never> = {
+  equals?: $Enums.Badge | Prisma.EnumBadgeFieldRefInput<$PrismaModel>
+  in?: $Enums.Badge[] | Prisma.ListEnumBadgeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Badge[] | Prisma.ListEnumBadgeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBadgeFilter<$PrismaModel> | $Enums.Badge
+}
+
+export type NestedEnumBadgeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.Badge | Prisma.EnumBadgeFieldRefInput<$PrismaModel>
+  in?: $Enums.Badge[] | Prisma.ListEnumBadgeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Badge[] | Prisma.ListEnumBadgeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBadgeWithAggregatesFilter<$PrismaModel> | $Enums.Badge
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBadgeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBadgeFilter<$PrismaModel>
 }
 
 

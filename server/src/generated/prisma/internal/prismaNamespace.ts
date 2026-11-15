@@ -402,6 +402,10 @@ export const ModelName = {
   ItemPrivate: 'ItemPrivate',
   Match: 'Match',
   Claim: 'Claim',
+  Tip: 'Tip',
+  WalletEntry: 'WalletEntry',
+  UserBadge: 'UserBadge',
+  KarmaEvent: 'KarmaEvent',
   Notification: 'Notification',
   AuditLog: 'AuditLog'
 } as const
@@ -419,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "item" | "itemPrivate" | "match" | "claim" | "notification" | "auditLog"
+    modelProps: "user" | "item" | "itemPrivate" | "match" | "claim" | "tip" | "walletEntry" | "userBadge" | "karmaEvent" | "notification" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -793,6 +797,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Tip: {
+      payload: Prisma.$TipPayload<ExtArgs>
+      fields: Prisma.TipFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TipFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TipFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipPayload>
+        }
+        findFirst: {
+          args: Prisma.TipFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TipFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipPayload>
+        }
+        findMany: {
+          args: Prisma.TipFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipPayload>[]
+        }
+        create: {
+          args: Prisma.TipCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipPayload>
+        }
+        createMany: {
+          args: Prisma.TipCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TipCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipPayload>[]
+        }
+        delete: {
+          args: Prisma.TipDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipPayload>
+        }
+        update: {
+          args: Prisma.TipUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipPayload>
+        }
+        deleteMany: {
+          args: Prisma.TipDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TipUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TipUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipPayload>[]
+        }
+        upsert: {
+          args: Prisma.TipUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipPayload>
+        }
+        aggregate: {
+          args: Prisma.TipAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTip>
+        }
+        groupBy: {
+          args: Prisma.TipGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TipGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TipCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TipCountAggregateOutputType> | number
+        }
+      }
+    }
+    WalletEntry: {
+      payload: Prisma.$WalletEntryPayload<ExtArgs>
+      fields: Prisma.WalletEntryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WalletEntryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletEntryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WalletEntryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletEntryPayload>
+        }
+        findFirst: {
+          args: Prisma.WalletEntryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletEntryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WalletEntryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletEntryPayload>
+        }
+        findMany: {
+          args: Prisma.WalletEntryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletEntryPayload>[]
+        }
+        create: {
+          args: Prisma.WalletEntryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletEntryPayload>
+        }
+        createMany: {
+          args: Prisma.WalletEntryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WalletEntryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletEntryPayload>[]
+        }
+        delete: {
+          args: Prisma.WalletEntryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletEntryPayload>
+        }
+        update: {
+          args: Prisma.WalletEntryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletEntryPayload>
+        }
+        deleteMany: {
+          args: Prisma.WalletEntryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WalletEntryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WalletEntryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletEntryPayload>[]
+        }
+        upsert: {
+          args: Prisma.WalletEntryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WalletEntryPayload>
+        }
+        aggregate: {
+          args: Prisma.WalletEntryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWalletEntry>
+        }
+        groupBy: {
+          args: Prisma.WalletEntryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WalletEntryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WalletEntryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WalletEntryCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserBadge: {
+      payload: Prisma.$UserBadgePayload<ExtArgs>
+      fields: Prisma.UserBadgeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserBadgeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserBadgeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>
+        }
+        findFirst: {
+          args: Prisma.UserBadgeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserBadgeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>
+        }
+        findMany: {
+          args: Prisma.UserBadgeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
+        }
+        create: {
+          args: Prisma.UserBadgeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>
+        }
+        createMany: {
+          args: Prisma.UserBadgeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserBadgeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
+        }
+        delete: {
+          args: Prisma.UserBadgeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>
+        }
+        update: {
+          args: Prisma.UserBadgeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserBadgeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserBadgeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserBadgeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserBadgeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserBadgePayload>
+        }
+        aggregate: {
+          args: Prisma.UserBadgeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserBadge>
+        }
+        groupBy: {
+          args: Prisma.UserBadgeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserBadgeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserBadgeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserBadgeCountAggregateOutputType> | number
+        }
+      }
+    }
+    KarmaEvent: {
+      payload: Prisma.$KarmaEventPayload<ExtArgs>
+      fields: Prisma.KarmaEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KarmaEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarmaEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KarmaEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarmaEventPayload>
+        }
+        findFirst: {
+          args: Prisma.KarmaEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarmaEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KarmaEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarmaEventPayload>
+        }
+        findMany: {
+          args: Prisma.KarmaEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarmaEventPayload>[]
+        }
+        create: {
+          args: Prisma.KarmaEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarmaEventPayload>
+        }
+        createMany: {
+          args: Prisma.KarmaEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KarmaEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarmaEventPayload>[]
+        }
+        delete: {
+          args: Prisma.KarmaEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarmaEventPayload>
+        }
+        update: {
+          args: Prisma.KarmaEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarmaEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.KarmaEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KarmaEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KarmaEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarmaEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.KarmaEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarmaEventPayload>
+        }
+        aggregate: {
+          args: Prisma.KarmaEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKarmaEvent>
+        }
+        groupBy: {
+          args: Prisma.KarmaEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KarmaEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KarmaEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KarmaEventCountAggregateOutputType> | number
+        }
+      }
+    }
     Notification: {
       payload: Prisma.$NotificationPayload<ExtArgs>
       fields: Prisma.NotificationFieldRefs
@@ -987,6 +1287,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   role: 'role',
   trustScore: 'trustScore',
+  karma: 'karma',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1062,6 +1363,62 @@ export const ClaimScalarFieldEnum = {
 } as const
 
 export type ClaimScalarFieldEnum = (typeof ClaimScalarFieldEnum)[keyof typeof ClaimScalarFieldEnum]
+
+
+export const TipScalarFieldEnum = {
+  id: 'id',
+  claimId: 'claimId',
+  tipperId: 'tipperId',
+  finderId: 'finderId',
+  amountMinor: 'amountMinor',
+  currency: 'currency',
+  status: 'status',
+  message: 'message',
+  anonymous: 'anonymous',
+  provider: 'provider',
+  providerOrderId: 'providerOrderId',
+  providerPaymentId: 'providerPaymentId',
+  idempotencyKey: 'idempotencyKey',
+  createdAt: 'createdAt',
+  succeededAt: 'succeededAt'
+} as const
+
+export type TipScalarFieldEnum = (typeof TipScalarFieldEnum)[keyof typeof TipScalarFieldEnum]
+
+
+export const WalletEntryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  amountMinor: 'amountMinor',
+  reason: 'reason',
+  refId: 'refId',
+  createdAt: 'createdAt'
+} as const
+
+export type WalletEntryScalarFieldEnum = (typeof WalletEntryScalarFieldEnum)[keyof typeof WalletEntryScalarFieldEnum]
+
+
+export const UserBadgeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  badge: 'badge',
+  awardedAt: 'awardedAt'
+} as const
+
+export type UserBadgeScalarFieldEnum = (typeof UserBadgeScalarFieldEnum)[keyof typeof UserBadgeScalarFieldEnum]
+
+
+export const KarmaEventScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  delta: 'delta',
+  reason: 'reason',
+  refId: 'refId',
+  createdAt: 'createdAt'
+} as const
+
+export type KarmaEventScalarFieldEnum = (typeof KarmaEventScalarFieldEnum)[keyof typeof KarmaEventScalarFieldEnum]
 
 
 export const NotificationScalarFieldEnum = {
@@ -1297,6 +1654,69 @@ export type EnumClaimStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
 export type ListEnumClaimStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClaimStatus[]'>
     
 
+
+/**
+ * Reference to a field of type 'TipStatus'
+ */
+export type EnumTipStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TipStatus[]'
+ */
+export type ListEnumTipStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'WalletEntryType'
+ */
+export type EnumWalletEntryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WalletEntryType'>
+    
+
+
+/**
+ * Reference to a field of type 'WalletEntryType[]'
+ */
+export type ListEnumWalletEntryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WalletEntryType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'WalletEntryReason'
+ */
+export type EnumWalletEntryReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WalletEntryReason'>
+    
+
+
+/**
+ * Reference to a field of type 'WalletEntryReason[]'
+ */
+export type ListEnumWalletEntryReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WalletEntryReason[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Badge'
+ */
+export type EnumBadgeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Badge'>
+    
+
+
+/**
+ * Reference to a field of type 'Badge[]'
+ */
+export type ListEnumBadgeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Badge[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -1453,6 +1873,10 @@ export type GlobalOmitConfig = {
   itemPrivate?: Prisma.ItemPrivateOmit
   match?: Prisma.MatchOmit
   claim?: Prisma.ClaimOmit
+  tip?: Prisma.TipOmit
+  walletEntry?: Prisma.WalletEntryOmit
+  userBadge?: Prisma.UserBadgeOmit
+  karmaEvent?: Prisma.KarmaEventOmit
   notification?: Prisma.NotificationOmit
   auditLog?: Prisma.AuditLogOmit
 }

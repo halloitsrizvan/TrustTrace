@@ -70,3 +70,42 @@ export const ClaimStatus = {
 } as const
 
 export type ClaimStatus = (typeof ClaimStatus)[keyof typeof ClaimStatus]
+
+
+export const TipStatus = {
+  PENDING: 'PENDING',
+  SUCCEEDED: 'SUCCEEDED',
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type TipStatus = (typeof TipStatus)[keyof typeof TipStatus]
+
+
+export const WalletEntryType = {
+  CREDIT: 'CREDIT',
+  DEBIT: 'DEBIT'
+} as const
+
+export type WalletEntryType = (typeof WalletEntryType)[keyof typeof WalletEntryType]
+
+
+export const WalletEntryReason = {
+  TIP_RECEIVED: 'TIP_RECEIVED',
+  WITHDRAWAL: 'WITHDRAWAL',
+  REFUND: 'REFUND'
+} as const
+
+export type WalletEntryReason = (typeof WalletEntryReason)[keyof typeof WalletEntryReason]
+
+
+export const Badge = {
+  FIRST_RETURN: 'FIRST_RETURN',
+  CAMPUS_HERO: 'CAMPUS_HERO',
+  GUARDIAN: 'GUARDIAN',
+  GRATEFUL_SOUL: 'GRATEFUL_SOUL',
+  GENEROUS: 'GENEROUS'
+} as const
+
+export type Badge = (typeof Badge)[keyof typeof Badge]

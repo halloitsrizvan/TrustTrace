@@ -28,10 +28,12 @@ export type AggregateUser = {
 
 export type UserAvgAggregateOutputType = {
   trustScore: number | null
+  karma: number | null
 }
 
 export type UserSumAggregateOutputType = {
   trustScore: number | null
+  karma: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -41,6 +43,7 @@ export type UserMinAggregateOutputType = {
   name: string | null
   role: $Enums.Role | null
   trustScore: number | null
+  karma: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,6 +55,7 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   role: $Enums.Role | null
   trustScore: number | null
+  karma: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -63,6 +67,7 @@ export type UserCountAggregateOutputType = {
   name: number
   role: number
   trustScore: number
+  karma: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -71,10 +76,12 @@ export type UserCountAggregateOutputType = {
 
 export type UserAvgAggregateInputType = {
   trustScore?: true
+  karma?: true
 }
 
 export type UserSumAggregateInputType = {
   trustScore?: true
+  karma?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -84,6 +91,7 @@ export type UserMinAggregateInputType = {
   name?: true
   role?: true
   trustScore?: true
+  karma?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -95,6 +103,7 @@ export type UserMaxAggregateInputType = {
   name?: true
   role?: true
   trustScore?: true
+  karma?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +115,7 @@ export type UserCountAggregateInputType = {
   name?: true
   role?: true
   trustScore?: true
+  karma?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -204,6 +214,7 @@ export type UserGroupByOutputType = {
   name: string
   role: $Enums.Role
   trustScore: number
+  karma: number
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -238,6 +249,7 @@ export type UserWhereInput = {
   name?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   trustScore?: Prisma.IntFilter<"User"> | number
+  karma?: Prisma.IntFilter<"User"> | number
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   items?: Prisma.ItemListRelationFilter
@@ -245,6 +257,11 @@ export type UserWhereInput = {
   decisions?: Prisma.ClaimListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
+  tipsGiven?: Prisma.TipListRelationFilter
+  tipsReceived?: Prisma.TipListRelationFilter
+  walletEntries?: Prisma.WalletEntryListRelationFilter
+  badges?: Prisma.UserBadgeListRelationFilter
+  karmaEvents?: Prisma.KarmaEventListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -254,6 +271,7 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   trustScore?: Prisma.SortOrder
+  karma?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   items?: Prisma.ItemOrderByRelationAggregateInput
@@ -261,6 +279,11 @@ export type UserOrderByWithRelationInput = {
   decisions?: Prisma.ClaimOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
+  tipsGiven?: Prisma.TipOrderByRelationAggregateInput
+  tipsReceived?: Prisma.TipOrderByRelationAggregateInput
+  walletEntries?: Prisma.WalletEntryOrderByRelationAggregateInput
+  badges?: Prisma.UserBadgeOrderByRelationAggregateInput
+  karmaEvents?: Prisma.KarmaEventOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -273,6 +296,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   trustScore?: Prisma.IntFilter<"User"> | number
+  karma?: Prisma.IntFilter<"User"> | number
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   items?: Prisma.ItemListRelationFilter
@@ -280,6 +304,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   decisions?: Prisma.ClaimListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
+  tipsGiven?: Prisma.TipListRelationFilter
+  tipsReceived?: Prisma.TipListRelationFilter
+  walletEntries?: Prisma.WalletEntryListRelationFilter
+  badges?: Prisma.UserBadgeListRelationFilter
+  karmaEvents?: Prisma.KarmaEventListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -289,6 +318,7 @@ export type UserOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   trustScore?: Prisma.SortOrder
+  karma?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -308,6 +338,7 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   trustScore?: Prisma.IntWithAggregatesFilter<"User"> | number
+  karma?: Prisma.IntWithAggregatesFilter<"User"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -319,6 +350,7 @@ export type UserCreateInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ItemCreateNestedManyWithoutReporterInput
@@ -326,6 +358,11 @@ export type UserCreateInput = {
   decisions?: Prisma.ClaimCreateNestedManyWithoutDeciderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -335,6 +372,7 @@ export type UserUncheckedCreateInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutReporterInput
@@ -342,6 +380,11 @@ export type UserUncheckedCreateInput = {
   decisions?: Prisma.ClaimUncheckedCreateNestedManyWithoutDeciderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipUncheckedCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipUncheckedCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryUncheckedCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -351,6 +394,7 @@ export type UserUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUpdateManyWithoutReporterNestedInput
@@ -358,6 +402,11 @@ export type UserUpdateInput = {
   decisions?: Prisma.ClaimUpdateManyWithoutDeciderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -367,6 +416,7 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUncheckedUpdateManyWithoutReporterNestedInput
@@ -374,6 +424,11 @@ export type UserUncheckedUpdateInput = {
   decisions?: Prisma.ClaimUncheckedUpdateManyWithoutDeciderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUncheckedUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUncheckedUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUncheckedUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -383,6 +438,7 @@ export type UserCreateManyInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -394,6 +450,7 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -405,6 +462,7 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -416,12 +474,14 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   trustScore?: Prisma.SortOrder
+  karma?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
   trustScore?: Prisma.SortOrder
+  karma?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -431,6 +491,7 @@ export type UserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   trustScore?: Prisma.SortOrder
+  karma?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -442,12 +503,14 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
   trustScore?: Prisma.SortOrder
+  karma?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
   trustScore?: Prisma.SortOrder
+  karma?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -524,6 +587,76 @@ export type UserUpdateOneWithoutDecisionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDecisionsInput, Prisma.UserUpdateWithoutDecisionsInput>, Prisma.UserUncheckedUpdateWithoutDecisionsInput>
 }
 
+export type UserCreateNestedOneWithoutTipsGivenInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTipsGivenInput, Prisma.UserUncheckedCreateWithoutTipsGivenInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTipsGivenInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutTipsReceivedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTipsReceivedInput, Prisma.UserUncheckedCreateWithoutTipsReceivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTipsReceivedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTipsGivenNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTipsGivenInput, Prisma.UserUncheckedCreateWithoutTipsGivenInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTipsGivenInput
+  upsert?: Prisma.UserUpsertWithoutTipsGivenInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTipsGivenInput, Prisma.UserUpdateWithoutTipsGivenInput>, Prisma.UserUncheckedUpdateWithoutTipsGivenInput>
+}
+
+export type UserUpdateOneRequiredWithoutTipsReceivedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTipsReceivedInput, Prisma.UserUncheckedCreateWithoutTipsReceivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTipsReceivedInput
+  upsert?: Prisma.UserUpsertWithoutTipsReceivedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTipsReceivedInput, Prisma.UserUpdateWithoutTipsReceivedInput>, Prisma.UserUncheckedUpdateWithoutTipsReceivedInput>
+}
+
+export type UserCreateNestedOneWithoutWalletEntriesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWalletEntriesInput, Prisma.UserUncheckedCreateWithoutWalletEntriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWalletEntriesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWalletEntriesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWalletEntriesInput, Prisma.UserUncheckedCreateWithoutWalletEntriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWalletEntriesInput
+  upsert?: Prisma.UserUpsertWithoutWalletEntriesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWalletEntriesInput, Prisma.UserUpdateWithoutWalletEntriesInput>, Prisma.UserUncheckedUpdateWithoutWalletEntriesInput>
+}
+
+export type UserCreateNestedOneWithoutBadgesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBadgesInput, Prisma.UserUncheckedCreateWithoutBadgesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBadgesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutBadgesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBadgesInput, Prisma.UserUncheckedCreateWithoutBadgesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBadgesInput
+  upsert?: Prisma.UserUpsertWithoutBadgesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBadgesInput, Prisma.UserUpdateWithoutBadgesInput>, Prisma.UserUncheckedUpdateWithoutBadgesInput>
+}
+
+export type UserCreateNestedOneWithoutKarmaEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutKarmaEventsInput, Prisma.UserUncheckedCreateWithoutKarmaEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutKarmaEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutKarmaEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutKarmaEventsInput, Prisma.UserUncheckedCreateWithoutKarmaEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutKarmaEventsInput
+  upsert?: Prisma.UserUpsertWithoutKarmaEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutKarmaEventsInput, Prisma.UserUpdateWithoutKarmaEventsInput>, Prisma.UserUncheckedUpdateWithoutKarmaEventsInput>
+}
+
 export type UserCreateNestedOneWithoutNotificationsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
@@ -561,12 +694,18 @@ export type UserCreateWithoutItemsInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   claims?: Prisma.ClaimCreateNestedManyWithoutClaimantInput
   decisions?: Prisma.ClaimCreateNestedManyWithoutDeciderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutItemsInput = {
@@ -576,12 +715,18 @@ export type UserUncheckedCreateWithoutItemsInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   claims?: Prisma.ClaimUncheckedCreateNestedManyWithoutClaimantInput
   decisions?: Prisma.ClaimUncheckedCreateNestedManyWithoutDeciderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipUncheckedCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipUncheckedCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryUncheckedCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutItemsInput = {
@@ -607,12 +752,18 @@ export type UserUpdateWithoutItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   claims?: Prisma.ClaimUpdateManyWithoutClaimantNestedInput
   decisions?: Prisma.ClaimUpdateManyWithoutDeciderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutItemsInput = {
@@ -622,12 +773,18 @@ export type UserUncheckedUpdateWithoutItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   claims?: Prisma.ClaimUncheckedUpdateManyWithoutClaimantNestedInput
   decisions?: Prisma.ClaimUncheckedUpdateManyWithoutDeciderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUncheckedUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUncheckedUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUncheckedUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutClaimsInput = {
@@ -637,12 +794,18 @@ export type UserCreateWithoutClaimsInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ItemCreateNestedManyWithoutReporterInput
   decisions?: Prisma.ClaimCreateNestedManyWithoutDeciderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutClaimsInput = {
@@ -652,12 +815,18 @@ export type UserUncheckedCreateWithoutClaimsInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutReporterInput
   decisions?: Prisma.ClaimUncheckedCreateNestedManyWithoutDeciderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipUncheckedCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipUncheckedCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryUncheckedCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutClaimsInput = {
@@ -672,12 +841,18 @@ export type UserCreateWithoutDecisionsInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ItemCreateNestedManyWithoutReporterInput
   claims?: Prisma.ClaimCreateNestedManyWithoutClaimantInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDecisionsInput = {
@@ -687,12 +862,18 @@ export type UserUncheckedCreateWithoutDecisionsInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutReporterInput
   claims?: Prisma.ClaimUncheckedCreateNestedManyWithoutClaimantInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipUncheckedCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipUncheckedCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryUncheckedCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDecisionsInput = {
@@ -718,12 +899,18 @@ export type UserUpdateWithoutClaimsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUpdateManyWithoutReporterNestedInput
   decisions?: Prisma.ClaimUpdateManyWithoutDeciderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClaimsInput = {
@@ -733,12 +920,18 @@ export type UserUncheckedUpdateWithoutClaimsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUncheckedUpdateManyWithoutReporterNestedInput
   decisions?: Prisma.ClaimUncheckedUpdateManyWithoutDeciderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUncheckedUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUncheckedUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUncheckedUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutDecisionsInput = {
@@ -759,12 +952,18 @@ export type UserUpdateWithoutDecisionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUpdateManyWithoutReporterNestedInput
   claims?: Prisma.ClaimUpdateManyWithoutClaimantNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDecisionsInput = {
@@ -774,12 +973,518 @@ export type UserUncheckedUpdateWithoutDecisionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUncheckedUpdateManyWithoutReporterNestedInput
   claims?: Prisma.ClaimUncheckedUpdateManyWithoutClaimantNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUncheckedUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUncheckedUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUncheckedUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutTipsGivenInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  role?: $Enums.Role
+  trustScore?: number
+  karma?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ItemCreateNestedManyWithoutReporterInput
+  claims?: Prisma.ClaimCreateNestedManyWithoutClaimantInput
+  decisions?: Prisma.ClaimCreateNestedManyWithoutDeciderInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  tipsReceived?: Prisma.TipCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutTipsGivenInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  role?: $Enums.Role
+  trustScore?: number
+  karma?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ItemUncheckedCreateNestedManyWithoutReporterInput
+  claims?: Prisma.ClaimUncheckedCreateNestedManyWithoutClaimantInput
+  decisions?: Prisma.ClaimUncheckedCreateNestedManyWithoutDeciderInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  tipsReceived?: Prisma.TipUncheckedCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryUncheckedCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutTipsGivenInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTipsGivenInput, Prisma.UserUncheckedCreateWithoutTipsGivenInput>
+}
+
+export type UserCreateWithoutTipsReceivedInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  role?: $Enums.Role
+  trustScore?: number
+  karma?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ItemCreateNestedManyWithoutReporterInput
+  claims?: Prisma.ClaimCreateNestedManyWithoutClaimantInput
+  decisions?: Prisma.ClaimCreateNestedManyWithoutDeciderInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipCreateNestedManyWithoutTipperInput
+  walletEntries?: Prisma.WalletEntryCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutTipsReceivedInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  role?: $Enums.Role
+  trustScore?: number
+  karma?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ItemUncheckedCreateNestedManyWithoutReporterInput
+  claims?: Prisma.ClaimUncheckedCreateNestedManyWithoutClaimantInput
+  decisions?: Prisma.ClaimUncheckedCreateNestedManyWithoutDeciderInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipUncheckedCreateNestedManyWithoutTipperInput
+  walletEntries?: Prisma.WalletEntryUncheckedCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutTipsReceivedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTipsReceivedInput, Prisma.UserUncheckedCreateWithoutTipsReceivedInput>
+}
+
+export type UserUpsertWithoutTipsGivenInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTipsGivenInput, Prisma.UserUncheckedUpdateWithoutTipsGivenInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTipsGivenInput, Prisma.UserUncheckedCreateWithoutTipsGivenInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTipsGivenInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTipsGivenInput, Prisma.UserUncheckedUpdateWithoutTipsGivenInput>
+}
+
+export type UserUpdateWithoutTipsGivenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemUpdateManyWithoutReporterNestedInput
+  claims?: Prisma.ClaimUpdateManyWithoutClaimantNestedInput
+  decisions?: Prisma.ClaimUpdateManyWithoutDeciderNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  tipsReceived?: Prisma.TipUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTipsGivenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemUncheckedUpdateManyWithoutReporterNestedInput
+  claims?: Prisma.ClaimUncheckedUpdateManyWithoutClaimantNestedInput
+  decisions?: Prisma.ClaimUncheckedUpdateManyWithoutDeciderNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  tipsReceived?: Prisma.TipUncheckedUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUncheckedUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutTipsReceivedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTipsReceivedInput, Prisma.UserUncheckedUpdateWithoutTipsReceivedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTipsReceivedInput, Prisma.UserUncheckedCreateWithoutTipsReceivedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTipsReceivedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTipsReceivedInput, Prisma.UserUncheckedUpdateWithoutTipsReceivedInput>
+}
+
+export type UserUpdateWithoutTipsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemUpdateManyWithoutReporterNestedInput
+  claims?: Prisma.ClaimUpdateManyWithoutClaimantNestedInput
+  decisions?: Prisma.ClaimUpdateManyWithoutDeciderNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUpdateManyWithoutTipperNestedInput
+  walletEntries?: Prisma.WalletEntryUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTipsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemUncheckedUpdateManyWithoutReporterNestedInput
+  claims?: Prisma.ClaimUncheckedUpdateManyWithoutClaimantNestedInput
+  decisions?: Prisma.ClaimUncheckedUpdateManyWithoutDeciderNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUncheckedUpdateManyWithoutTipperNestedInput
+  walletEntries?: Prisma.WalletEntryUncheckedUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutWalletEntriesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  role?: $Enums.Role
+  trustScore?: number
+  karma?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ItemCreateNestedManyWithoutReporterInput
+  claims?: Prisma.ClaimCreateNestedManyWithoutClaimantInput
+  decisions?: Prisma.ClaimCreateNestedManyWithoutDeciderInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipCreateNestedManyWithoutFinderInput
+  badges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutWalletEntriesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  role?: $Enums.Role
+  trustScore?: number
+  karma?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ItemUncheckedCreateNestedManyWithoutReporterInput
+  claims?: Prisma.ClaimUncheckedCreateNestedManyWithoutClaimantInput
+  decisions?: Prisma.ClaimUncheckedCreateNestedManyWithoutDeciderInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipUncheckedCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipUncheckedCreateNestedManyWithoutFinderInput
+  badges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutWalletEntriesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWalletEntriesInput, Prisma.UserUncheckedCreateWithoutWalletEntriesInput>
+}
+
+export type UserUpsertWithoutWalletEntriesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWalletEntriesInput, Prisma.UserUncheckedUpdateWithoutWalletEntriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWalletEntriesInput, Prisma.UserUncheckedCreateWithoutWalletEntriesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWalletEntriesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWalletEntriesInput, Prisma.UserUncheckedUpdateWithoutWalletEntriesInput>
+}
+
+export type UserUpdateWithoutWalletEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemUpdateManyWithoutReporterNestedInput
+  claims?: Prisma.ClaimUpdateManyWithoutClaimantNestedInput
+  decisions?: Prisma.ClaimUpdateManyWithoutDeciderNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUpdateManyWithoutFinderNestedInput
+  badges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWalletEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemUncheckedUpdateManyWithoutReporterNestedInput
+  claims?: Prisma.ClaimUncheckedUpdateManyWithoutClaimantNestedInput
+  decisions?: Prisma.ClaimUncheckedUpdateManyWithoutDeciderNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUncheckedUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUncheckedUpdateManyWithoutFinderNestedInput
+  badges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutBadgesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  role?: $Enums.Role
+  trustScore?: number
+  karma?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ItemCreateNestedManyWithoutReporterInput
+  claims?: Prisma.ClaimCreateNestedManyWithoutClaimantInput
+  decisions?: Prisma.ClaimCreateNestedManyWithoutDeciderInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutBadgesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  role?: $Enums.Role
+  trustScore?: number
+  karma?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ItemUncheckedCreateNestedManyWithoutReporterInput
+  claims?: Prisma.ClaimUncheckedCreateNestedManyWithoutClaimantInput
+  decisions?: Prisma.ClaimUncheckedCreateNestedManyWithoutDeciderInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipUncheckedCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipUncheckedCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryUncheckedCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutBadgesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBadgesInput, Prisma.UserUncheckedCreateWithoutBadgesInput>
+}
+
+export type UserUpsertWithoutBadgesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBadgesInput, Prisma.UserUncheckedUpdateWithoutBadgesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBadgesInput, Prisma.UserUncheckedCreateWithoutBadgesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutBadgesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBadgesInput, Prisma.UserUncheckedUpdateWithoutBadgesInput>
+}
+
+export type UserUpdateWithoutBadgesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemUpdateManyWithoutReporterNestedInput
+  claims?: Prisma.ClaimUpdateManyWithoutClaimantNestedInput
+  decisions?: Prisma.ClaimUpdateManyWithoutDeciderNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBadgesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemUncheckedUpdateManyWithoutReporterNestedInput
+  claims?: Prisma.ClaimUncheckedUpdateManyWithoutClaimantNestedInput
+  decisions?: Prisma.ClaimUncheckedUpdateManyWithoutDeciderNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUncheckedUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUncheckedUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUncheckedUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutKarmaEventsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  role?: $Enums.Role
+  trustScore?: number
+  karma?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ItemCreateNestedManyWithoutReporterInput
+  claims?: Prisma.ClaimCreateNestedManyWithoutClaimantInput
+  decisions?: Prisma.ClaimCreateNestedManyWithoutDeciderInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutKarmaEventsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  role?: $Enums.Role
+  trustScore?: number
+  karma?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ItemUncheckedCreateNestedManyWithoutReporterInput
+  claims?: Prisma.ClaimUncheckedCreateNestedManyWithoutClaimantInput
+  decisions?: Prisma.ClaimUncheckedCreateNestedManyWithoutDeciderInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipUncheckedCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipUncheckedCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryUncheckedCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutKarmaEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutKarmaEventsInput, Prisma.UserUncheckedCreateWithoutKarmaEventsInput>
+}
+
+export type UserUpsertWithoutKarmaEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutKarmaEventsInput, Prisma.UserUncheckedUpdateWithoutKarmaEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutKarmaEventsInput, Prisma.UserUncheckedCreateWithoutKarmaEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutKarmaEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutKarmaEventsInput, Prisma.UserUncheckedUpdateWithoutKarmaEventsInput>
+}
+
+export type UserUpdateWithoutKarmaEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemUpdateManyWithoutReporterNestedInput
+  claims?: Prisma.ClaimUpdateManyWithoutClaimantNestedInput
+  decisions?: Prisma.ClaimUpdateManyWithoutDeciderNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutKarmaEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemUncheckedUpdateManyWithoutReporterNestedInput
+  claims?: Prisma.ClaimUncheckedUpdateManyWithoutClaimantNestedInput
+  decisions?: Prisma.ClaimUncheckedUpdateManyWithoutDeciderNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUncheckedUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUncheckedUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUncheckedUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -789,12 +1494,18 @@ export type UserCreateWithoutNotificationsInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ItemCreateNestedManyWithoutReporterInput
   claims?: Prisma.ClaimCreateNestedManyWithoutClaimantInput
   decisions?: Prisma.ClaimCreateNestedManyWithoutDeciderInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -804,12 +1515,18 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutReporterInput
   claims?: Prisma.ClaimUncheckedCreateNestedManyWithoutClaimantInput
   decisions?: Prisma.ClaimUncheckedCreateNestedManyWithoutDeciderInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  tipsGiven?: Prisma.TipUncheckedCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipUncheckedCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryUncheckedCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -835,12 +1552,18 @@ export type UserUpdateWithoutNotificationsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUpdateManyWithoutReporterNestedInput
   claims?: Prisma.ClaimUpdateManyWithoutClaimantNestedInput
   decisions?: Prisma.ClaimUpdateManyWithoutDeciderNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -850,12 +1573,18 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUncheckedUpdateManyWithoutReporterNestedInput
   claims?: Prisma.ClaimUncheckedUpdateManyWithoutClaimantNestedInput
   decisions?: Prisma.ClaimUncheckedUpdateManyWithoutDeciderNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  tipsGiven?: Prisma.TipUncheckedUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUncheckedUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUncheckedUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -865,12 +1594,18 @@ export type UserCreateWithoutAuditLogsInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ItemCreateNestedManyWithoutReporterInput
   claims?: Prisma.ClaimCreateNestedManyWithoutClaimantInput
   decisions?: Prisma.ClaimCreateNestedManyWithoutDeciderInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  tipsGiven?: Prisma.TipCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -880,12 +1615,18 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   name: string
   role?: $Enums.Role
   trustScore?: number
+  karma?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutReporterInput
   claims?: Prisma.ClaimUncheckedCreateNestedManyWithoutClaimantInput
   decisions?: Prisma.ClaimUncheckedCreateNestedManyWithoutDeciderInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  tipsGiven?: Prisma.TipUncheckedCreateNestedManyWithoutTipperInput
+  tipsReceived?: Prisma.TipUncheckedCreateNestedManyWithoutFinderInput
+  walletEntries?: Prisma.WalletEntryUncheckedCreateNestedManyWithoutUserInput
+  badges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  karmaEvents?: Prisma.KarmaEventUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -911,12 +1652,18 @@ export type UserUpdateWithoutAuditLogsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUpdateManyWithoutReporterNestedInput
   claims?: Prisma.ClaimUpdateManyWithoutClaimantNestedInput
   decisions?: Prisma.ClaimUpdateManyWithoutDeciderNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  tipsGiven?: Prisma.TipUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -926,12 +1673,18 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   trustScore?: Prisma.IntFieldUpdateOperationsInput | number
+  karma?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUncheckedUpdateManyWithoutReporterNestedInput
   claims?: Prisma.ClaimUncheckedUpdateManyWithoutClaimantNestedInput
   decisions?: Prisma.ClaimUncheckedUpdateManyWithoutDeciderNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  tipsGiven?: Prisma.TipUncheckedUpdateManyWithoutTipperNestedInput
+  tipsReceived?: Prisma.TipUncheckedUpdateManyWithoutFinderNestedInput
+  walletEntries?: Prisma.WalletEntryUncheckedUpdateManyWithoutUserNestedInput
+  badges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  karmaEvents?: Prisma.KarmaEventUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -945,6 +1698,11 @@ export type UserCountOutputType = {
   decisions: number
   notifications: number
   auditLogs: number
+  tipsGiven: number
+  tipsReceived: number
+  walletEntries: number
+  badges: number
+  karmaEvents: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -953,6 +1711,11 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   decisions?: boolean | UserCountOutputTypeCountDecisionsArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
+  tipsGiven?: boolean | UserCountOutputTypeCountTipsGivenArgs
+  tipsReceived?: boolean | UserCountOutputTypeCountTipsReceivedArgs
+  walletEntries?: boolean | UserCountOutputTypeCountWalletEntriesArgs
+  badges?: boolean | UserCountOutputTypeCountBadgesArgs
+  karmaEvents?: boolean | UserCountOutputTypeCountKarmaEventsArgs
 }
 
 /**
@@ -1000,6 +1763,41 @@ export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.AuditLogWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTipsGivenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TipWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTipsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TipWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWalletEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WalletEntryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBadgesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserBadgeWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountKarmaEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KarmaEventWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1008,6 +1806,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   role?: boolean
   trustScore?: boolean
+  karma?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   items?: boolean | Prisma.User$itemsArgs<ExtArgs>
@@ -1015,6 +1814,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   decisions?: boolean | Prisma.User$decisionsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
+  tipsGiven?: boolean | Prisma.User$tipsGivenArgs<ExtArgs>
+  tipsReceived?: boolean | Prisma.User$tipsReceivedArgs<ExtArgs>
+  walletEntries?: boolean | Prisma.User$walletEntriesArgs<ExtArgs>
+  badges?: boolean | Prisma.User$badgesArgs<ExtArgs>
+  karmaEvents?: boolean | Prisma.User$karmaEventsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1025,6 +1829,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   role?: boolean
   trustScore?: boolean
+  karma?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1036,6 +1841,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   role?: boolean
   trustScore?: boolean
+  karma?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1047,17 +1853,23 @@ export type UserSelectScalar = {
   name?: boolean
   role?: boolean
   trustScore?: boolean
+  karma?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "role" | "trustScore" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "role" | "trustScore" | "karma" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | Prisma.User$itemsArgs<ExtArgs>
   claims?: boolean | Prisma.User$claimsArgs<ExtArgs>
   decisions?: boolean | Prisma.User$decisionsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
+  tipsGiven?: boolean | Prisma.User$tipsGivenArgs<ExtArgs>
+  tipsReceived?: boolean | Prisma.User$tipsReceivedArgs<ExtArgs>
+  walletEntries?: boolean | Prisma.User$walletEntriesArgs<ExtArgs>
+  badges?: boolean | Prisma.User$badgesArgs<ExtArgs>
+  karmaEvents?: boolean | Prisma.User$karmaEventsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1071,6 +1883,11 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     decisions: Prisma.$ClaimPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+    tipsGiven: Prisma.$TipPayload<ExtArgs>[]
+    tipsReceived: Prisma.$TipPayload<ExtArgs>[]
+    walletEntries: Prisma.$WalletEntryPayload<ExtArgs>[]
+    badges: Prisma.$UserBadgePayload<ExtArgs>[]
+    karmaEvents: Prisma.$KarmaEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1079,6 +1896,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string
     role: $Enums.Role
     trustScore: number
+    karma: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1480,6 +2298,11 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   decisions<T extends Prisma.User$decisionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$decisionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClaimPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tipsGiven<T extends Prisma.User$tipsGivenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tipsGivenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tipsReceived<T extends Prisma.User$tipsReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tipsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  walletEntries<T extends Prisma.User$walletEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$walletEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WalletEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  badges<T extends Prisma.User$badgesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$badgesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  karmaEvents<T extends Prisma.User$karmaEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$karmaEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KarmaEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1515,6 +2338,7 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly trustScore: Prisma.FieldRef<"User", 'Int'>
+  readonly karma: Prisma.FieldRef<"User", 'Int'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -2027,6 +2851,126 @@ export type User$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
+}
+
+/**
+ * User.tipsGiven
+ */
+export type User$tipsGivenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tip
+   */
+  select?: Prisma.TipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tip
+   */
+  omit?: Prisma.TipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TipInclude<ExtArgs> | null
+  where?: Prisma.TipWhereInput
+  orderBy?: Prisma.TipOrderByWithRelationInput | Prisma.TipOrderByWithRelationInput[]
+  cursor?: Prisma.TipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TipScalarFieldEnum | Prisma.TipScalarFieldEnum[]
+}
+
+/**
+ * User.tipsReceived
+ */
+export type User$tipsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tip
+   */
+  select?: Prisma.TipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tip
+   */
+  omit?: Prisma.TipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TipInclude<ExtArgs> | null
+  where?: Prisma.TipWhereInput
+  orderBy?: Prisma.TipOrderByWithRelationInput | Prisma.TipOrderByWithRelationInput[]
+  cursor?: Prisma.TipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TipScalarFieldEnum | Prisma.TipScalarFieldEnum[]
+}
+
+/**
+ * User.walletEntries
+ */
+export type User$walletEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WalletEntry
+   */
+  select?: Prisma.WalletEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WalletEntry
+   */
+  omit?: Prisma.WalletEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WalletEntryInclude<ExtArgs> | null
+  where?: Prisma.WalletEntryWhereInput
+  orderBy?: Prisma.WalletEntryOrderByWithRelationInput | Prisma.WalletEntryOrderByWithRelationInput[]
+  cursor?: Prisma.WalletEntryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WalletEntryScalarFieldEnum | Prisma.WalletEntryScalarFieldEnum[]
+}
+
+/**
+ * User.badges
+ */
+export type User$badgesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserBadge
+   */
+  select?: Prisma.UserBadgeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserBadge
+   */
+  omit?: Prisma.UserBadgeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserBadgeInclude<ExtArgs> | null
+  where?: Prisma.UserBadgeWhereInput
+  orderBy?: Prisma.UserBadgeOrderByWithRelationInput | Prisma.UserBadgeOrderByWithRelationInput[]
+  cursor?: Prisma.UserBadgeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserBadgeScalarFieldEnum | Prisma.UserBadgeScalarFieldEnum[]
+}
+
+/**
+ * User.karmaEvents
+ */
+export type User$karmaEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KarmaEvent
+   */
+  select?: Prisma.KarmaEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KarmaEvent
+   */
+  omit?: Prisma.KarmaEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KarmaEventInclude<ExtArgs> | null
+  where?: Prisma.KarmaEventWhereInput
+  orderBy?: Prisma.KarmaEventOrderByWithRelationInput | Prisma.KarmaEventOrderByWithRelationInput[]
+  cursor?: Prisma.KarmaEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.KarmaEventScalarFieldEnum | Prisma.KarmaEventScalarFieldEnum[]
 }
 
 /**

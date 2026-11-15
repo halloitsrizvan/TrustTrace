@@ -17,6 +17,7 @@ import { NotificationsModule } from './notifications/notifications.module.js';
 import { ClaimsModule } from './claims/claims.module.js';
 import { HandoverModule } from './handover/handover.module.js';
 import { AdminModule } from './admin/admin.module.js';
+import { TippingModule } from './tipping/tipping.module.js';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { AdminModule } from './admin/admin.module.js';
     ClaimsModule,
     HandoverModule,
     AdminModule,
+    TippingModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },

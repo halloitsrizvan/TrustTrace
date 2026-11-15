@@ -67,6 +67,26 @@ export type Match = Prisma.MatchModel
  */
 export type Claim = Prisma.ClaimModel
 /**
+ * Model Tip
+ * 
+ */
+export type Tip = Prisma.TipModel
+/**
+ * Model WalletEntry
+ * 
+ */
+export type WalletEntry = Prisma.WalletEntryModel
+/**
+ * Model UserBadge
+ * 
+ */
+export type UserBadge = Prisma.UserBadgeModel
+/**
+ * Model KarmaEvent
+ * 
+ */
+export type KarmaEvent = Prisma.KarmaEventModel
+/**
  * Model Notification
  * 
  */

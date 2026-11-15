@@ -56,6 +56,10 @@ export const ModelName = {
   ItemPrivate: 'ItemPrivate',
   Match: 'Match',
   Claim: 'Claim',
+  Tip: 'Tip',
+  WalletEntry: 'WalletEntry',
+  UserBadge: 'UserBadge',
+  KarmaEvent: 'KarmaEvent',
   Notification: 'Notification',
   AuditLog: 'AuditLog'
 } as const
@@ -83,6 +87,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   role: 'role',
   trustScore: 'trustScore',
+  karma: 'karma',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -158,6 +163,62 @@ export const ClaimScalarFieldEnum = {
 } as const
 
 export type ClaimScalarFieldEnum = (typeof ClaimScalarFieldEnum)[keyof typeof ClaimScalarFieldEnum]
+
+
+export const TipScalarFieldEnum = {
+  id: 'id',
+  claimId: 'claimId',
+  tipperId: 'tipperId',
+  finderId: 'finderId',
+  amountMinor: 'amountMinor',
+  currency: 'currency',
+  status: 'status',
+  message: 'message',
+  anonymous: 'anonymous',
+  provider: 'provider',
+  providerOrderId: 'providerOrderId',
+  providerPaymentId: 'providerPaymentId',
+  idempotencyKey: 'idempotencyKey',
+  createdAt: 'createdAt',
+  succeededAt: 'succeededAt'
+} as const
+
+export type TipScalarFieldEnum = (typeof TipScalarFieldEnum)[keyof typeof TipScalarFieldEnum]
+
+
+export const WalletEntryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  amountMinor: 'amountMinor',
+  reason: 'reason',
+  refId: 'refId',
+  createdAt: 'createdAt'
+} as const
+
+export type WalletEntryScalarFieldEnum = (typeof WalletEntryScalarFieldEnum)[keyof typeof WalletEntryScalarFieldEnum]
+
+
+export const UserBadgeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  badge: 'badge',
+  awardedAt: 'awardedAt'
+} as const
+
+export type UserBadgeScalarFieldEnum = (typeof UserBadgeScalarFieldEnum)[keyof typeof UserBadgeScalarFieldEnum]
+
+
+export const KarmaEventScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  delta: 'delta',
+  reason: 'reason',
+  refId: 'refId',
+  createdAt: 'createdAt'
+} as const
+
+export type KarmaEventScalarFieldEnum = (typeof KarmaEventScalarFieldEnum)[keyof typeof KarmaEventScalarFieldEnum]
 
 
 export const NotificationScalarFieldEnum = {

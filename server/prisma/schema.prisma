@@ -52,6 +52,33 @@ enum ClaimStatus {
   COLLECTED
 }
 
+enum TipStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+  EXPIRED
+}
+
+enum WalletEntryType {
+  CREDIT
+  DEBIT
+}
+
+enum WalletEntryReason {
+  TIP_RECEIVED
+  WITHDRAWAL
+  REFUND
+}
+
+enum Badge {
+  FIRST_RETURN
+  CAMPUS_HERO
+  GUARDIAN
+  GRATEFUL_SOUL
+  GENEROUS
+}
+
 model User {
   id            String         @id @default(uuid()) @db.Uuid
   email         String         @unique
@@ -59,6 +86,7 @@ model User {
   name          String
   role          Role           @default(STUDENT)
   trustScore    Int            @default(50)
+  karma         Int            @default(0)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   items         Item[]
@@ -66,6 +94,11 @@ model User {
   decisions     Claim[]        @relation("AdminDecisions")
   notifications Notification[]
   auditLogs     AuditLog[]
+  tipsGiven     Tip[]          @relation("TipsGiven")
+  tipsReceived  Tip[]          @relation("TipsReceived")
+  walletEntries WalletEntry[]
+  badges        UserBadge[]
+  karmaEvents   KarmaEvent[]
 }
 
 model Item {
@@ -145,9 +178,72 @@ model Claim {
   lostItem       Item?       @relation("LostClaims", fields: [lostItemId], references: [id])
   claimant       User        @relation("ClaimantClaims", fields: [claimantId], references: [id])
   decider        User?       @relation("AdminDecisions", fields: [decidedBy], references: [id])
+  tip            Tip?
 
   @@index([foundItemId, status])
   @@index([claimantId])
+}
+
+model Tip {
+  id                String    @id @default(uuid()) @db.Uuid
+  claimId           String    @unique @db.Uuid
+  tipperId          String    @db.Uuid
+  finderId          String    @db.Uuid
+  amountMinor       Int
+  currency          String    @default("INR")
+  status            TipStatus @default(PENDING)
+  message           String?
+  anonymous         Boolean   @default(false)
+  provider          String
+  providerOrderId   String?   @unique
+  providerPaymentId String?   @unique
+  idempotencyKey    String    @unique
+  createdAt         DateTime  @default(now())
+  succeededAt       DateTime?
+  claim             Claim     @relation(fields: [claimId], references: [id])
+  tipper            User      @relation("TipsGiven", fields: [tipperId], references: [id])
+  finder            User      @relation("TipsReceived", fields: [finderId], references: [id])
+
+  @@index([finderId, status])
+  @@index([tipperId])
+}
+
+model WalletEntry {
+  id          String            @id @default(uuid()) @db.Uuid
+  userId      String            @db.Uuid
+  type        WalletEntryType
+  amountMinor Int
+  reason      WalletEntryReason
+  refId       String
+  createdAt   DateTime          @default(now())
+  user        User              @relation(fields: [userId], references: [id])
+
+  @@unique([reason, refId])
+  @@index([userId])
+}
+
+model UserBadge {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  badge     Badge
+  awardedAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, badge])
+}
+
+model KarmaEvent {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  delta     Int
+  reason    String
+  refId     String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, reason, refId])
+  @@index([userId])
+  @@index([refId])
 }
 
 model Notification {
