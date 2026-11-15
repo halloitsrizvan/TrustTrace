@@ -17,3 +17,17 @@ export const ZONE_ADJACENCY: Readonly<Record<string, readonly string[]>> = {
   FEST_GROUNDS: ['MAIN_GATE', 'CAFETERIA', 'SPORTS_COMPLEX', 'AUDITORIUM'],
   ADMIN_BLOCK: ['MAIN_GATE', 'ACADEMIC_BLOCK'],
 };
+
+export const CLAIM_CONFIG = {
+  weights: { proof: 0.55, timeline: 0.2, userTrust: 0.15, behaviour: 0.1 },
+  proofSemanticWeight: 0.7,
+  proofTokenWeight: 0.3,
+  proofHardReject: 0.35,
+  approvalThreshold: 70,
+  sensitiveApprovalThreshold: 75,
+  copycatCosine: 0.85,
+  tokenTtlHours: 24,
+  maxAttempts: 3,
+  cooldownMinutes: 10,
+  maxActiveClaims: 5,
+} as const;

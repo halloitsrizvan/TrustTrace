@@ -14,6 +14,9 @@ import { UploadsModule } from './uploads/uploads.module.js';
 import { ItemsModule } from './items/items.module.js';
 import { EmbeddingsModule } from './embeddings/embeddings.module.js';
 import { NotificationsModule } from './notifications/notifications.module.js';
+import { ClaimsModule } from './claims/claims.module.js';
+import { HandoverModule } from './handover/handover.module.js';
+import { AdminModule } from './admin/admin.module.js';
 
 @Module({
   imports: [
@@ -35,6 +38,9 @@ import { NotificationsModule } from './notifications/notifications.module.js';
     ItemsModule,
     EmbeddingsModule,
     NotificationsModule,
+    ClaimsModule,
+    HandoverModule,
+    AdminModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },
