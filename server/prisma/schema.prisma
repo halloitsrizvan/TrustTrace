@@ -1,0 +1,177 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+enum ItemType {
+  LOST
+  FOUND
+}
+
+enum ItemStatus {
+  OPEN
+  MATCHED
+  CLAIM_PENDING
+  RETURNED
+  CLOSED
+  EXPIRED
+}
+
+enum ItemCategory {
+  ID_CARD
+  PHONE
+  BOOK
+  GADGET
+  WALLET
+  KEYS
+  BAG
+  OTHER
+}
+
+enum EmbeddingStatus {
+  READY
+  PENDING
+  FAILED
+}
+
+enum ClaimStatus {
+  PENDING
+  APPROVED
+  FLAGGED
+  REJECTED
+  EXPIRED
+  COLLECTED
+}
+
+model User {
+  id            String         @id @default(uuid()) @db.Uuid
+  email         String         @unique
+  passwordHash  String
+  name          String
+  role          Role           @default(STUDENT)
+  trustScore    Int            @default(50)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  items         Item[]
+  claims        Claim[]        @relation("ClaimantClaims")
+  decisions     Claim[]        @relation("AdminDecisions")
+  notifications Notification[]
+  auditLogs     AuditLog[]
+}
+
+model Item {
+  id                String                      @id @default(uuid()) @db.Uuid
+  type              ItemType
+  status            ItemStatus                  @default(OPEN)
+  category          ItemCategory
+  title             String
+  publicDescription String
+  zone              String
+  eventTag          String?
+  occurredAt        DateTime
+  imageUrl          String?
+  reporterId        String                      @db.Uuid
+  holdLocation      String?
+  embeddingStatus   EmbeddingStatus             @default(PENDING)
+  publicEmbedding   Unsupported("vector(768)")?
+  createdAt         DateTime                    @default(now())
+  updatedAt         DateTime                    @updatedAt
+  reporter          User                        @relation(fields: [reporterId], references: [id])
+  private           ItemPrivate?
+  lostMatches       Match[]                     @relation("LostMatches")
+  foundMatches      Match[]                     @relation("FoundMatches")
+  foundClaims       Claim[]                     @relation("FoundClaims")
+  lostClaims        Claim[]                     @relation("LostClaims")
+
+  @@index([type, status, category, zone, createdAt])
+}
+
+model ItemPrivate {
+  itemId           String                      @id @db.Uuid
+  privateDetails   String?
+  privateImageUrl  String?
+  privateEmbedding Unsupported("vector(768)")?
+  createdAt        DateTime                    @default(now())
+  updatedAt        DateTime                    @updatedAt
+  item             Item                        @relation(fields: [itemId], references: [id], onDelete: Cascade)
+}
+
+model Match {
+  id          String   @id @default(uuid()) @db.Uuid
+  lostItemId  String   @db.Uuid
+  foundItemId String   @db.Uuid
+  score       Float
+  breakdown   Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  lostItem    Item     @relation("LostMatches", fields: [lostItemId], references: [id], onDelete: Cascade)
+  foundItem   Item     @relation("FoundMatches", fields: [foundItemId], references: [id], onDelete: Cascade)
+
+  @@unique([lostItemId, foundItemId])
+  @@index([lostItemId])
+  @@index([foundItemId])
+}
+
+model Claim {
+  id             String      @id @default(uuid()) @db.Uuid
+  foundItemId    String      @db.Uuid
+  lostItemId     String?     @db.Uuid
+  claimantId     String      @db.Uuid
+  status         ClaimStatus @default(PENDING)
+  prompts        Json
+  answers        Json?
+  proofScore     Float       @default(0)
+  trustScore     Int         @default(0)
+  breakdown      Json
+  attemptNo      Int         @default(1)
+  startedAt      DateTime    @default(now())
+  submittedAt    DateTime?
+  tokenHash      String?
+  tokenExpiresAt DateTime?
+  decidedBy      String?     @db.Uuid
+  decisionNote   String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  foundItem      Item        @relation("FoundClaims", fields: [foundItemId], references: [id])
+  lostItem       Item?       @relation("LostClaims", fields: [lostItemId], references: [id])
+  claimant       User        @relation("ClaimantClaims", fields: [claimantId], references: [id])
+  decider        User?       @relation("AdminDecisions", fields: [decidedBy], references: [id])
+
+  @@index([foundItemId, status])
+  @@index([claimantId])
+}
+
+model Notification {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @db.Uuid
+  type      String
+  payload   Json
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid()) @db.Uuid
+  actorId   String?  @db.Uuid
+  action    String
+  entity    String
+  entityId  String
+  meta      Json
+  createdAt DateTime @default(now())
+  actor     User?    @relation(fields: [actorId], references: [id])
+
+  @@index([entity, entityId, createdAt])
+}
