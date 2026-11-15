@@ -7,6 +7,7 @@ import type { CreateTipDto } from './dto/create-tip.dto.js';
 import { sanitizeTipMessage } from './message-sanitizer.js';
 import { PAYMENT_PROVIDER, type PaymentProvider } from './payment-provider.js';
 import { TIPPING_CONFIG } from './tipping.config.js';
+import type { TipQueryDto } from './dto/tip-query.dto.js';
 
 @Injectable()
 export class TipsService {
@@ -64,5 +65,45 @@ export class TipsService {
       await transaction.auditLog.create({ data: { actorId: tip.tipperId, action: 'TIP_SUCCEEDED', entity: 'Tip', entityId: tip.id, meta: { amountMinor: tip.amountMinor } } });
       return settled;
     });
+  }
+
+  async given(userId: string, query: TipQueryDto) {
+    const rows = await this.prisma.tip.findMany({
+      where: { tipperId: userId }, orderBy: [{ createdAt: 'desc' }, { id: 'desc' }], take: query.limit + 1,
+      ...(query.cursor ? { cursor: { id: query.cursor }, skip: 1 } : {}),
+      include: { finder: { select: { id: true, name: true } } },
+    });
+    return this.page(rows, query.limit);
+  }
+
+  async received(userId: string, query: TipQueryDto) {
+    const rows = await this.prisma.tip.findMany({
+      where: { finderId: userId }, orderBy: [{ createdAt: 'desc' }, { id: 'desc' }], take: query.limit + 1,
+      ...(query.cursor ? { cursor: { id: query.cursor }, skip: 1 } : {}),
+      include: { tipper: { select: { id: true, name: true } } },
+    });
+    const page = this.page(rows, query.limit);
+    return {
+      ...page,
+      items: page.items.map(({ tipper, ...tip }) =>
+        tip.anonymous ? tip : { ...tip, tipper },
+      ),
+    };
+  }
+
+  async wallet(userId: string, query: TipQueryDto) {
+    const [credits, debits, rows] = await Promise.all([
+      this.prisma.walletEntry.aggregate({ where: { userId, type: WalletEntryType.CREDIT }, _sum: { amountMinor: true } }),
+      this.prisma.walletEntry.aggregate({ where: { userId, type: WalletEntryType.DEBIT }, _sum: { amountMinor: true } }),
+      this.prisma.walletEntry.findMany({ where: { userId }, orderBy: [{ createdAt: 'desc' }, { id: 'desc' }], take: query.limit + 1, ...(query.cursor ? { cursor: { id: query.cursor }, skip: 1 } : {}) }),
+    ]);
+    const page = this.page(rows, query.limit);
+    return { balanceMinor: (credits._sum.amountMinor ?? 0) - (debits._sum.amountMinor ?? 0), entries: page.items, nextCursor: page.nextCursor };
+  }
+
+  private page<T extends { id: string }>(rows: T[], limit: number) {
+    const hasMore = rows.length > limit;
+    const items = hasMore ? rows.slice(0, limit) : rows;
+    return { items, nextCursor: hasMore ? items.at(-1)!.id : null };
   }
 }
