@@ -117,3 +117,28 @@ The default e2e suite uses a deliberately unavailable local database address to
 verify outage behavior and API serialization without requiring developer
 credentials. Database-backed demo verification requires a migrated Supabase or
 local PostgreSQL/pgvector database configured through `.env`.
+
+## Optional tipping and recognition
+
+Tips are available only after a claim reaches `COLLECTED`, never during
+matching or proof verification. Claim scoring imports no tipping or karma data.
+All money uses integer paise and wallet balances are derived from the immutable
+`WalletEntry` ledger.
+
+The buildathon configuration uses `PAYMENT_PROVIDER=mock`. An owner creates an
+idempotent order with `POST /api/tips` and confirms it with
+`POST /api/tips/{id}/confirm`. Razorpay and withdrawals are intentionally
+excluded. Defaults in `src/tipping/tipping.config.ts` are:
+
+- ₹10 minimum, ₹500 maximum, ₹1,000 daily cap
+- suggested amounts ₹20, ₹50, and ₹100
+- seven-day post-collection window
+- 30-minute pending-order TTL (the expiry worker is deferred with the cut
+  webhook/provider slice)
+- finder return +20 karma; finder/tipper successful-tip +5 karma
+- same finder/claimant pair earns karma at most once per 30 days
+
+Anonymous received-tip responses omit both `tipperId` and the tipper object.
+Stored `TIP_RECEIVED` notification payloads likewise contain no tipper identity.
+Public profiles and the Campus Heroes leaderboard expose names, karma, badges,
+and return counts—never email addresses or monetary amounts.

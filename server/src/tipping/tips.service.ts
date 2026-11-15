@@ -93,8 +93,8 @@ export class TipsService {
     const page = this.page(rows, query.limit);
     return {
       ...page,
-      items: page.items.map(({ tipper, ...tip }) =>
-        tip.anonymous ? tip : { ...tip, tipper },
+      items: page.items.map(({ tipper, tipperId, ...tip }) =>
+        tip.anonymous ? tip : { ...tip, tipperId, tipper },
       ),
     };
   }

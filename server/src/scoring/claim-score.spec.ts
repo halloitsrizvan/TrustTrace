@@ -35,4 +35,21 @@ describe('claim trust scoring', () => {
     });
     expect(score.total).toBe(93);
   });
+
+  it('is independent of tips and karma', () => {
+    const claimInput = {
+      proofCosine: 0.9,
+      tokenRecall: 0.8,
+      timeline: 1,
+      userTrust: 0.6,
+      behaviour: 0.9,
+    };
+    const beforeTips = calculateClaimScore(claimInput);
+    const unrelatedRecognitionData = { tips: 100, karma: 10_000 };
+    expect(unrelatedRecognitionData.karma).toBeGreaterThan(0);
+    expect(calculateClaimScore(claimInput)).toEqual(beforeTips);
+    expect(decideClaim(beforeTips.breakdown.proof, beforeTips.total, ItemCategory.BOOK)).toBe(
+      decideClaim(calculateClaimScore(claimInput).breakdown.proof, calculateClaimScore(claimInput).total, ItemCategory.BOOK),
+    );
+  });
 });
