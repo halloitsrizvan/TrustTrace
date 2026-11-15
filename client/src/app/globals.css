@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --paper: #f3f4fa;
+  --surface: #ffffff;
+  --ink: #141a3c;
+  --ink-soft: #4a5078;
+  --rule: #d9dcee;
+  --ultra: #2f3fe0;
+  --on-ultra: #ffffff;
+  --ultra-tint: #e3e6fc;
+  --lost: #f26b21;
+  --lost-tint: #ffe9db;
+  --lost-ink: #8a3a08;
+  --found: #0fa77a;
+  --found-tint: #d9f5ec;
+  --found-ink: #04644a;
+  --review: #e5a100;
+  --review-tint: #fff0cc;
+  --review-ink: #7a5200;
+  --rejected: #b3122e;
+  --rejected-tint: #ffe0e5;
+  --rejected-ink: #7a0c20;
+  --print: 4px 4px 0 rgba(20, 26, 60, 0.12);
+  --print-border: transparent;
+}
+
+.dark {
+  --paper: #0d1130;
+  --surface: #151b47;
+  --ink: #e9ebff;
+  --ink-soft: #a5abd6;
+  --rule: #2a3170;
+  --ultra: #8c97ff;
+  --on-ultra: #0d1130;
+  --ultra-tint: #232b6b;
+  --lost: #ff8a4d;
+  --lost-tint: #3b2316;
+  --lost-ink: #ffb48a;
+  --found: #2fd3a0;
+  --found-tint: #0f3a33;
+  --found-ink: #7be8c4;
+  --review: #ffc53d;
+  --review-tint: #3d3210;
+  --review-ink: #ffd66b;
+  --rejected: #ff5a72;
+  --rejected-tint: #4a1824;
+  --rejected-ink: #ff9aaa;
+  --print: 0 0 0 0 transparent;
+  --print-border: var(--rule);
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-rule: var(--rule);
+  --color-ultra: var(--ultra);
+  --color-on-ultra: var(--on-ultra);
+  --color-ultra-tint: var(--ultra-tint);
+  --color-lost: var(--lost);
+  --color-lost-tint: var(--lost-tint);
+  --color-lost-ink: var(--lost-ink);
+  --color-found: var(--found);
+  --color-found-tint: var(--found-tint);
+  --color-found-ink: var(--found-ink);
+  --color-review: var(--review);
+  --color-review-tint: var(--review-tint);
+  --color-review-ink: var(--review-ink);
+  --color-rejected: var(--rejected);
+  --color-rejected-tint: var(--rejected-tint);
+  --color-rejected-ink: var(--rejected-ink);
+  --font-sans: var(--font-body), var(--font-malayalam), system-ui, sans-serif;
+  --font-display: var(--font-archivo), var(--font-body), sans-serif;
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 22px;
+  --text-2xl: 28px;
+  --text-3xl: 36px;
+  --text-4xl: 48px;
+  --text-5xl: 64px;
+  --radius-tag: 6px;
+  --radius-control: 12px;
+  --radius-sheet: 28px;
+}
+
+html {
+  background: var(--paper);
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), var(--font-malayalam), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-archivo), var(--font-body), sans-serif;
+  font-variation-settings: "wdth" 118;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.num {
+  font-variant-numeric: tabular-nums;
+}
+.measure {
+  max-width: 62ch;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ultra);
+  outline-offset: 2px;
+}
+
+/* printed offset shadow: crisp in light, a rule border in dark */
+.printed {
+  box-shadow: var(--print);
+  border: 1px solid var(--print-border);
+}
+.printed-drop {
+  filter: drop-shadow(4px 4px 0 rgba(20, 26, 60, 0.12));
+}
+.dark .printed-drop {
+  filter: none;
+}
+
+/* tag silhouettes: the cut corner sits on the string side */
+.tag-lost {
+  clip-path: polygon(16px 0, 100% 0, 100% 100%, 0 100%, 0 16px);
+}
+.tag-found {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+}
+
+.perforation {
+  border-top: 2px dashed var(--rule);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes shimmer {
+  0% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.55;
+  }
+}
+.sheet-in {
+  animation: sheet-up 200ms ease-out;
+}
+.fade-in {
+  animation: fade 150ms ease-out;
+}
+.skel {
+  background: var(--rule);
+  animation: shimmer 1.4s ease-in-out infinite;
+}

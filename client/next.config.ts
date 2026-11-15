@@ -1,18 +1,16 @@
 import type { NextConfig } from "next";
 
+const imageHost = process.env.NEXT_PUBLIC_IMAGE_HOST ?? "**.supabase.co";
+
 const nextConfig: NextConfig = {
-  /* config options here */
-  experimental: {
-    agentFeedback: true,
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: imageHost }],
   },
-  cacheComponents: true,
-  partialPrefetching: true,
+  poweredByHeader: false,
+  // msw/browser has a null "node" export; the server graph gets an empty stub instead.
   turbopack: {
-    rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
+    resolveAlias: {
+      "msw/browser": { browser: "msw/browser", default: "./src/mocks/empty.ts" },
     },
   },
 };
