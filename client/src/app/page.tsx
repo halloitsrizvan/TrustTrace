@@ -17,13 +17,13 @@ export default function Landing() {
   return (
     <div className="relative isolate">
       <div aria-hidden className="bg-hero absolute inset-x-0 top-0 -z-10 h-[640px]" />
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-4 md:px-6">
+      <header className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
         <Logo />
         <nav aria-label={copy.nav.main} className="flex items-center gap-1">
-          <Link href="/board" className="inline-flex min-h-11 items-center rounded-2xl px-3 hover:bg-ultra-tint">
+          <Link href="/board" className="inline-flex min-h-11 items-center rounded-2xl px-3">
             {copy.nav.board}
           </Link>
-          <Link href="/login" className="inline-flex min-h-11 items-center rounded-2xl px-3 font-bold hover:bg-ultra-tint">
+          <Link href="/login" className="inline-flex min-h-11 items-center rounded-2xl px-3 font-bold">
             {copy.action.signIn}
           </Link>
         </nav>

@@ -1,6 +1,10 @@
 "use client";
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { get, patch, post } from "./client";
+import { ApiError, get, patch, post } from "./client";
+import {
+  MAX_ATTEMPTS, COOLDOWN_MINUTES, toAdminDetail, toAdminRow, toAuditRow, toClaim, toEligibility, toLeaders, toMatch,
+  toNotification, toPoints, toProfile, toTip, toWallet,
+} from "./adapt";
 import type {
   AdminClaimDetail, AdminClaimRow, AdminStats, AppNotification, AuditRow, Claim, ClaimStart, ClaimSubmitResult,
   CreateItemInput, CreateItemResponse, HandoverResult, ItemMatch, ItemPage, LeaderRow, OwnerItem, Paged,
@@ -45,17 +49,33 @@ export function useItemsFeed(f: ItemFilters) {
 
 export const useItem = (id: string) =>
   useQuery({ queryKey: keys.item(id), queryFn: () => get<PublicItem | OwnerItem>(`/items/${id}`) });
+type Raw = Record<string, unknown>;
+export const fetchMatches = async (id: string): Promise<ItemMatch[]> => (await get<Raw[]>(`/items/${id}/matches`)).map(toMatch);
 export const useItemMatches = (id: string, enabled = true) =>
-  useQuery({ queryKey: keys.matches(id), queryFn: () => get<ItemMatch[]>(`/items/${id}/matches`), enabled });
+  useQuery({ queryKey: keys.matches(id), queryFn: () => fetchMatches(id), enabled });
 export const useMyItems = () => useQuery({ queryKey: keys.mine, queryFn: () => get<OwnerItem[]>("/items/mine") });
-export const useMyClaims = () => useQuery({ queryKey: keys.claims, queryFn: () => get<Claim[]>("/claims/mine") });
-export const useClaim = (id: string) =>
-  useQuery({ queryKey: keys.claim(id), queryFn: () => get<Claim>(`/claims/${id}`) });
+// Claim endpoints return foundItemId only, so the item is fetched alongside.
+const fetchClaim = async (id: string): Promise<Claim> => {
+  const c = await get<Raw>(`/claims/${id}`);
+  return toClaim(c, await get<PublicItem>(`/items/${String(c.foundItemId)}`));
+};
+export const useMyClaims = () =>
+  useQuery({
+    queryKey: keys.claims,
+    queryFn: async () => {
+      const rows = await get<Raw[]>("/claims/mine");
+      return Promise.all(rows.map(async (c) => toClaim(c, await get<PublicItem>(`/items/${String(c.foundItemId)}`))));
+    },
+  });
+export const useClaim = (id: string) => useQuery({ queryKey: keys.claim(id), queryFn: () => fetchClaim(id) });
 
 export function useCreateItem() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (b: CreateItemInput) => post<CreateItemResponse>("/items", b),
+    mutationFn: async (b: CreateItemInput): Promise<CreateItemResponse> => {
+      const r = await post<Raw>("/items", b);
+      return { ...(r as unknown as OwnerItem), matches: ((r.matches as Raw[]) ?? []).map(toMatch) };
+    },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["items"] }),
   });
 }
@@ -69,12 +89,33 @@ export function useCloseItem() {
 
 export const startClaim = (foundItemId: string, lostItemId?: string) =>
   post<ClaimStart>("/claims/start", { foundItemId, lostItemId });
-export const submitClaim = (id: string, answers: { promptId: string; answer: string }[]) =>
-  post<ClaimSubmitResult>(`/claims/${id}/submit`, { answers });
-export const fetchQr = (id: string) => get<QrToken>(`/claims/${id}/qr`);
+export const submitClaim = async (id: string, answers: { promptId: string; answer: string }[]): Promise<ClaimSubmitResult> => {
+  const r = await post<Raw>(`/claims/${id}/submit`, { answers: answers.map((a) => ({ promptId: a.promptId, text: a.answer })) });
+  // Attempt count and token expiry come from the claim itself.
+  const c = await get<Raw>(`/claims/${id}`).catch(() => ({}) as Raw);
+  const attemptNo = Number(c.attemptNo ?? 1);
+  const rejected = r.decision === "REJECTED";
+  return {
+    decision: r.decision as ClaimSubmitResult["decision"],
+    trustScore: Number(r.trustScore),
+    breakdown: toPoints(r.breakdown),
+    handoverToken: r.handoverToken as string | undefined,
+    tokenExpiresAt: (c.tokenExpiresAt as string | undefined) ?? undefined,
+    attemptsLeft: rejected ? Math.max(0, MAX_ATTEMPTS - attemptNo) : undefined,
+    retryAfter: rejected ? new Date(Date.now() + COOLDOWN_MINUTES * 60_000).toISOString() : null,
+  };
+};
+export const fetchQr = async (id: string): Promise<QrToken> => {
+  const q = await get<{ token: string; expiresAt: string }>(`/claims/${id}/qr`);
+  return { handoverToken: q.token, tokenExpiresAt: q.expiresAt };
+};
 
 export const useNotifications = () =>
-  useQuery({ queryKey: keys.notifs, queryFn: () => get<AppNotification[]>("/notifications"), refetchInterval: 60_000 });
+  useQuery({
+    queryKey: keys.notifs,
+    queryFn: async (): Promise<AppNotification[]> => (await get<{ notifications: Raw[] }>("/notifications")).notifications.map(toNotification),
+    refetchInterval: 60_000,
+  });
 export function useMarkRead() {
   const qc = useQueryClient();
   return useMutation({
@@ -86,53 +127,93 @@ export function useMarkRead() {
 export const useTipEligibility = (claimId: string, enabled = true) =>
   useQuery({
     queryKey: ["tip-elig", claimId],
-    queryFn: () => get<TipEligibility>(`/tips/eligibility/${claimId}`),
+    queryFn: async (): Promise<TipEligibility> => toEligibility(await get<Raw>(`/tips/eligibility/${claimId}`)),
     enabled,
     retry: false,
   });
-export const createTip = (b: { claimId: string; amount: number; note?: string; anonymous: boolean }, key: string) =>
-  post<Tip>("/tips", b, { "Idempotency-Key": key });
-export const confirmTip = (id: string) => post<Tip>(`/tips/${id}/confirm`);
-export const useTipsGiven = () => useQuery({ queryKey: ["tips", "given"], queryFn: () => get<Tip[]>("/tips/mine/given") });
+export const createTip = async (b: { claimId: string; amount: number; note?: string; anonymous: boolean }, key: string): Promise<Tip> =>
+  toTip(await post<Raw>("/tips", { claimId: b.claimId, amountMinor: b.amount, message: b.note, anonymous: b.anonymous }, { "Idempotency-Key": key }));
+export const confirmTip = async (id: string): Promise<Tip> => toTip(await post<Raw>(`/tips/${id}/confirm`));
+export const useTipsGiven = () =>
+  useQuery({ queryKey: ["tips", "given"], queryFn: async () => (await get<{ items: Raw[] }>("/tips/mine/given")).items.map(toTip) });
 export const useTipsReceived = () =>
-  useQuery({ queryKey: ["tips", "received"], queryFn: () => get<Tip[]>("/tips/mine/received") });
-export const useWallet = () => useQuery({ queryKey: ["wallet"], queryFn: () => get<Wallet>("/wallet") });
+  useQuery({ queryKey: ["tips", "received"], queryFn: async () => (await get<{ items: Raw[] }>("/tips/mine/received")).items.map(toTip) });
+export const useWallet = () => useQuery({ queryKey: ["wallet"], queryFn: async (): Promise<Wallet> => toWallet(await get<Raw>("/wallet")) });
 
 export const useProfile = (id: string) =>
-  useQuery({ queryKey: ["profile", id], queryFn: () => get<PublicProfile>(`/users/${id}/public-profile`), retry: false, enabled: !!id });
+  useQuery({ queryKey: ["profile", id], queryFn: async (): Promise<PublicProfile> => toProfile(await get<Raw>(`/users/${id}/public-profile`)), retry: false, enabled: !!id });
 export const useLeaderboard = (period: "week" | "month" | "all") =>
   useQuery({
     queryKey: ["leaderboard", period],
-    queryFn: () => get<LeaderRow[]>("/leaderboard/finders", { period }),
+    queryFn: async (): Promise<LeaderRow[]> => toLeaders(await get<Raw[]>("/leaderboard/finders", { period })),
   });
 export const usePublicStats = () =>
   useQuery({ queryKey: ["public-stats"], queryFn: () => get<PublicStats>("/public/stats"), retry: false });
 
-export const useAdminStats = () => useQuery({ queryKey: ["admin", "stats"], queryFn: () => get<AdminStats>("/admin/stats") });
+export const useAdminStats = () =>
+  useQuery({
+    queryKey: ["admin", "stats"],
+    queryFn: async (): Promise<AdminStats> => {
+      const r = await get<Raw>("/admin/stats");
+      return {
+        itemsReturned: Number(r.reunitedCount), avgHoursToReturn: Number(r.avgHoursToReunite), fraudBlocked: Number(r.fraudBlockedCount),
+        openReviews: Number(r.openFlagged), tipConversion: Math.round(Number(r.tipConversionRate) * 100),
+        zones: r.zones as AdminStats["zones"], hours: r.hours as AdminStats["hours"],
+        topFinders: (r.topFinders as Raw[]).map((f) => ({ id: String(f.id), name: String(f.name), returns: Number(f.returnsCount) })),
+      };
+    },
+  });
+// One list feeds both the queue and the review panel; the backend has no single-claim admin endpoint.
+const adminClaimsRaw = () => ({ queryKey: ["admin", "claims"], queryFn: () => get<Raw[]>("/admin/claims") });
 export const useAdminClaims = () =>
-  useQuery({ queryKey: ["admin", "claims"], queryFn: () => get<AdminClaimRow[]>("/admin/claims") });
+  useQuery({
+    ...adminClaimsRaw(),
+    select: (rows): AdminClaimRow[] =>
+      rows.map(toAdminRow).sort((a, b) => Number(b.status === "FLAGGED") - Number(a.status === "FLAGGED")),
+  });
 export const useAdminClaim = (id: string | null) =>
   useQuery({
-    queryKey: ["admin", "claim", id],
-    queryFn: () => get<AdminClaimDetail>(`/admin/claims/${id}`),
+    ...adminClaimsRaw(),
+    select: (rows): AdminClaimDetail | null => {
+      const c = rows.find((x) => x.id === id);
+      return c ? toAdminDetail(c) : null;
+    },
     enabled: !!id,
   });
 export function useDecide() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (v: { id: string; decision: "APPROVED" | "REJECTED"; note: string }) =>
-      post(`/admin/claims/${v.id}/decision`, { decision: v.decision, note: v.note }),
+      post(`/admin/claims/${v.id}/decision`, { decision: v.decision === "APPROVED" ? "APPROVE" : "REJECT", note: v.note }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["admin"] }),
   });
 }
-export const scanToken = (token: string) => post<HandoverResult>("/handover/scan", { token });
+/** Maps the backend handover errors to the three plain failures the desk sees. */
+export const scanToken = async (token: string): Promise<HandoverResult> => {
+  try {
+    const r = await post<{ claimId: string }>("/handover/scan", { token });
+    return { ok: true, claimId: r.claimId };
+  } catch (e) {
+    if (e instanceof ApiError && e.status < 500) {
+      const m = e.message.toLowerCase();
+      return { ok: false, code: m.includes("already used") ? "USED" : m.includes("expired") ? "EXPIRED" : "INVALID" };
+    }
+    throw e;
+  }
+};
 export const useAdminTips = (page: string | undefined, status: string) =>
   useQuery({
     queryKey: ["admin", "tips", page, status],
-    queryFn: () => get<Paged<Tip>>("/admin/tips", { cursor: page, status }),
+    queryFn: async (): Promise<Paged<Tip>> => {
+      const r = await get<{ tips: Raw[]; nextCursor: string | null }>("/admin/tips", { cursor: page, status });
+      return { rows: r.tips.map(toTip), nextCursor: r.nextCursor };
+    },
   });
-export const useAdminAudit = (page: string | undefined, q: string) =>
+export const useAdminAudit = (page: string | undefined, entity: string) =>
   useQuery({
-    queryKey: ["admin", "audit", page, q],
-    queryFn: () => get<Paged<AuditRow>>("/admin/audit", { cursor: page, q }),
+    queryKey: ["admin", "audit", page, entity],
+    queryFn: async (): Promise<Paged<AuditRow>> => {
+      const r = await get<{ logs: Raw[]; nextCursor: string | null }>("/admin/audit", { cursor: page, entity });
+      return { rows: r.logs.map(toAuditRow), nextCursor: r.nextCursor };
+    },
   });

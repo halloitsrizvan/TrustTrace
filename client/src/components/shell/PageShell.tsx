@@ -57,7 +57,7 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
     <div className="relative isolate min-h-dvh pb-28 md:pb-10">
       <div aria-hidden className="bg-hero absolute inset-x-0 top-0 -z-10 h-[420px]" />
       <header className="sticky top-0 z-30 bg-transparent">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 md:px-6">
+        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 pt-[max(0.75rem,env(safe-area-inset-top))] md:px-6 md:py-4">
           <Logo href="/board" />
           <nav aria-label={copy.nav.main} className="ml-4 hidden items-center gap-1 md:flex">
             {links.map(({ href, label }) => (
@@ -67,7 +67,7 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
                 aria-current={active(href) ? "page" : undefined}
                 className={cn(
                   "inline-flex min-h-11 items-center rounded-2xl px-3 text-base",
-                  active(href) ? "bg-ultra-tint font-bold" : "hover:bg-ultra-tint",
+                  active(href) ? "bg-ultra-tint font-bold" : "",
                 )}
               >
                 {label}
@@ -83,12 +83,12 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
                 <Link
                   href="/notifications"
                   aria-label={unread ? `${copy.nav.notifications}, ${unread} unread` : copy.nav.notifications}
-                  className="relative grid size-11 place-items-center rounded-full hover:bg-ultra-tint"
+                  className="relative grid size-11 place-items-center rounded-full"
                 >
                   <Bell size={21} strokeWidth={1.75} aria-hidden />
                   {unread > 0 ? <span aria-hidden className="absolute right-2.5 top-2.5 size-2.5 rounded-full bg-lost ring-2 ring-paper" /> : null}
                 </Link>
-                <Link href="/me" aria-label={copy.nav.me} className="grid size-11 place-items-center rounded-full hover:bg-ultra-tint max-md:hidden">
+                <Link href="/me" aria-label={copy.nav.me} className="grid size-11 place-items-center rounded-full max-md:hidden">
                   <UserRound size={21} strokeWidth={1.75} aria-hidden />
                 </Link>
               </>

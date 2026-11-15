@@ -130,7 +130,9 @@ export interface QrToken {
 
 export interface AppNotification {
   id: string;
-  type: "MATCH_FOUND" | "CLAIM_RESULT" | "HANDOVER_DONE" | "TIP_PROMPT" | "TIP_RECEIVED" | "BADGE_EARNED";
+  type:
+    | "STRONG_MATCH" | "CLAIM_STARTED" | "CLAIM_DECISION" | "HANDOVER_COMPLETED" | "RETURN_COMPLETED"
+    | "TIP_PROMPT" | "TIP_RECEIVED" | "BADGE_EARNED";
   title: string;
   body: string;
   readAt: string | null;
@@ -200,8 +202,9 @@ export interface AdminStats {
   avgHoursToReturn: number;
   fraudBlocked: number;
   openReviews: number;
-  tipConversion: number;
-  hotspots: { zone: string; hour: number; count: number }[];
+  tipConversion: number; // percent
+  zones: { key: string; count: number }[];
+  hours: { key: string; count: number }[];
   topFinders: { id: string; name: string; returns: number }[];
 }
 export interface HandoverResult {
@@ -209,6 +212,7 @@ export interface HandoverResult {
   itemTitle?: string;
   ownerFirstName?: string;
   code?: "USED" | "EXPIRED" | "INVALID";
+  claimId?: string;
 }
 export interface AuditRow {
   id: string;

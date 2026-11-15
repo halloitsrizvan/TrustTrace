@@ -83,8 +83,8 @@ export default function ScanPage() {
           {result.ok ? (
             <>
               <p className="font-display text-4xl">{a.handedOver}</p>
-              <p className="text-xl">{result.itemTitle}</p>
-              <p className="text-lg">{a.owner}: {result.ownerFirstName}</p>
+              {result.itemTitle ? <p className="text-xl">{result.itemTitle}</p> : <p className="text-lg">{a.handedOverNoDetail}</p>}
+              {result.ownerFirstName ? <p className="text-lg">{a.owner}: {result.ownerFirstName}</p> : null}
             </>
           ) : (
             <p className="font-display text-3xl">{result.code ? failText[result.code] : copy.admin.scanFailed}</p>

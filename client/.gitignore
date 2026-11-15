@@ -45,3 +45,4 @@ next-env.d.ts
 shot.tmp.mjs
 .sp.tmp
 *.tmp.mjs
+.next-test

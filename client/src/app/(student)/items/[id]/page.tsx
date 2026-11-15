@@ -59,6 +59,7 @@ export default function ItemPage({ params }: { params: Promise<{ id: string }> }
 
   const lost = it.type === "LOST";
   const open = it.status === "OPEN";
+  const claimable = open || it.status === "MATCHED";
   const privateDetails = mine ? (it as OwnerItem).private?.privateDetails : null;
 
   return (
@@ -83,7 +84,7 @@ export default function ItemPage({ params }: { params: Promise<{ id: string }> }
         ) : null}
       </div>
 
-      {!mine && !lost && open ? (
+      {!mine && !lost && claimable ? (
         <div className="space-y-2">
           {me.data ? (
             <Button size="lg" className="w-full" onClick={claim} disabled={claiming} data-testid="claim-start">

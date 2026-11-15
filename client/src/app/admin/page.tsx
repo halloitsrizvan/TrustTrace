@@ -30,11 +30,10 @@ export default function AdminDashboard() {
     );
   if (q.isError) return <ErrorState title={a.errorTitle} body={a.errorBody} onRetry={() => q.refetch()} />;
   const s = q.data!;
-  const zones = [...new Set(s.hotspots.map((h) => h.zone))];
-  const hours = [...new Set(s.hotspots.map((h) => h.hour))].sort((x, y) => x - y);
-  const max = Math.max(1, ...s.hotspots.map((h) => h.count));
+  const maxZone = Math.max(1, ...s.zones.map((z) => z.count));
+  const hourCount = (h: number) => s.hours.find((x) => Number(x.key) === h)?.count ?? 0;
+  const maxHour = Math.max(1, ...s.hours.map((x) => x.count));
   const top = Math.max(1, ...s.topFinders.map((f) => f.returns));
-  const cell = (z: string, h: number) => s.hotspots.find((x) => x.zone === z && x.hour === h)?.count ?? 0;
 
   return (
     <div className="space-y-8">
@@ -48,37 +47,43 @@ export default function AdminDashboard() {
       </dl>
 
       <div className="grid gap-8 xl:grid-cols-[2fr_1fr]">
-        <section aria-labelledby="hs" className="min-w-0 space-y-3">
+        <section aria-labelledby="hs" className="min-w-0 space-y-6">
           <div>
             <h2 id="hs" className="font-display text-2xl">{a.hotspots}</h2>
             <p className="text-ink-soft">{a.hotspotsSub}</p>
           </div>
-          <div className="overflow-x-auto rounded-3xl border border-rule bg-surface p-4">
-            <div className="grid min-w-[560px] gap-1" style={{ gridTemplateColumns: `120px repeat(${hours.length}, minmax(0, 1fr))` }} role="table" aria-label={a.hotspots}>
-              <div />
-              {hours.map((h) => <div key={h} className="text-center text-xs text-ink-soft num" role="columnheader">{h}</div>)}
-              {zones.map((z) => (
-                <div key={z} className="contents" role="row">
-                  <div className="truncate pr-2 text-sm" role="rowheader">{zoneName(z)}</div>
-                  {hours.map((h) => {
-                    const n = cell(z, h);
-                    return (
-                      <div
-                        key={h}
-                        role="cell"
-                        title={`${zoneName(z)}, ${h}:00, ${n}`}
-                        className="grid h-7 place-items-center rounded-[4px] text-[11px] font-bold num"
-                        style={{
-                          background: `color-mix(in srgb, var(--ultra) ${Math.round((n / max) * 100)}%, var(--paper))`,
-                          color: n / max > 0.5 ? "var(--on-ultra)" : "var(--ink)",
-                        }}
-                      >
-                        {n}
-                      </div>
-                    );
-                  })}
-                </div>
+          <div className="space-y-3 rounded-3xl border border-rule bg-surface p-5">
+            <h3 className="font-display text-lg">{a.byZone}</h3>
+            <ul className="space-y-2">
+              {s.zones.map((z) => (
+                <li key={z.key} className="grid grid-cols-[130px_1fr_32px] items-center gap-3 text-sm">
+                  <span className="truncate">{zoneName(z.key)}</span>
+                  <span className="h-2.5 overflow-hidden rounded-full bg-rule/70"><span className="block h-full rounded-full bg-ultra" style={{ width: `${(z.count / maxZone) * 100}%` }} /></span>
+                  <span className="text-right font-bold num">{z.count}</span>
+                </li>
               ))}
+            </ul>
+          </div>
+          <div className="space-y-3 rounded-3xl border border-rule bg-surface p-5">
+            <h3 className="font-display text-lg">{a.byHour}</h3>
+            <div className="grid grid-cols-12 gap-1 sm:grid-cols-24" role="list" aria-label={a.byHour}>
+              {Array.from({ length: 24 }, (_, h) => {
+                const n = hourCount(h);
+                return (
+                  <div
+                    key={h}
+                    role="listitem"
+                    title={`${h}:00, ${n}`}
+                    className="grid h-10 place-items-center rounded-lg text-[11px] font-bold num"
+                    style={{
+                      background: `color-mix(in srgb, var(--ultra) ${Math.round((n / maxHour) * 100)}%, var(--paper))`,
+                      color: n / maxHour > 0.5 ? "var(--on-ultra)" : "var(--ink)",
+                    }}
+                  >
+                    {h}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

@@ -48,7 +48,7 @@ export default function ThanksPage({ params }: { params: Promise<{ claimId: stri
     if (attempt.current?.sig !== sig) attempt.current = { sig, key: crypto.randomUUID() };
     try {
       const tip = await createTip({ claimId, amount: paise, note: note.trim() || undefined, anonymous: anon }, attempt.current.key);
-      if (tip.status !== "CONFIRMED" && MOCK_PAY) await confirmTip(tip.id);
+      if (tip.status !== "SUCCEEDED" && MOCK_PAY) await confirmTip(tip.id);
       qc.invalidateQueries({ queryKey: ["tip-elig", claimId] });
       qc.invalidateQueries({ queryKey: ["tips"] });
       toast.success(copy.toast.thanksSent);

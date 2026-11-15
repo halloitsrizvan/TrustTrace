@@ -22,7 +22,7 @@ export default function AdminAuditPage() {
     <div className="space-y-5">
       <h1 className="font-display text-3xl">{a.auditTitle}</h1>
       <div className="max-w-sm">
-        <Input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={a.searchAudit} aria-label={a.searchAudit} />
+        <Input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={a.entityFilter} aria-label={a.entityFilter} />
       </div>
       <DataTable
         testid="audit-table"

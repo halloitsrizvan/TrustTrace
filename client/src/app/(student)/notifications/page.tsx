@@ -8,9 +8,11 @@ import { cn, timeAgo } from "@/lib/utils";
 import { EmptyState, ErrorState, ListSkeleton } from "@/components/ui/states";
 
 const icons: Record<AppNotification["type"], typeof Search> = {
-  MATCH_FOUND: Search,
-  CLAIM_RESULT: ShieldCheck,
-  HANDOVER_DONE: PackageCheck,
+  STRONG_MATCH: Search,
+  CLAIM_STARTED: ShieldCheck,
+  CLAIM_DECISION: ShieldCheck,
+  HANDOVER_COMPLETED: PackageCheck,
+  RETURN_COMPLETED: PackageCheck,
   TIP_PROMPT: HandHeart,
   TIP_RECEIVED: Heart,
   BADGE_EARNED: BadgeCheck,
@@ -18,9 +20,11 @@ const icons: Record<AppNotification["type"], typeof Search> = {
 
 function target(n: AppNotification) {
   switch (n.type) {
-    case "MATCH_FOUND": return n.data?.itemId ? `/items/${n.data.itemId}` : "/matches";
-    case "CLAIM_RESULT":
-    case "HANDOVER_DONE": return n.data?.claimId ? `/claim/${n.data.claimId}` : "/claims";
+    case "STRONG_MATCH":
+    case "CLAIM_STARTED": return n.data?.itemId ? `/items/${n.data.itemId}` : "/matches";
+    case "CLAIM_DECISION": return n.data?.claimId ? `/claim/${n.data.claimId}` : "/claims";
+    case "HANDOVER_COMPLETED": return "/claims";
+    case "RETURN_COMPLETED": return "/items/mine";
     case "TIP_PROMPT": return n.data?.claimId ? `/thanks/${n.data.claimId}` : "/claims";
     default: return "/me";
   }

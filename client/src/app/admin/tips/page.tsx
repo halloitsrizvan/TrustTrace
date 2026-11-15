@@ -21,7 +21,7 @@ export default function AdminTipsPage() {
         label={a.col.status}
         value={status}
         onChange={(v) => { setStatus(v); setCursors([undefined]); }}
-        options={[{ value: "", label: a.filterAll }, { value: "CONFIRMED", label: a.confirmed }, { value: "PENDING", label: a.pending }]}
+        options={[{ value: "", label: a.filterAll }, { value: "SUCCEEDED", label: a.confirmed }, { value: "PENDING", label: a.pending }]}
       />
       <DataTable
         testid="tips-table"
@@ -39,7 +39,7 @@ export default function AdminTipsPage() {
           { head: a.col.from, cell: (r) => r.fromName ?? copy.profile.anonymousTipper },
           { head: a.col.to, cell: (r) => r.toName ?? "" },
           { head: a.col.amount, cell: (r) => <span className="font-display num">{rupees(r.amount)}</span> },
-          { head: a.col.status, cell: (r) => <Pill tone={r.status === "CONFIRMED" ? "found" : "review"}>{r.status === "CONFIRMED" ? a.confirmed : a.pending}</Pill> },
+          { head: a.col.status, cell: (r) => <Pill tone={r.status === "SUCCEEDED" ? "found" : "review"}>{r.status === "SUCCEEDED" ? a.confirmed : a.pending}</Pill> },
         ]}
       />
     </div>

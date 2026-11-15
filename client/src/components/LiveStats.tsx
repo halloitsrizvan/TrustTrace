@@ -13,13 +13,6 @@ export function LiveStats() {
           <dd className="font-display text-5xl num">{data.itemsReturned}</dd>
           <dt className="text-ink-soft">{copy.landing.returned}</dt>
         </div>
-        <div>
-          <dd className="font-display text-5xl num">
-            {data.avgHoursToReturn}
-            <span className="ml-2 text-xl text-ink-soft">{copy.landing.hours}</span>
-          </dd>
-          <dt className="text-ink-soft">{copy.landing.avgTime}</dt>
-        </div>
       </dl>
     </section>
   );

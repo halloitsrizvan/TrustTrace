@@ -249,7 +249,7 @@ export default function ClaimPage({ params }: { params: Promise<{ claimId: strin
         {showResult ? (
           <div data-testid="claim-result" data-decision={r.decision} className="fade-in relative space-y-3 border-t border-rule pt-5">
             <motion.div
-              className="absolute -top-7 right-0 origin-center"
+              className="absolute right-0 top-3 origin-center"
               initial={reduce || !fresh ? false : { scale: 1.15, opacity: 0, rotate: -8 }}
               animate={{ scale: 1, opacity: 1, rotate: -8 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
