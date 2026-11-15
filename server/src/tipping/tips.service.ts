@@ -7,11 +7,13 @@ import type { CreateTipDto } from './dto/create-tip.dto.js';
 import { sanitizeTipMessage } from './message-sanitizer.js';
 import { PAYMENT_PROVIDER, type PaymentProvider } from './payment-provider.js';
 import { TIPPING_CONFIG } from './tipping.config.js';
+import { RecognitionService } from './recognition.service.js';
+import { NotificationsService } from '../notifications/notifications.service.js';
 import type { TipQueryDto } from './dto/tip-query.dto.js';
 
 @Injectable()
 export class TipsService {
-  constructor(private readonly prisma: PrismaService, @Inject(PAYMENT_PROVIDER) private readonly payments: PaymentProvider) {}
+  constructor(private readonly prisma: PrismaService, @Inject(PAYMENT_PROVIDER) private readonly payments: PaymentProvider, private readonly recognition: RecognitionService, private readonly notifications: NotificationsService) {}
 
   async eligibility(claimId: string, user: CurrentUser) {
     const claim = await this.prisma.claim.findUnique({ where: { id: claimId }, include: { foundItem: { include: { reporter: true } }, tip: true } });
@@ -55,16 +57,22 @@ export class TipsService {
   }
 
   async settle(tipId: string, providerPaymentId: string, status: TipStatus) {
-    return this.prisma.$transaction(async (transaction) => {
+    const settled = await this.prisma.$transaction(async (transaction) => {
       await transaction.$queryRaw(Prisma.sql`SELECT "id" FROM "Tip" WHERE "id" = ${tipId}::uuid FOR UPDATE`);
       const tip = await transaction.tip.findUniqueOrThrow({ where: { id: tipId } });
-      if (tip.status === TipStatus.SUCCEEDED || tip.status !== TipStatus.PENDING) return tip;
-      if (status === TipStatus.FAILED) return transaction.tip.update({ where: { id: tip.id }, data: { status } });
+      if (tip.status === TipStatus.SUCCEEDED || tip.status !== TipStatus.PENDING) return { tip, transitioned: false };
+      if (status === TipStatus.FAILED) return { tip: await transaction.tip.update({ where: { id: tip.id }, data: { status } }), transitioned: true };
       const settled = await transaction.tip.update({ where: { id: tip.id }, data: { status: TipStatus.SUCCEEDED, succeededAt: new Date(), providerPaymentId } });
       await transaction.walletEntry.create({ data: { userId: tip.finderId, type: WalletEntryType.CREDIT, amountMinor: tip.amountMinor, reason: WalletEntryReason.TIP_RECEIVED, refId: tip.id } });
       await transaction.auditLog.create({ data: { actorId: tip.tipperId, action: 'TIP_SUCCEEDED', entity: 'Tip', entityId: tip.id, meta: { amountMinor: tip.amountMinor } } });
-      return settled;
+      return { tip: settled, transitioned: true };
     });
+    if (settled.transitioned && settled.tip.status === TipStatus.SUCCEEDED) {
+      await this.recognition.afterTip(settled.tip);
+    } else if (settled.transitioned && settled.tip.status === TipStatus.FAILED) {
+      await this.prisma.auditLog.create({ data: { action: 'TIP_FAILED', entity: 'Tip', entityId: settled.tip.id, meta: {} } });
+    }
+    return settled.tip;
   }
 
   async given(userId: string, query: TipQueryDto) {

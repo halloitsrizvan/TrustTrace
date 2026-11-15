@@ -5,10 +5,11 @@ import { ClaimStatus, ItemStatus } from '../generated/prisma/enums.js';
 import { Prisma } from '../generated/prisma/client.js';
 import { NotificationsService } from '../notifications/notifications.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { RecognitionService } from '../tipping/recognition.service.js';
 
 @Injectable()
 export class HandoverService {
-  constructor(private readonly prisma: PrismaService, private readonly notifications: NotificationsService) {}
+  constructor(private readonly prisma: PrismaService, private readonly notifications: NotificationsService, private readonly recognition: RecognitionService) {}
 
   async scan(token: string, admin: CurrentUser) {
     const tokenHash = createHash('sha256').update(token).digest('hex');
@@ -30,6 +31,7 @@ export class HandoverService {
       this.notifications.create(claim.claimantId, 'HANDOVER_COMPLETED', { claimId: claim.id }),
       this.notifications.create(claim.foundItem.reporterId, 'HANDOVER_COMPLETED', { claimId: claim.id, foundItemId: claim.foundItemId }),
     ]);
+    await this.recognition.afterReturn(claim.id, claim.foundItem.reporterId, claim.claimantId);
     return { status: ClaimStatus.COLLECTED, claimId: claim.id };
   }
 }

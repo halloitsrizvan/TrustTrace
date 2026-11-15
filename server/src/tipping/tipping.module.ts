@@ -5,6 +5,7 @@ import { PAYMENT_PROVIDER } from './payment-provider.js';
 import { TipsController } from './tips.controller.js';
 import { TipsService } from './tips.service.js';
 import { WalletController } from './wallet.controller.js';
+import { RecognitionService } from './recognition.service.js';
 
 @Global()
 @Module({
@@ -17,7 +18,7 @@ import { WalletController } from './wallet.controller.js';
       if (provider === 'mock') return new MockPaymentProvider();
       throw new NotImplementedException('Razorpay is intentionally excluded from this build');
     },
-  }, TipsService],
-  exports: [PAYMENT_PROVIDER, TipsService],
+  }, TipsService, RecognitionService],
+  exports: [PAYMENT_PROVIDER, TipsService, RecognitionService],
 })
 export class TippingModule {}
