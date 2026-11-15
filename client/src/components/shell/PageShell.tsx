@@ -75,7 +75,7 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
           <div className="ml-auto flex items-center gap-1">
             {signedIn ? (
               <>
-                <Button variant="primary" size="md" className="hidden md:inline-flex" onClick={() => setSheet(true)} data-testid="report-open">
+                <Button variant="primary" size="md" className="max-md:hidden" onClick={() => setSheet(true)} data-testid="report-open">
                   <Plus size={18} strokeWidth={1.75} aria-hidden /> {copy.nav.report}
                 </Button>
                 <Link
@@ -86,7 +86,7 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
                   <Bell size={21} strokeWidth={1.75} aria-hidden />
                   {unread > 0 ? <span aria-hidden className="absolute right-2.5 top-2.5 size-2.5 rounded-full bg-lost ring-2 ring-paper" /> : null}
                 </Link>
-                <Link href="/me" aria-label={copy.nav.me} className="hidden size-11 place-items-center rounded-full hover:bg-ultra-tint md:grid">
+                <Link href="/me" aria-label={copy.nav.me} className="grid size-11 place-items-center rounded-full hover:bg-ultra-tint max-md:hidden">
                   <UserRound size={21} strokeWidth={1.75} aria-hidden />
                 </Link>
               </>

@@ -99,7 +99,7 @@ export const useTipsReceived = () =>
 export const useWallet = () => useQuery({ queryKey: ["wallet"], queryFn: () => get<Wallet>("/wallet") });
 
 export const useProfile = (id: string) =>
-  useQuery({ queryKey: ["profile", id], queryFn: () => get<PublicProfile>(`/users/${id}/public-profile`), retry: false });
+  useQuery({ queryKey: ["profile", id], queryFn: () => get<PublicProfile>(`/users/${id}/public-profile`), retry: false, enabled: !!id });
 export const useLeaderboard = (period: "week" | "month" | "all") =>
   useQuery({
     queryKey: ["leaderboard", period],
