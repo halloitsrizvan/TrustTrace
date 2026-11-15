@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Search } from "lucide-react";
+import { Search, SlidersHorizontal } from "lucide-react";
 import { copy } from "@/lib/copy";
+import { cn } from "@/lib/utils";
 import { useItemsFeed, type ItemFilters } from "@/lib/api/hooks";
-import { Segmented } from "@/components/ui/segmented";
 import { Input, Select } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
+import { BottomSheet } from "@/components/ui/sheet";
 import { CategoryChips, ZoneSelect } from "@/components/ui/pickers";
 import { EmptyState, ErrorState } from "@/components/ui/states";
 import { SkeletonTag, TagCard } from "@/components/tag/TagCard";
@@ -27,6 +28,7 @@ export default function BoardPage() {
   const [zone, setZone] = useState("");
   const [eventTag, setEventTag] = useState("");
   const [q, setQ] = useState("");
+  const [sheet, setSheet] = useState(false);
   const dq = useDebounced(q.trim(), 300);
 
   const filters: ItemFilters = {
@@ -38,7 +40,9 @@ export default function BoardPage() {
   };
   const feed = useItemsFeed(filters);
   const items = feed.data?.pages.flatMap((p) => p.items) ?? [];
-  const filtered = !!(filters.type || filters.category || filters.zone || filters.eventTag || filters.q);
+  const events = [...new Set([...items.map((i) => i.eventTag), eventTag])].filter((e): e is string => !!e).sort();
+  const extra = [category, zone, eventTag].filter(Boolean).length;
+  const filtered = !!(filters.type || extra || filters.q);
 
   const sentinel = useRef<HTMLDivElement>(null);
   const { hasNextPage, isFetchingNextPage, fetchNextPage } = feed;
@@ -59,11 +63,16 @@ export default function BoardPage() {
   }
 
   const b = copy.board;
+  const tabs: { value: TypeFilter; label: string }[] = [
+    { value: "ALL", label: b.all },
+    { value: "LOST", label: b.lost },
+    { value: "FOUND", label: b.found },
+  ];
+
   return (
-    <div className="space-y-5">
-      <section className="space-y-4 pt-1">
-        <h1 className="font-display text-3xl leading-[1.1] md:text-5xl">{b.heroTitle}</h1>
-        <div className="relative">
+    <div className="space-y-4">
+      <div className="flex items-center gap-2">
+        <div className="relative flex-1">
           <Search aria-hidden size={18} strokeWidth={1.75} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-soft" />
           <Input
             type="search"
@@ -75,56 +84,44 @@ export default function BoardPage() {
             className="printed min-h-12 rounded-full pl-11"
           />
         </div>
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#2273eb] to-[#4aa0ff] p-5 text-white md:max-w-xl">
-          <div aria-hidden className="absolute -right-6 -top-6 size-36 rounded-full bg-white/15" />
-          <div aria-hidden className="absolute -bottom-10 right-10 size-28 rounded-full bg-white/10" />
-          <h2 className="font-display text-xl">{b.bannerTitle}</h2>
-          <p className="mt-1 max-w-[16rem] text-sm text-white/90">{b.bannerBody}</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <Button href="/report/lost" variant="secondary" size="sm" className="border-transparent bg-white text-[#14306b]">{copy.action.reportLost}</Button>
-            <Button href="/report/found" variant="secondary" size="sm" className="border-transparent bg-white/20 text-white hover:bg-white/30">{copy.action.reportFound}</Button>
-          </div>
-        </div>
-      </section>
-
-      <div className="space-y-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <Segmented
-            label={b.typeLabel}
-            value={type}
-            onChange={setType}
-            testid="type-filter"
-            options={[
-              { value: "ALL", label: b.all },
-              { value: "LOST", label: b.lost },
-              { value: "FOUND", label: b.found },
-            ]}
-          />
-          <div className="w-44">
-            <ZoneSelect value={zone} onChange={setZone} anyLabel={b.zoneAny} aria-label={b.zoneLabel} />
-          </div>
-          <div className="w-44">
-            <Select value={eventTag} onChange={(e) => setEventTag(e.target.value)} aria-label={b.eventLabel}>
-              <option value="">{b.eventAny}</option>
-              {b.events.map((ev) => (
-                <option key={ev} value={ev}>
-                  {ev}
-                </option>
-              ))}
-            </Select>
-          </div>
-        </div>
-        <CategoryChips label={b.categoryLabel} value={category} onChange={setCategory} allowNone />
+        <button
+          type="button"
+          onClick={() => setSheet(true)}
+          aria-label={extra ? `${b.filters}, ${extra}` : b.filters}
+          data-testid="filters-open"
+          className="printed relative grid size-12 shrink-0 place-items-center rounded-full bg-surface text-ink"
+        >
+          <SlidersHorizontal size={20} strokeWidth={1.75} aria-hidden />
+          {extra ? (
+            <span aria-hidden className="num absolute -right-0.5 -top-0.5 grid size-5 place-items-center rounded-full bg-ultra text-[11px] font-bold text-on-ultra">
+              {extra}
+            </span>
+          ) : null}
+        </button>
       </div>
 
-      <h2 className="font-display text-2xl">{b.recent}</h2>
+      <div role="tablist" aria-label={b.typeLabel} data-testid="type-filter" className="flex gap-6 border-b border-rule">
+        {tabs.map((t) => (
+          <button
+            key={t.value}
+            type="button"
+            role="tab"
+            aria-selected={type === t.value}
+            onClick={() => setType(t.value)}
+            className={cn(
+              "-mb-px min-h-11 border-b-2 text-base transition-colors duration-150",
+              type === t.value ? "border-ultra font-bold text-ink" : "border-transparent text-ink-soft hover:text-ink",
+            )}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
 
       {feed.isLoading ? (
-        <div className="grid gap-3 md:grid-cols-3 md:gap-4 md:items-start xl:grid-cols-4" role="status" aria-label={copy.states.loading}>
+        <div className="grid gap-3 md:grid-cols-3 md:gap-4 xl:grid-cols-4" role="status" aria-label={copy.states.loading}>
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i}>
-              <SkeletonTag tall={i % 3 === 0} />
-            </div>
+            <SkeletonTag key={i} tall={i % 3 === 0} />
           ))}
         </div>
       ) : feed.isError ? (
@@ -133,32 +130,54 @@ export default function BoardPage() {
         filtered ? (
           <EmptyState title={b.emptyTitle} body={b.emptyBody} action={<Button variant="secondary" onClick={clear}>{copy.action.clear}</Button>} />
         ) : (
-          <EmptyState
-            title={b.emptyBoardTitle}
-            body={b.emptyBoardBody}
-            action={<Button href="/report/lost">{copy.action.reportLost}</Button>}
-          />
+          <EmptyState title={b.emptyBoardTitle} body={b.emptyBoardBody} action={<Button href="/report/lost">{copy.action.reportLost}</Button>} />
         )
       ) : (
         <>
-          <div className="grid gap-3 md:grid-cols-3 md:gap-4 md:items-start xl:grid-cols-4" data-testid="feed">
+          <div className="grid gap-3 md:grid-cols-3 md:items-start md:gap-4 xl:grid-cols-4" data-testid="feed">
             {items.map((it) => (
-              <div key={it.id}>
-                <TagCard item={it} tall />
-              </div>
+              <TagCard key={it.id} item={it} tall />
             ))}
           </div>
           <div ref={sentinel} className="h-8" aria-hidden />
           {isFetchingNextPage ? (
-            <div className="grid gap-3 md:grid-cols-3 md:gap-4 md:items-start xl:grid-cols-4">
+            <div className="grid gap-3 md:grid-cols-3 md:gap-4 xl:grid-cols-4">
               <SkeletonTag />
               <SkeletonTag />
             </div>
-          ) : !hasNextPage ? (
-            <p className="py-6 text-center text-ink-soft">{b.end}</p>
           ) : null}
         </>
       )}
+
+      <BottomSheet open={sheet} onOpenChange={setSheet} title={b.filters}>
+        <div className="space-y-5">
+          <div className="space-y-2">
+            <p className="text-sm font-bold">{b.categoryLabel}</p>
+            <CategoryChips label={b.categoryLabel} value={category} onChange={setCategory} allowNone />
+          </div>
+          <div className="space-y-2">
+            <label htmlFor="f-zone" className="text-sm font-bold">{b.zoneLabel}</label>
+            <ZoneSelect id="f-zone" value={zone} onChange={setZone} anyLabel={b.zoneAny} />
+          </div>
+          {events.length ? (
+            <div className="space-y-2">
+              <label htmlFor="f-event" className="text-sm font-bold">{b.eventLabel}</label>
+              <Select id="f-event" value={eventTag} onChange={(e) => setEventTag(e.target.value)}>
+                <option value="">{b.eventAny}</option>
+                {events.map((ev) => (
+                  <option key={ev} value={ev}>{ev}</option>
+                ))}
+              </Select>
+            </div>
+          ) : null}
+          <div className="flex gap-3 pt-1">
+            <Button variant="secondary" className="flex-1" onClick={() => { setCategory(""); setZone(""); setEventTag(""); }} disabled={!extra}>
+              {copy.action.clear}
+            </Button>
+            <Button className="flex-1" onClick={() => setSheet(false)}>{b.apply}</Button>
+          </div>
+        </div>
+      </BottomSheet>
     </div>
   );
 }

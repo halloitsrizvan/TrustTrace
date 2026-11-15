@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const imageHost = process.env.NEXT_PUBLIC_IMAGE_HOST ?? "**.supabase.co";
+const imageHost = process.env.NEXT_PUBLIC_IMAGE_HOST ?? "res.cloudinary.com";
 
 const nextConfig: NextConfig = {
   images: {

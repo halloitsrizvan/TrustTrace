@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/shell/Logo";
 import { TagCard } from "@/components/tag/TagCard";
 import { LiveStats } from "@/components/LiveStats";
+import { LandingAuthLink } from "@/components/LandingAuthLink";
 import type { PublicItem } from "@/lib/api/types";
 
 const sample = (id: string, type: "LOST" | "FOUND", title: string): PublicItem => ({
@@ -23,9 +24,7 @@ export default function Landing() {
           <Link href="/board" className="inline-flex min-h-11 items-center rounded-2xl px-3">
             {copy.nav.board}
           </Link>
-          <Link href="/login" className="inline-flex min-h-11 items-center rounded-2xl px-3 font-bold">
-            {copy.action.signIn}
-          </Link>
+          <LandingAuthLink />
         </nav>
       </header>
 

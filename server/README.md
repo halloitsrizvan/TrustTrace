@@ -16,7 +16,6 @@ Copy-Item .env.example .env
 npm install --legacy-peer-deps
 npm run prisma:generate
 npm run prisma:migrate
-npm run seed
 npm run start:dev
 ```
 
@@ -88,21 +87,6 @@ available when an LLM is offline. Collection duration in admin statistics uses
 `Claim.updatedAt - Item.createdAt`, because the original data model has no
 dedicated `collectedAt` column.
 
-## Demo
-
-`npm run seed` creates an admin, Alice, Mallory, four other students, and 40
-items with deterministic mock embeddings. It is safe to run repeatedly.
-
-- Password for every demo account: `DemoPass123!`
-- Admin: `admin@demo.edu`
-- Honest owner: `alice@demo.edu`
-- Copycat: `mallory@demo.edu`
-
-Mallory can claim the seeded found phone using only its public wording and will
-fail the private-proof rule. Alice's seeded lost report contains the matching
-private details: a red dragon sticker and cracked top-left corner. Alice can
-answer the prompts, receive the one-time token, and have the admin scan it at
-`POST /api/handover/scan`.
 
 ## Verification
 

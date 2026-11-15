@@ -77,11 +77,11 @@ export interface CreateItemResponse extends OwnerItem {
   matches: ItemMatch[];
 }
 export interface SignedUpload {
-  signedUrl: string;
+  uploadUrl: string;
+  fields: Record<string, string>;
   path: string;
-  token: string;
+  publicUrl: string | null;
   maxBytes: number;
-  publicUrl?: string;
 }
 
 export interface ClaimPrompt {

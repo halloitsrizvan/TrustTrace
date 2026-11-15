@@ -21,15 +21,15 @@ export class UploadsController {
 
   @Post('sign')
   @ApiOperation({
-    summary: 'Create a signed image upload URL',
+    summary: 'Sign a direct Cloudinary image upload',
     description:
-      'Uploads are limited to JPEG, PNG, or WebP and 5 MB. Configure the same limit on the Supabase bucket.',
+      'POST the returned fields plus the file to uploadUrl as multipart form data. Clients must resize to 5 MB or less.',
   })
   @ApiCreatedResponse({ type: SignedUploadResponseDto })
   sign(
     @CurrentUser() user: AuthenticatedUser,
     @Body() input: SignUploadDto,
-  ): Promise<SignedUploadResponseDto> {
+  ): SignedUploadResponseDto {
     return this.uploads.sign(user, input);
   }
 }

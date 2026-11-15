@@ -32,8 +32,10 @@ export function SidebarShell({ children }: { children: ReactNode }) {
                     href={href}
                     aria-current={on(href, exact) ? "page" : undefined}
                     className={cn(
-                      "flex min-h-11 items-center gap-2.5 rounded-2xl px-3",
-                      on(href, exact) ? "bg-ultra-tint font-bold" : "hover:bg-ultra-tint",
+                      "relative flex min-h-10 items-center gap-2.5 px-3 text-[15px] transition-colors duration-150 before:absolute before:inset-y-2 before:left-0 before:w-0.5 before:rounded-full before:bg-ultra before:transition-opacity",
+                      on(href, exact)
+                        ? "font-bold text-ink before:opacity-100"
+                        : "text-ink-soft before:opacity-0 hover:text-ink",
                     )}
                   >
                     <Icon size={19} strokeWidth={1.75} aria-hidden />
@@ -45,7 +47,7 @@ export function SidebarShell({ children }: { children: ReactNode }) {
           </nav>
           <div className="hidden md:block md:mt-auto md:space-y-3">
             <ThemeToggle />
-            <Link href="/board" className="flex min-h-11 items-center gap-2 rounded-2xl px-3 text-ink-soft hover:bg-ultra-tint">
+            <Link href="/board" className="flex min-h-10 items-center gap-2 px-3 text-[15px] text-ink-soft transition-colors duration-150 hover:text-ink">
               <ArrowLeft size={18} strokeWidth={1.75} aria-hidden /> {copy.nav.admin.backToApp}
             </Link>
           </div>
@@ -56,7 +58,7 @@ export function SidebarShell({ children }: { children: ReactNode }) {
               key={href}
               href={href}
               aria-current={on(href, exact) ? "page" : undefined}
-              className={cn("inline-flex min-h-11 shrink-0 items-center rounded-full px-4 text-sm", on(href, exact) ? "bg-ultra font-bold text-on-ultra" : "bg-paper")}
+              className={cn("inline-flex min-h-11 shrink-0 items-center border-b-2 px-3 text-sm", on(href, exact) ? "border-ultra font-bold text-ink" : "border-transparent text-ink-soft")}
             >
               {label}
             </Link>

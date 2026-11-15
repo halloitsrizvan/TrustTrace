@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Bell, LayoutGrid, Plus, Sparkles, UserRound, Trophy, PackageSearch, PackagePlus } from "lucide-react";
 import { copy } from "@/lib/copy";
 import { cn } from "@/lib/utils";
@@ -41,6 +41,12 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
   const path = usePathname();
   const router = useRouter();
   const [sheet, setSheet] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   const me = useMe();
   const notifs = useNotifications();
   const unread = (notifs.data ?? []).filter((n) => !n.readAt).length;
@@ -56,7 +62,14 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
   return (
     <div className="relative isolate min-h-dvh pb-28 md:pb-10">
       <div aria-hidden className="bg-hero absolute inset-x-0 top-0 -z-10 h-[420px]" />
-      <header className="sticky top-0 z-30 bg-transparent">
+      <header
+        className={cn(
+          "sticky top-0 z-30 border-b transition-[background-color,border-color,box-shadow] duration-200",
+          scrolled
+            ? "border-rule bg-surface shadow-[0_6px_20px_-12px_rgba(34,115,235,0.35)]"
+            : "border-transparent bg-transparent",
+        )}
+      >
         <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 pt-[max(0.75rem,env(safe-area-inset-top))] md:px-6 md:py-4">
           <Logo href="/board" />
           <nav aria-label={copy.nav.main} className="ml-4 hidden items-center gap-1 md:flex">
@@ -66,8 +79,10 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
                 href={href}
                 aria-current={active(href) ? "page" : undefined}
                 className={cn(
-                  "inline-flex min-h-11 items-center rounded-2xl px-3 text-base",
-                  active(href) ? "bg-ultra-tint font-bold" : "",
+                  "relative inline-flex min-h-11 items-center px-3 text-base transition-colors duration-150 after:absolute after:inset-x-3 after:bottom-1.5 after:h-0.5 after:rounded-full after:bg-ultra after:transition-transform after:duration-150",
+                  active(href)
+                    ? "font-bold text-ink after:scale-x-100"
+                    : "text-ink-soft after:scale-x-0 hover:text-ink hover:after:scale-x-100",
                 )}
               >
                 {label}
@@ -83,12 +98,12 @@ export function PageShell({ children, wide }: { children: ReactNode; wide?: bool
                 <Link
                   href="/notifications"
                   aria-label={unread ? `${copy.nav.notifications}, ${unread} unread` : copy.nav.notifications}
-                  className="relative grid size-11 place-items-center rounded-full"
+                  className="relative grid size-11 place-items-center rounded-full text-ink-soft transition-colors duration-150 hover:text-ink"
                 >
                   <Bell size={21} strokeWidth={1.75} aria-hidden />
                   {unread > 0 ? <span aria-hidden className="absolute right-2.5 top-2.5 size-2.5 rounded-full bg-lost ring-2 ring-paper" /> : null}
                 </Link>
-                <Link href="/me" aria-label={copy.nav.me} className="grid size-11 place-items-center rounded-full max-md:hidden">
+                <Link href="/me" aria-label={copy.nav.me} className="grid size-11 place-items-center rounded-full text-ink-soft transition-colors duration-150 hover:text-ink max-md:hidden">
                   <UserRound size={21} strokeWidth={1.75} aria-hidden />
                 </Link>
               </>

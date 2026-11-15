@@ -158,12 +158,7 @@ export function ReportForm({ type }: { type: ItemType }) {
             {(p) => <Input {...p} type="datetime-local" max={toLocalInput(new Date())} {...register("occurredAt")} />}
           </Field>
           <Field label={r.event}>
-            {(p) => (
-              <Select {...p} {...register("eventTag")}>
-                <option value="">{copy.board.eventAny}</option>
-                {copy.board.events.map((ev) => <option key={ev} value={ev}>{ev}</option>)}
-              </Select>
-            )}
+            {(p) => <Input {...p} {...register("eventTag")} maxLength={100} />}
           </Field>
           {found ? (
             <Field label={r.holdLocation} hint={r.holdHint}>

@@ -3,7 +3,6 @@ import type { SignedUpload } from "./api/types";
 
 const MAX_EDGE = 1600;
 const MAX_BYTES = 5 * 1024 * 1024;
-const PUBLIC_BASE = process.env.NEXT_PUBLIC_STORAGE_PUBLIC_URL ?? "";
 
 export class PhotoTooBig extends Error {}
 
@@ -27,11 +26,14 @@ export async function prepareImage(file: File, maxEdge = MAX_EDGE): Promise<Blob
   throw new PhotoTooBig();
 }
 
-/** Returns the public image URL to send in the item payload. */
+/** Uploads straight to Cloudinary with a server-signed request and returns the public image URL. */
 export async function uploadPhoto(file: File): Promise<string> {
   const blob = await prepareImage(file);
   const signed = await post<SignedUpload>("/uploads/sign", { contentType: "image/jpeg", purpose: "public" });
-  const put = await fetch(signed.signedUrl, { method: "PUT", headers: { "Content-Type": "image/jpeg" }, body: blob });
-  if (!put.ok) throw new Error("upload");
-  return signed.publicUrl ?? `${PUBLIC_BASE}/${signed.path}`;
+  const form = new FormData();
+  for (const [k, v] of Object.entries(signed.fields)) form.append(k, v);
+  form.append("file", blob);
+  const res = await fetch(signed.uploadUrl, { method: "POST", body: form });
+  if (!res.ok || !signed.publicUrl) throw new Error("upload");
+  return signed.publicUrl;
 }

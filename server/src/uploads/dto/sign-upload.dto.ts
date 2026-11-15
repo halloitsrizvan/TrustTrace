@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsIn } from 'class-validator';
 import { IMAGE_CONTENT_TYPES } from '../uploads.constants.js';
 
@@ -13,8 +13,23 @@ export class SignUploadDto {
 }
 
 export class SignedUploadResponseDto {
-  @ApiProperty() signedUrl: string;
-  @ApiProperty({ example: 'public/user-id/random-id.jpg' }) path: string;
-  @ApiProperty({ description: 'Supabase upload token' }) token: string;
+  @ApiProperty({ description: 'POST multipart form data here' })
+  uploadUrl: string;
+
+  @ApiProperty({
+    type: 'object',
+    additionalProperties: { type: 'string' },
+    description: 'Form fields to send before the file field',
+  })
+  fields: Record<string, string>;
+
+  @ApiProperty({ example: 'public/user-id/random-id' }) path: string;
+
+  @ApiPropertyOptional({
+    nullable: true,
+    description: 'Delivery URL for public uploads; null for private ones',
+  })
+  publicUrl: string | null;
+
   @ApiProperty({ example: 5_242_880 }) maxBytes: number;
 }

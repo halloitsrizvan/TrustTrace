@@ -1,4 +1,3 @@
-export const SUPABASE_CLIENT = Symbol('SUPABASE_CLIENT');
 export const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
 
 export const IMAGE_CONTENT_TYPES = [
