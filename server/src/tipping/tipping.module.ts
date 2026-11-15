@@ -2,9 +2,12 @@ import { Global, Module, NotImplementedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MockPaymentProvider } from './mock-payment.provider.js';
 import { PAYMENT_PROVIDER } from './payment-provider.js';
+import { TipsController } from './tips.controller.js';
+import { TipsService } from './tips.service.js';
 
 @Global()
 @Module({
+  controllers: [TipsController],
   providers: [{
     provide: PAYMENT_PROVIDER,
     inject: [ConfigService],
@@ -13,7 +16,7 @@ import { PAYMENT_PROVIDER } from './payment-provider.js';
       if (provider === 'mock') return new MockPaymentProvider();
       throw new NotImplementedException('Razorpay is intentionally excluded from this build');
     },
-  }],
-  exports: [PAYMENT_PROVIDER],
+  }, TipsService],
+  exports: [PAYMENT_PROVIDER, TipsService],
 })
 export class TippingModule {}
