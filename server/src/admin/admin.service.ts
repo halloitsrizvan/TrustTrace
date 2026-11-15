@@ -8,6 +8,8 @@ import type { AdminClaimsQueryDto, AdminDecisionDto } from './dto/admin-claims.d
 import type { AdminAuditQueryDto } from './dto/admin-audit.dto.js';
 import { ClaimStatus as Status } from '../generated/prisma/enums.js';
 import { Prisma } from '../generated/prisma/client.js';
+import { TipStatus } from '../generated/prisma/enums.js';
+import type { AdminTipsQueryDto } from './dto/admin-tips.dto.js';
 
 @Injectable()
 export class AdminService {
@@ -48,7 +50,7 @@ export class AdminService {
   }
 
   async stats() {
-    const [totalItems, reunitedCount, fraudBlockedCount, openFlagged, durations, zones, hours] = await Promise.all([
+    const [totalItems, reunitedCount, fraudBlockedCount, openFlagged, durations, zones, hours, tipTotals, topFinders] = await Promise.all([
       this.prisma.item.count(),
       this.prisma.claim.count({ where: { status: Status.COLLECTED } }),
       this.prisma.claim.count({ where: { status: Status.REJECTED } }),
@@ -68,6 +70,13 @@ export class AdminService {
         WHERE "createdAt" >= NOW() - INTERVAL '30 days'
         GROUP BY key ORDER BY key
       `),
+      this.prisma.tip.aggregate({ where: { status: TipStatus.SUCCEEDED }, _count: true, _sum: { amountMinor: true } }),
+      this.prisma.$queryRaw<Array<{ id: string; name: string; returnsCount: bigint }>>(Prisma.sql`
+        SELECT users."id", users."name", COUNT(claims."id") AS "returnsCount"
+        FROM "User" users JOIN "Item" items ON items."reporterId" = users."id"
+        JOIN "Claim" claims ON claims."foundItemId" = items."id" AND claims."status" = 'COLLECTED'::"ClaimStatus"
+        GROUP BY users."id" ORDER BY "returnsCount" DESC LIMIT 5
+      `),
     ]);
     return {
       totalItems,
@@ -77,6 +86,10 @@ export class AdminService {
       openFlagged,
       zones: zones.map(({ key, count }) => ({ key, count: Number(count) })),
       hours: hours.map(({ key, count }) => ({ key: String(key), count: Number(count) })),
+      tipsCount: tipTotals._count,
+      tipsTotalMinor: tipTotals._sum.amountMinor ?? 0,
+      tipConversionRate: reunitedCount ? Number((tipTotals._count / reunitedCount).toFixed(4)) : 0,
+      topFinders: topFinders.map((row) => ({ ...row, returnsCount: Number(row.returnsCount) })),
     };
   }
 
@@ -90,5 +103,13 @@ export class AdminService {
     const hasMore = rows.length > query.limit;
     const logs = hasMore ? rows.slice(0, query.limit) : rows;
     return { logs, nextCursor: hasMore ? logs.at(-1)!.id : null };
+  }
+
+  async tips(query: AdminTipsQueryDto, admin: CurrentUser) {
+    const rows = await this.prisma.tip.findMany({ where: { status: query.status }, orderBy: [{ createdAt: 'desc' }, { id: 'desc' }], take: query.limit + 1, ...(query.cursor ? { cursor: { id: query.cursor }, skip: 1 } : {}), include: { tipper: { select: { id: true, email: true, name: true } }, finder: { select: { id: true, email: true, name: true } } } });
+    await this.prisma.auditLog.create({ data: { actorId: admin.id, action: 'ADMIN_TIPS_VIEWED', entity: 'Tip', entityId: 'LIST', meta: { status: query.status ?? null } } });
+    const hasMore = rows.length > query.limit;
+    const tips = hasMore ? rows.slice(0, query.limit) : rows;
+    return { tips, nextCursor: hasMore ? tips.at(-1)!.id : null };
   }
 }

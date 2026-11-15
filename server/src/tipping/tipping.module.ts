@@ -6,10 +6,12 @@ import { TipsController } from './tips.controller.js';
 import { TipsService } from './tips.service.js';
 import { WalletController } from './wallet.controller.js';
 import { RecognitionService } from './recognition.service.js';
+import { RecognitionController } from './recognition.controller.js';
+import { RecognitionProfilesService } from './recognition-profiles.service.js';
 
 @Global()
 @Module({
-  controllers: [TipsController, WalletController],
+  controllers: [TipsController, WalletController, RecognitionController],
   providers: [{
     provide: PAYMENT_PROVIDER,
     inject: [ConfigService],
@@ -18,7 +20,7 @@ import { RecognitionService } from './recognition.service.js';
       if (provider === 'mock') return new MockPaymentProvider();
       throw new NotImplementedException('Razorpay is intentionally excluded from this build');
     },
-  }, TipsService, RecognitionService],
+  }, TipsService, RecognitionService, RecognitionProfilesService],
   exports: [PAYMENT_PROVIDER, TipsService, RecognitionService],
 })
 export class TippingModule {}

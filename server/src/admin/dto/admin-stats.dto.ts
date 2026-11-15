@@ -13,4 +13,8 @@ export class AdminStatsDto {
   @ApiProperty() openFlagged: number;
   @ApiProperty({ type: [HotspotCountDto] }) zones: HotspotCountDto[];
   @ApiProperty({ type: [HotspotCountDto] }) hours: HotspotCountDto[];
+  @ApiProperty() tipsCount: number;
+  @ApiProperty() tipsTotalMinor: number;
+  @ApiProperty() tipConversionRate: number;
+  @ApiProperty({ type: [Object] }) topFinders: object[];
 }

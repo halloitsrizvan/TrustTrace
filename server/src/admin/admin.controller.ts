@@ -8,6 +8,7 @@ import { AdminService } from './admin.service.js';
 import { AdminClaimsQueryDto, AdminDecisionDto } from './dto/admin-claims.dto.js';
 import { AdminAuditQueryDto } from './dto/admin-audit.dto.js';
 import { AdminStatsDto } from './dto/admin-stats.dto.js';
+import { AdminTipsQueryDto } from './dto/admin-tips.dto.js';
 
 @ApiTags('Admin') @ApiBearerAuth() @Roles(Role.ADMIN) @Controller('admin')
 export class AdminController {
@@ -20,4 +21,6 @@ export class AdminController {
   stats() { return this.admin.stats(); }
   @Get('audit') @ApiOkResponse({ description: 'Cursor-paginated audit log' })
   audit(@Query() query: AdminAuditQueryDto) { return this.admin.audit(query); }
+  @Get('tips') @ApiOkResponse({ description: 'Audited tip inspection including anonymous tipper identity' })
+  tips(@Query() query: AdminTipsQueryDto, @CurrentUser() admin: AuthenticatedUser) { return this.admin.tips(query, admin); }
 }
