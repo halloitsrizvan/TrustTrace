@@ -27,10 +27,7 @@ const base = {
   holdLocation: z.string().max(200).optional(),
 };
 const foundSchema = z.object({ ...base, privateDetails: z.string().trim().min(10, r.privateShort).max(2000) });
-const lostSchema = z.object({
-  ...base,
-  privateDetails: z.string().trim().max(2000).refine((v) => v === "" || v.length >= 10, r.privateShort),
-});
+const lostSchema = z.object({ ...base, privateDetails: z.string().optional() });
 type Values = z.infer<typeof foundSchema>;
 
 const stepFields: (keyof Values)[][] = [[], ["category", "title", "publicDescription", "zone", "occurredAt"], ["privateDetails"]];
@@ -77,7 +74,7 @@ export function ReportForm({ type }: { type: ItemType }) {
         eventTag: v.eventTag || undefined,
         holdLocation: found ? v.holdLocation || undefined : undefined,
         imageUrl: photo ?? undefined,
-        privateDetails: v.privateDetails || undefined,
+        privateDetails: found ? v.privateDetails || undefined : undefined,
       },
       {
         onSuccess: (res) => {
@@ -110,16 +107,18 @@ export function ReportForm({ type }: { type: ItemType }) {
     );
   }
 
-  const last = step === 2;
+  // Lost reports have no private-details step: only the finder adds proof.
+  const total = found ? 3 : 2;
+  const last = step === total - 1;
   return (
     <form onSubmit={handleSubmit(submit)} noValidate className="space-y-6" data-testid="report-form">
       <div>
         <h1 className="font-display text-3xl">{found ? r.foundTitle : r.lostTitle}</h1>
         <p className="mt-1 text-ink-soft" aria-live="polite">
-          {r.stepOf(step + 1, 3)}: {r.steps[step]}
+          {r.stepOf(step + 1, total)}: {r.steps[step]}
         </p>
         <div aria-hidden className="mt-3 flex gap-1.5">
-          {[0, 1, 2].map((i) => (
+          {Array.from({ length: total }, (_, i) => i).map((i) => (
             <span key={i} className={`h-1.5 flex-1 rounded-full ${i <= step ? "bg-ultra" : "bg-rule"}`} />
           ))}
         </div>
@@ -168,7 +167,7 @@ export function ReportForm({ type }: { type: ItemType }) {
         </section>
       ) : null}
 
-      {step === 2 ? (
+      {found && step === 2 ? (
         <section className="space-y-4" data-testid="step-private">
           <div className="rounded-2xl bg-ultra-tint p-4">
             <h2 className="font-display text-xl">{found ? r.privateTitleFound : r.privateTitleLost}</h2>
@@ -196,11 +195,11 @@ export function ReportForm({ type }: { type: ItemType }) {
           </Button>
         ) : null}
         {last ? (
-          <Button type="submit" size="lg" className="flex-1" disabled={create.isPending} data-testid="report-submit">
+          <Button key="submit" type="submit" size="lg" className="flex-1" disabled={create.isPending} data-testid="report-submit">
             {copy.action.submit}
           </Button>
         ) : (
-          <Button size="lg" className="flex-1" onClick={next} data-testid="report-next">
+          <Button key="next" size="lg" className="flex-1" onClick={next} data-testid="report-next">
             {copy.action.next}
           </Button>
         )}

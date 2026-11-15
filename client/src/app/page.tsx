@@ -7,9 +7,9 @@ import { LiveStats } from "@/components/LiveStats";
 import { LandingAuthLink } from "@/components/LandingAuthLink";
 import type { PublicItem } from "@/lib/api/types";
 
-const sample = (id: string, type: "LOST" | "FOUND", title: string): PublicItem => ({
+const sample = (id: string, type: "LOST" | "FOUND", title: string, imageUrl: string): PublicItem => ({
   id, type, status: "OPEN", category: "PHONE", title, publicDescription: "", zone: "LIBRARY",
-  eventTag: null, occurredAt: "2026-11-14T10:00:00.000Z", imageUrl: null, reporterId: "x", holdLocation: null,
+  eventTag: null, occurredAt: "2026-11-14T10:00:00.000Z", imageUrl, reporterId: "x", holdLocation: null,
   createdAt: "", updatedAt: "", reporter: { id: "x", name: "" },
 });
 
@@ -51,9 +51,9 @@ export default function Landing() {
               {c.match}
             </span>
             <div className="grid grid-cols-2 gap-5">
-              <TagCard decorative item={sample("a0000000-0000-4000-8000-000000000412", "LOST", c.lostTag)} />
+              <TagCard decorative item={sample("a0000000-0000-4000-8000-000000000412", "LOST", c.lostTag, "/hero/phone-lost.svg")} />
               <div className="mt-6">
-                <TagCard decorative item={sample("a0000000-0000-4000-8000-000000000413", "FOUND", c.foundTag)} />
+                <TagCard decorative item={sample("a0000000-0000-4000-8000-000000000413", "FOUND", c.foundTag, "/hero/phone-found.svg")} />
               </div>
             </div>
           </div>

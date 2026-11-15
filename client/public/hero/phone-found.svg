@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Black phone with a cracked top corner on a desk">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9f5ec"/><stop offset="1" stop-color="#a8e6cf"/></linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a2f3d"/><stop offset="1" stop-color="#0f121a"/></linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a4a7a"/><stop offset="1" stop-color="#1a2145"/></linearGradient>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#06402e" flood-opacity="0.3"/></filter>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg)"/>
+  <rect y="340" width="400" height="160" fill="#8fd6b8" opacity="0.55"/>
+  <circle cx="70" cy="100" r="90" fill="#fff" opacity="0.35"/>
+  <g transform="rotate(10 200 270)" filter="url(#sh)">
+    <rect x="120" y="85" width="165" height="340" rx="29" fill="url(#body)"/>
+    <rect x="129" y="95" width="147" height="320" rx="21" fill="url(#screen)"/>
+    <rect x="180" y="103" width="42" height="10" rx="5" fill="#0b0d14"/>
+    <rect x="144" y="150" width="116" height="14" rx="7" fill="#fff" opacity="0.85"/>
+    <rect x="160" y="174" width="84" height="8" rx="4" fill="#fff" opacity="0.45"/>
+    <g fill="#fff" opacity="0.9"><rect x="144" y="340" width="25" height="25" rx="7"/><rect x="190" y="340" width="25" height="25" rx="7"/><rect x="236" y="340" width="25" height="25" rx="7"/></g>
+    <g stroke="#e8f0ff" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.9">
+      <path d="M280 99 L251 132 L263 142 L232 179"/>
+      <path d="M251 132 L272 138"/>
+      <path d="M263 142 L245 144"/>
+    </g>
+  </g>
+</svg>
